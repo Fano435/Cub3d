@@ -64,25 +64,25 @@ void	draw_square(int x, int y, int size, t_img *img)
 	}
 }
 
-char	map[5][5] = {{'1', '1', '1', '1', '1'}, {'1', '0', '1', '0', '1'}, {'1',
-		'0', '0', '0', '1'}, {'1', '0', '0', '0', '1'}, {'1', '1', '1', '1',
-		'1'}};
+char	map[10][8] = {{'1', '1', '1', '1', '1', '1', '1', '1'}, {'1', '0', '1',
+		'0', '0', '0', '0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'},
+		{'1', '0', '0', '0', '0', '1', '0', '1'}, {'1', '0', '0', '0', '0', '1',
+		'0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'}, {'1', '0', '0',
+		'1', '0', '0', '0', '1'}, {'1', '1', '1', '1', '1', '1', '1', '1'}};
 
-void	draw_map(char map[5][5], t_img *img)
+void	draw_map(char map[10][8], t_img *img)
 {
 	int	x;
 	int	y;
-	int	size;
 
-	size = 64;
 	x = 0;
-	while (x < 5)
+	while (x < 10)
 	{
 		y = 0;
-		while (y < 5)
+		while (y < 8)
 		{
 			if (map[x][y] == '1')
-				draw_square((x * size), (y * size), size, img);
+				draw_square((x * BLOCK), (y * BLOCK), BLOCK, img);
 			y++;
 		}
 		x++;
@@ -94,10 +94,58 @@ void	draw_player(t_game *game)
 	draw_square(game->player->x, game->player->y, 10, game->img);
 }
 
+void	clear(t_game *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < WIN_WIDTH)
+	{
+		j = 0;
+		while (j < WIN_HEIGHT)
+		{
+			pixel_put(game->img, i, j, 0x000000);
+			j++;
+		}
+		i++;
+	}
+}
+
+bool	touch(float px, float py, char map[10][8])
+{
+	int	x;
+	int	y;
+
+	(void)map;
+	x = px / BLOCK;
+	y = py / BLOCK;
+	if (map[x][y] == '1')
+		return (true);
+	if (px >= WIN_WIDTH || px <= 0 || py >= WIN_HEIGHT || py <= 0)
+		return (true);
+	return (false);
+}
+
 int	render(t_game *game)
 {
-	move_player(game->player);
+	t_player	*player;
+	double		ray_x;
+	double		ray_y;
+
+	player = game->player;
+	ray_x = player->x;
+	ray_y = player->y;
+	move_player(player);
+	clear(game);
 	draw_player(game);
+	draw_map(map, game->img);
+	while (!touch(ray_x, ray_y, map))
+	{
+		pixel_put(game->img, ray_x, ray_y, 0xFF0000);
+		ray_x += sin(player->angle);
+		ray_y += cos(player->angle);
+	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->mlx_img, 0,
 		0);
 	return (0);
@@ -110,12 +158,9 @@ int	main(int ac, char **av)
 	(void)ac, (void)av;
 	game = malloc(sizeof(t_game));
 	init(game);
-	draw_player(game);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->mlx_img, 0,
-		0);
 	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);
 	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, game);
-	// mlx_loop_hook(game->mlx_ptr, render, game);
+	mlx_loop_hook(game->mlx_ptr, render, game);
 	mlx_loop(game->mlx_ptr);
 }

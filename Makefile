@@ -6,7 +6,7 @@ OBJ_DIR = obj/
 
 INCLUDE = 	-I ./include -Imlx 
 CFLAGS = -Wall -Wextra -Werror
-MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
+MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
 
 MLX_DIR = ./mlx
 MLX_LIB = $(MLX_DIR)/libmlx_Linux.a

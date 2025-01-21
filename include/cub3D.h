@@ -35,10 +35,14 @@ typedef struct s_player
 {
 	float		x;
 	float		y;
+	double		angle;
+
 	bool		key_up;
 	bool		key_right;
 	bool		key_down;
 	bool		key_left;
+	bool		rotate_l;
+	bool		rotate_r;
 }				t_player;
 
 typedef struct s_game
@@ -60,10 +64,15 @@ void			move_player(t_player *player);
 
 # define WIN_WIDTH 960
 # define WIN_HEIGHT 540
-# define KEY_LEFT 97
-# define KEY_UP 119
-# define KEY_RIGHT 100
-# define KEY_DOWN 115
+# define BLOCK 32
+
+# define W 119
+# define A 97
+# define S 115
+# define D 100
 # define KEY_ESC 65307
+# define LEFT 65361
+# define RIGHT 65363
+# define PI 3.14159
 
 #endif

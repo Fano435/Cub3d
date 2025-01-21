@@ -28,14 +28,20 @@ int	close_game(t_game *game)
 
 int	key_press(int keysym, t_player *player)
 {
-	if (keysym == KEY_UP)
+	if (keysym == W)
 		player->key_up = true;
-	else if (keysym == KEY_RIGHT)
+	else if (keysym == D)
 		player->key_right = true;
-	else if (keysym == KEY_DOWN)
+	else if (keysym == S)
 		player->key_down = true;
-	else if (keysym == KEY_LEFT)
+	else if (keysym == A)
 		player->key_left = true;
+	else if (keysym == A)
+		player->key_left = true;
+	else if (keysym == LEFT)
+		player->rotate_l = true;
+	else if (keysym == RIGHT)
+		player->rotate_r = true;
 	return (0);
 }
 
@@ -44,14 +50,18 @@ int	key_release(int keysym, t_game *game)
 	t_player	*player;
 
 	player = game->player;
-	if (keysym == KEY_UP)
+	if (keysym == W)
 		player->key_up = false;
-	else if (keysym == KEY_RIGHT)
+	else if (keysym == D)
 		player->key_right = false;
-	else if (keysym == KEY_DOWN)
+	else if (keysym == S)
 		player->key_down = false;
-	else if (keysym == KEY_LEFT)
+	else if (keysym == A)
 		player->key_left = false;
+	else if (keysym == LEFT)
+		player->rotate_l = false;
+	else if (keysym == RIGHT)
+		player->rotate_r = false;
 	if (keysym == KEY_ESC)
 		close_game(game);
 	return (0);
