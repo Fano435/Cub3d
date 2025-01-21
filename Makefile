@@ -1,5 +1,5 @@
 NAME = cub3D
-FILES = main libft_utils events get_next_line  get_next_line_utils
+FILES = main events get_next_line  get_next_line_utils player
 
 SRC_DIR = src/
 OBJ_DIR = obj/
@@ -19,7 +19,7 @@ OBJF	=	.cache_exits
 $(OBJF):
 	@mkdir -p $(OBJ_DIR)
 
-vpath %.c $(SRC_DIR) $(SRC_DIR)gnl
+vpath %.c $(SRC_DIR) $(SRC_DIR)gnl $(SRC_DIR)raycaster
 
 .PHONY: all clean fclean re
 

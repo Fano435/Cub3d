@@ -18,33 +18,45 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <math.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
 
 typedef struct s_img
 {
-	void	*mlx_img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_len;
-	int		endian;
-}			t_img;
+	void		*mlx_img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_len;
+	int			endian;
+}				t_img;
+
+typedef struct s_player
+{
+	float		x;
+	float		y;
+	bool		key_up;
+	bool		key_right;
+	bool		key_down;
+	bool		key_left;
+}				t_player;
 
 typedef struct s_game
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_img	*img;
-}			t_game;
-
-int			ft_atoi(const char *nptr);
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_img		*img;
+	t_player	*player;
+}				t_game;
 
 // events.c
-int			close_game(t_game *game);
-int			handle_keys(int keysym, t_game *game);
+int				close_game(t_game *game);
+int				key_press(int keysym, t_player *player);
+int				key_release(int keysym, t_game *game);
 
-// check_argument.c
-void		check_argument(int argc, char *argv[], t_game *game);
+// player.c
+void			init_player(t_player *player);
+void			move_player(t_player *player);
 
 # define WIN_WIDTH 960
 # define WIN_HEIGHT 540

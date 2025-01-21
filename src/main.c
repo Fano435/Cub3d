@@ -14,71 +14,108 @@
 
 void	init(t_game *game)
 {
-	void	*mlx;
 	void	*win;
 
-	mlx = mlx_init();
-	game->mlx_ptr = mlx;
+	game->img = malloc(sizeof(t_img));
+	game->player = malloc(sizeof(t_player));
+	init_player(game->player);
+	game->mlx_ptr = mlx_init();
 	win = mlx_new_window(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
 	game->win_ptr = win;
+	game->img->mlx_img = mlx_new_image(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	game->img->addr = mlx_get_data_addr(game->img->mlx_img,
+			&game->img->bits_per_pixel, &game->img->line_len,
+			&game->img->endian);
 }
 
 int	rgb_to_int(int r, int g, int b)
 {
-	// return ((256 * 256 * r) + (256 * g) + (b));
 	return ((r << 16) | (g << 8) | (b));
 }
 
-void	img_pixel_put(t_img *img, int x, int y, int color)
+void	pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*pixel;
 	int		offset;
 
+	if (x >= WIN_WIDTH || x < 0 || y >= WIN_HEIGHT || y < 0)
+		return ;
 	offset = (y * img->line_len + x * (img->bits_per_pixel / 8));
 	pixel = img->addr + offset;
 	*(int *)pixel = color;
 }
 
-// Juste pour tester le fonctionnement de mlx_pixel_put()
-void	draw_test(t_img *img)
+void	draw_square(int x, int y, int size, t_img *img)
 {
 	int	i;
 	int	j;
 
-	i = 0;
-	while (i < 960)
+	i = -1;
+	j = -1;
+	while (j++ < size)
 	{
-		j = 0;
-		while (j < 135)
-		{
-			img_pixel_put(img, i, j, 0xFF0000);
-			j++;
-		}
-		i++;
+		pixel_put(img, x + j, y, 0xFFFFFF);
+		pixel_put(img, x, y + j, 0xFFFFFF);
 	}
+	while (i++ < size)
+	{
+		pixel_put(img, x + i, y + j, 0xFFFFFF);
+		pixel_put(img, x + j, y + i, 0xFFFFFF);
+	}
+}
+
+char	map[5][5] = {{'1', '1', '1', '1', '1'}, {'1', '0', '1', '0', '1'}, {'1',
+		'0', '0', '0', '1'}, {'1', '0', '0', '0', '1'}, {'1', '1', '1', '1',
+		'1'}};
+
+void	draw_map(char map[5][5], t_img *img)
+{
+	int	x;
+	int	y;
+	int	size;
+
+	size = 64;
+	x = 0;
+	while (x < 5)
+	{
+		y = 0;
+		while (y < 5)
+		{
+			if (map[x][y] == '1')
+				draw_square((x * size), (y * size), size, img);
+			y++;
+		}
+		x++;
+	}
+}
+
+void	draw_player(t_game *game)
+{
+	draw_square(game->player->x, game->player->y, 10, game->img);
+}
+
+int	render(t_game *game)
+{
+	move_player(game->player);
+	draw_player(game);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->mlx_img, 0,
+		0);
+	return (0);
 }
 
 int	main(int ac, char **av)
 {
 	t_game	*game;
-	t_img	img;
 
-	// if (ac == 4)
-	// {
-	// 	printf("%d\n", rgb_to_int(ft_atoi(av[1]), ft_atoi(av[2]),
-	// 			ft_atoi(av[3])));
-	// 	return (1);
-	// }
 	(void)ac, (void)av;
 	game = malloc(sizeof(t_game));
 	init(game);
-	img.mlx_img = mlx_new_image(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
-	game->img = &img;
-	img.addr = mlx_get_data_addr(img.mlx_img, &img.bits_per_pixel,
-			&img.line_len, &img.endian);
-	draw_test(&img);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, img.mlx_img, 0, 0);
-	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, handle_keys, game);
+	draw_player(game);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->mlx_img, 0,
+		0);
 	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
+	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);
+	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, game);
+	// mlx_loop_hook(game->mlx_ptr, render, game);
 	mlx_loop(game->mlx_ptr);
 }
