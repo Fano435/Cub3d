@@ -1,12 +1,24 @@
 NAME = cub3D
+
+red             = /bin/echo -e "\x1b[31m\#\# $1\x1b[0m"
+green           = /bin/echo -e "\x1b[32m\#\# $1\x1b[0m"
+yellow          = /bin/echo -e "\x1b[33m\#\# $1\x1b[0m"
+blue            = /bin/echo -e "\x1b[34m\#\# $1\x1b[0m"
+purple          = /bin/echo -e "\x1b[35m\#\# $1\x1b[0m"
+
 FILES = main events get_next_line  get_next_line_utils player
+
+LIBFT = libft/libft.a
+LIBFT_DIR = libft
 
 SRC_DIR = src/
 OBJ_DIR = obj/
 
 INCLUDE = 	-I ./include -Imlx 
-CFLAGS = -Wall -Wextra -Werror
-MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
+CC = cc
+CFLAGS = -Wall -Wextra -Werror $(DEBUG)
+DEBUG = -g3 
+MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 
 MLX_DIR = ./mlx
 MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
@@ -19,31 +31,44 @@ OBJF	=	.cache_exits
 $(OBJF):
 	@mkdir -p $(OBJ_DIR)
 
+# ---------------------------------- RULES ----------------------------------- #
+
+all:  $(NAME) $(LIBFT)
+
+$(NAME): $(OBJS) $(MLX_LIB) $(LIBFT)
+	@$(CC) $(CFLAGS) $(MLX_LIB) $(LIBFT) $(OBJS) $(MLX_FLAGS) $(INCLUDE) -o $@
+	@$(call blue,"✅ $@ build successful!")
+ 
+$(OBJ_DIR)%.o : %.c Makefile | $(OBJF)
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@$(call blue,"✅ $< compiled!")
+
+
+$(LIBFT):
+	@$(MAKE) -sC $(LIBFT_DIR) --no-print-directory
+	@$(call blue,"✅ $@ compiled!")
+
+$(MLX_LIB):
+	@make -C $(MLX_DIR) --no-print-directory
+clean:
+	@rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJF)
+	@$(call blue,"🗑️  $(NAME) cleaned")
+
+fclean: 
+	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
+	@make clean
+	@rm -f $(NAME)
+	@make clean -C $(MLX_DIR) --no-print-directory
+	@$(call blue,"🗑️  $(NAME) fcleaned")
+
+re:
+	@make fclean 
+	@make all
+	@$(call blue,"🗑️  $(NAME) fcleaned")
+
+
 vpath %.c $(SRC_DIR) $(SRC_DIR)gnl $(SRC_DIR)raycaster
 
 .PHONY: all clean fclean re
 
-all:  $(NAME)
-
-$(NAME): $(OBJS) $(MLX_LIB)
-	cc $(CFLAGS) $(MLX_LIB) $(OBJS) $(MLX_FLAGS) $(INCLUDE) -o $@
- 
-$(OBJ_DIR)%.o : %.c Makefile | $(OBJF)
-	cc $(CFLAGS) $(INCLUDE) -c $< -o $@
-
-
-$(MLX_LIB):
-	make -C $(MLX_DIR)
-
-clean:
-	@rm -rf $(OBJ_DIR)
-	@rm -rf $(OBJF)
-	
-fclean: 
-	make clean
-	rm -f $(NAME)
-	@make clean -C $(MLX_DIR)
-
-re:
-	make fclean 
-	make all
