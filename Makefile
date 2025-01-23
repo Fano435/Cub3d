@@ -6,7 +6,7 @@ yellow          = /bin/echo -e "\x1b[33m\#\# $1\x1b[0m"
 blue            = /bin/echo -e "\x1b[34m\#\# $1\x1b[0m"
 purple          = /bin/echo -e "\x1b[35m\#\# $1\x1b[0m"
 
-FILES = main events get_next_line  get_next_line_utils player
+FILES = main events get_next_line get_next_line_utils player init
 
 LIBFT = libft/libft.a
 LIBFT_DIR = libft
@@ -18,7 +18,7 @@ INCLUDE = 	-I ./include -Imlx
 CC = cc
 CFLAGS = -Wall -Wextra -Werror $(DEBUG)
 DEBUG = -g3 
-MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
+MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
 
 MLX_DIR = ./mlx
 MLX_LIB = $(MLX_DIR)/libmlx_Linux.a

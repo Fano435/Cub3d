@@ -68,7 +68,7 @@ char	map[10][8] = {{'1', '1', '1', '1', '1', '1', '1', '1'}, {'1', '0', '1',
 		'0', '0', '0', '0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'},
 		{'1', '0', '0', '0', '0', '1', '0', '1'}, {'1', '0', '0', '0', '0', '1',
 		'0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'}, {'1', '0', '0',
-		'1', '0', '0', '0', '1'}, {'1', '1', '1', '1', '1', '1', '1', '1'}};
+		'0', '0', '0', '0', '1'}, {'1', '1', '1', '1', '1', '1', '1', '1'}};
 
 void	draw_map(char map[10][8], t_img *img)
 {
@@ -87,11 +87,6 @@ void	draw_map(char map[10][8], t_img *img)
 		}
 		x++;
 	}
-}
-
-void	draw_player(t_game *game)
-{
-	draw_square(game->player->x, game->player->y, 10, game->img);
 }
 
 void	clear(t_game *game)
@@ -117,35 +112,127 @@ bool	touch(float px, float py, char map[10][8])
 	int	x;
 	int	y;
 
-	(void)map;
 	x = px / BLOCK;
 	y = py / BLOCK;
-	if (map[x][y] == '1')
-		return (true);
 	if (px >= WIN_WIDTH || px <= 0 || py >= WIN_HEIGHT || py <= 0)
 		return (true);
+	if (map[x][y] == '1')
+		return (true);
 	return (false);
+}
+
+void	draw_ray(t_game *game, double angle)
+{
+	double		ray_x;
+	double		ray_y;
+	t_player	*player;
+
+	player = game->player;
+	ray_x = player->pos_x;
+	ray_y = player->pos_y;
+	while (!touch(ray_x, ray_y, map))
+	{
+		pixel_put(game->img, ray_x, ray_y, 0xFF0000);
+		ray_x += cos(angle);
+		ray_y += sin(angle);
+	}
+}
+
+void	raycasting(t_game *game)
+{
+	t_player	*player;
+	t_ray		ray;
+	double		dirX;
+	double		dirY;
+	int			i;
+	double		cameraX;
+	int			mapX;
+	int			mapY;
+	double		rayDirX;
+	double		rayDirY;
+	double		halfPlaneWidth;
+	int			stepX;
+	int			stepY;
+
+	init_ray(&ray);
+	game->ray = ray;
+	halfPlaneWidth = tan(FOV * PI / 360.0);
+	player = game->player;
+	double sideDistX, sideDistY;
+	double deltaDistX, deltaDistY;
+	double planeX, planeY;
+	dirY = 0;
+	dirX = -1;
+	i = 0;
+	mapX = (int)player->pos_x;
+	mapY = (int)player->pos_y;
+	// printf("X : %f\nY : %f\n", player->pos_x, player->pos_y);
+	// printf("posX : %d\nposY : %d\n", mapX, mapY);
+	planeX = -player->dir_y * halfPlaneWidth;
+	planeY = player->dir_x * halfPlaneWidth;
+	while (i < WIN_WIDTH)
+	{
+		cameraX = 2 * i / (double)WIN_WIDTH - 1;
+		rayDirX = player->dir_x + planeX * cameraX;
+		rayDirY = player->dir_y + planeY * cameraX;
+		// printf("dirX : %f\ndirY : %f\n", rayDirX, rayDirY);
+		if (rayDirX != 0 && rayDirY != 0)
+		{
+			deltaDistX = fabs(1 / rayDirX);
+			deltaDistY = fabs(1 / rayDirY);
+		}
+		if (rayDirX < 0)
+		{
+			stepX = -1;
+			sideDistX = (player->pos_x - mapX) * deltaDistX;
+		}
+		else
+		{
+			stepX = 1;
+			sideDistX = (mapX + 1.0 - player->pos_x) * deltaDistX;
+		}
+		if (rayDirY < 0)
+		{
+			stepY = -1;
+			sideDistY = (player->pos_y - mapY) * deltaDistY;
+		}
+		else
+		{
+			stepY = 1;
+			sideDistY = (mapY + 1.0 - player->pos_y) * deltaDistY;
+		}
+		while (!touch(mapX, mapY, map))
+		{
+			if (sideDistX < sideDistY)
+			{
+				sideDistX += deltaDistX;
+				mapX += stepX;
+				ray.side = X;
+			}
+			else
+			{
+				sideDistY += deltaDistY;
+				mapY += stepY;
+				ray.side = Y;
+			}
+		}
+		printf("distX : %f\ndistY : %f\n", sideDistX - deltaDistX, sideDistY
+			- deltaDistY);
+		i++;
+	}
 }
 
 int	render(t_game *game)
 {
 	t_player	*player;
-	double		ray_x;
-	double		ray_y;
 
 	player = game->player;
-	ray_x = player->x;
-	ray_y = player->y;
-	move_player(player);
+	rotate_player(player);
 	clear(game);
-	draw_player(game);
+	draw_square(game->player->pos_x, game->player->pos_y, 10, game->img);
 	draw_map(map, game->img);
-	while (!touch(ray_x, ray_y, map))
-	{
-		pixel_put(game->img, ray_x, ray_y, 0xFF0000);
-		ray_x += sin(player->angle);
-		ray_y += cos(player->angle);
-	}
+	draw_ray(game, player->angle);
+	raycasting(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->mlx_img, 0,
 		0);
 	return (0);

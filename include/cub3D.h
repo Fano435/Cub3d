@@ -33,8 +33,12 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	float		x;
-	float		y;
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	double		planeX;
+	double		planeY;
 	double		angle;
 
 	bool		key_up;
@@ -45,12 +49,33 @@ typedef struct s_player
 	bool		rotate_r;
 }				t_player;
 
+typedef struct s_ray
+{
+	double		camera_x;
+	double		dir_x;
+	double		dir_y;
+	int			map_x;
+	int			map_y;
+	int			step_x;
+	int			step_y;
+	double		sidedist_x;
+	double		sidedist_y;
+	double		deltadist_x;
+	double		deltadist_y;
+	int			wall_dist;
+	int			side;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+}				t_ray;
+
 typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		*img;
 	t_player	*player;
+	t_ray		ray;
 }				t_game;
 
 // events.c
@@ -58,14 +83,20 @@ int				close_game(t_game *game);
 int				key_press(int keysym, t_player *player);
 int				key_release(int keysym, t_game *game);
 
-// player.c
+// init.c
 void			init_player(t_player *player);
-void			move_player(t_player *player);
+void			init_ray(t_ray *ray);
+
+// player.c
+void			rotate_player(t_player *player);
 
 # define WIN_WIDTH 960
 # define WIN_HEIGHT 540
-# define BLOCK 32
+# define BLOCK 64
+# define FOV 60
 
+# define X 0
+# define Y 1
 # define W 119
 # define A 97
 # define S 115
