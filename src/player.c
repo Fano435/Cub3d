@@ -14,46 +14,46 @@
 
 void	rotate_player(t_player *player)
 {
-	int		speed;
+	double	speed;
 	float	angle_speed;
 
-	speed = 1;
-	angle_speed = 0.05;
+	speed = 0.01;
+	angle_speed = 0.01;
 	if (player->rotate_l)
 	{
 		player->angle -= angle_speed;
 		if (player->angle < 0)
-			player->angle = 2 * PI;
+			player->angle = 2 * M_PI;
 	}
 	if (player->rotate_r)
 	{
 		player->angle += angle_speed;
-		if (player->angle > 2 * PI)
+		if (player->angle > 2 * M_PI)
 			player->angle = 0;
 	}
 	player->dir_x = cos(player->angle);
 	player->dir_y = sin(player->angle);
-	// if (player->key_up)
-	// {
-	// 	player->pos_x += cos(player->angle) * speed;
-	// 	player->pos_y += sin(player->angle) * speed;
-	// }
-	// if (player->key_down)
-	// {
-	// 	player->pos_x -= cos(player->angle) * speed;
-	// 	player->pos_y -= sin(player->angle) * speed;
-	// }
-	// if (player->key_right)
-	// {
-	// 	player->pos_x -= sin(player->angle) * speed;
-	// 	player->pos_y += cos(player->angle) * speed;
-	// }
-	// if (player->key_left)
-	// {
-	// 	player->pos_x += sin(player->angle) * speed;
-	// 	player->pos_y -= cos(player->angle) * speed;
-	// }
+	if (player->key_up)
+	{
+		player->pos_x += cos(player->angle) * speed;
+		player->pos_y += sin(player->angle) * speed;
+	}
+	if (player->key_down)
+	{
+		player->pos_x -= cos(player->angle) * speed;
+		player->pos_y -= sin(player->angle) * speed;
+	}
+	if (player->key_right)
+	{
+		player->pos_x -= sin(player->angle) * speed;
+		player->pos_y += cos(player->angle) * speed;
+	}
+	if (player->key_left)
+	{
+		player->pos_x += sin(player->angle) * speed;
+		player->pos_y -= cos(player->angle) * speed;
+	}
 	// printf("Angle : %f\nCos : %f\nSin : %f\n", player->angle,
 	// 	cos(player->angle), sin(player->angle));
-	// printf("PosX : %f\nPosY : %f\n", player->pos_x, player->pos_x);
+	// printf("PosX : %f\nPosY : %f\n", player->pos_x, player->pos_y);
 }

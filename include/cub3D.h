@@ -37,9 +37,10 @@ typedef struct s_player
 	double		pos_y;
 	double		dir_x;
 	double		dir_y;
-	double		planeX;
-	double		planeY;
+	double		plane_x;
+	double		plane_y;
 	double		angle;
+	int			fov;
 
 	bool		key_up;
 	bool		key_right;
@@ -51,22 +52,14 @@ typedef struct s_player
 
 typedef struct s_ray
 {
-	double		camera_x;
-	double		dir_x;
-	double		dir_y;
+	double		angle;
 	int			map_x;
 	int			map_y;
-	int			step_x;
-	int			step_y;
-	double		sidedist_x;
-	double		sidedist_y;
-	double		deltadist_x;
-	double		deltadist_y;
-	int			wall_dist;
-	int			side;
+	double		wall_dist;
 	int			line_height;
 	int			draw_start;
 	int			draw_end;
+	int			side;
 }				t_ray;
 
 typedef struct s_game
@@ -75,24 +68,30 @@ typedef struct s_game
 	void		*win_ptr;
 	t_img		*img;
 	t_player	*player;
-	t_ray		ray;
+	t_ray		*ray;
 }				t_game;
 
+void			render_wall(t_game *game, t_ray *ray, int pos);
+bool			touch(int x, int y);
 // events.c
 int				close_game(t_game *game);
 int				key_press(int keysym, t_player *player);
 int				key_release(int keysym, t_game *game);
 
 // init.c
+void			init(t_game *game);
 void			init_player(t_player *player);
 void			init_ray(t_ray *ray);
 
 // player.c
 void			rotate_player(t_player *player);
 
+// raycasting.c
+void			cast_rays(t_game *game);
+
 # define WIN_WIDTH 960
 # define WIN_HEIGHT 540
-# define BLOCK 64
+# define BLOCK 48
 # define FOV 60
 
 # define X 0
@@ -104,6 +103,5 @@ void			rotate_player(t_player *player);
 # define KEY_ESC 65307
 # define LEFT 65361
 # define RIGHT 65363
-# define PI 3.14159
 
 #endif
