@@ -73,6 +73,7 @@ typedef struct s_game
 
 void			render_wall(t_game *game, t_ray *ray, int pos);
 bool			touch(int x, int y);
+void			pixel_put(t_img *img, int x, int y, int color);
 // events.c
 int				close_game(t_game *game);
 int				key_press(int keysym, t_player *player);

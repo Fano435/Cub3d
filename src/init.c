@@ -31,7 +31,7 @@ void	init(t_game *game)
 
 void	init_player(t_player *player)
 {
-	player->fov = 60;
+	player->fov = (60 * M_PI) / 180;
 	player->pos_x = 2;
 	player->pos_y = 7;
 	player->dir_x = 0;
@@ -49,9 +49,6 @@ void	init_player(t_player *player)
 
 void	init_ray(t_ray *ray)
 {
-	// ray->angle = 0;
-	// ray->map_x = 0;
-	// ray->map_y = 0;
 	ray->wall_dist = 0;
 	ray->line_height = 0;
 	ray->draw_start = 0;
