@@ -72,6 +72,7 @@ typedef struct s_game
 }				t_game;
 
 void			render_wall(t_game *game, t_ray *ray, int pos);
+void			render_floor_ceiling(t_game *game, t_ray *ray, int pos);
 bool			touch(int x, int y);
 void			pixel_put(t_img *img, int x, int y, int color);
 // events.c

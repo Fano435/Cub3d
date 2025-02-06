@@ -113,7 +113,7 @@ int	render(t_game *game)
 	clear(game);
 	pixel_put(game->img, player->pos_x * BLOCK, player->pos_y * BLOCK,
 		0xFFFF00);
-	draw_map(map, game->img);
+	// draw_map(map, game->img);
 	cast_rays(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->mlx_img, 0,
 		0);
