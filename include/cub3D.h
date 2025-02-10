@@ -86,6 +86,7 @@ typedef struct s_game
 	t_ray		*ray;
 }				t_game;
 
+// render.c
 void			render_wall(t_game *game, t_ray *ray, int pos);
 void			render_floor_ceiling(t_game *game, t_ray *ray, int pos);
 bool			touch(int x, int y);
@@ -108,10 +109,9 @@ void			rotate_player(t_player *player);
 void			cast_rays(t_game *game);
 
 // parsing.c
-int     parsing(int argc, char **argv);
-int		parse_texture(char *line, int *done, int *id);
-int		arg_parsing(int argc, char **argv);
-
+int     		parsing(int argc, char **argv);
+int				parse_texture(char *line, int *done, int *id);
+int				arg_parsing(int argc, char **argv);
 
 // parsing_utils.c
 int				is_texture(char *line, int *id);
@@ -126,6 +126,7 @@ int				is_color(char *line, int *id);
 int				get_color(char *line, int pos, int first_nb);
 int				parse_color(char *line, int *done, int *id);
 
+// parsing_map.c
 
 # define WIN_WIDTH 960
 # define WIN_HEIGHT 540

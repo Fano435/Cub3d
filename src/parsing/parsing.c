@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/10 18:02:58 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:41:45 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,17 @@ int     parsing(int argc, char **argv)
     while (1)
     {
         line = get_next_line(fd_config);
-        if (!line) //A REMPLACER PAR UNE AUTRE VERIF QUE TOUT EST FAIT
-        {
-            if (done != 7)
-                error_msg(4);
+        if (!line)
             break;
-        }//////////////////FIN ICI
         dprintf(STDOUT_FILENO, "line is: %s", line);
         if (is_texture(line, &id) && parse_texture(line, &done, &id))
             return (-1);
         if (is_color(line, &id) && parse_color(line, &done, &id))
             return (-1);
-        // if (is_map(line, &done) && parse_map(line, done))
-            // return (-1);
         free(line);
     }
+    if (parse_map(done, fd_config))
+            return (-1);
     close(fd_config);
     return (0);
 }

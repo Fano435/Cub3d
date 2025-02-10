@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/10 18:11:20 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:15:37 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ int parse_color(char *line, int *done, int *id)
     converted_color = (red << 16 | green << 8 | blue);
     dprintf(STDERR_FILENO, "converted color is %d\n", converted_color);
     //RESTE A ADD DANS LA BONNE STRUCTURE AU BON ENDROIT
+    done++;
     return (0);
 }

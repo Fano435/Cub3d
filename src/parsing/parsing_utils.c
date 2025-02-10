@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/10 17:55:58 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:36:47 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int error_msg(int error_code)
     else if (error_code == 3)
         msg = "Texture needs to be given in this format: identifier ./file\n";
     else if (error_code == 4)
-        msg = "Configuration file needs to include 4 texture, 2 color and\
-                 1 map description\n";
+        msg = "Configuration file needs to include FIRST 4 textures and 2 color and\
+                 THEN 1 map description\n";
     else if (error_code == 5)
         msg = "Texture file cannot be opened\n";
     else if (error_code == 6)
