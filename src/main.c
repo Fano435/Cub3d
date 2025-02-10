@@ -3,22 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrasamim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:36:24 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/01/16 17:36:25 by jrasamim         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:40:17 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-char	map[10][8] = {{'1', '1', '1', '1', '1', '1', '1', '1'}, {'1', '0', '1',
-		'0', '0', '0', '0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '1', '0', '1'}, {'1', '0', '0', '0', '0', '1',
-		'0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'}, {'1', '0', '0',
-		'0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '1', '0', '0', '1'},
-		{'1', '0', '0', '1', '0', '0', '0', '1'}, {'1', '1', '1', '1', '1', '1',
-		'1', '1'}};
+/*SWITCH WITH MAP GIVEN IN CONFIGUATION FILE*/
+char	map[10][8] = {
+	{'1', '1', '1', '1', '1', '1', '1', '1'}, 
+	{'1', '0', '1', '0', '0', '0', '0', '1'},
+	{'1', '0', '1', '0', '0', '0', '0', '1'},
+	{'1', '0', '0', '0', '0', '1', '0', '1'},
+	{'1', '0', '0', '0', '0', '1', '0', '1'},
+	{'1', '0', '1', '0', '0', '0', '0', '1'},
+	{'1', '0', '0', '0', '0', '0', '0', '1'},
+	{'1', '0', '0', '0', '1', '0', '0', '1'},
+	{'1', '0', '0', '1', '0', '0', '0', '1'},
+	{'1', '1', '1', '1', '1', '1', '1', '1'}};
+/////////////////////////////////////////////
 
 bool	touch(int x, int y)
 {
@@ -46,6 +52,7 @@ void	pixel_put(t_img *img, int x, int y, int color)
 	*(int *)pixel = color;
 }
 
+//DISPLAY OF EACH WALL //DEPEND ON TEXTUE ???
 void	draw_square(int x, int y, int size, t_img *img)
 {
 	int	i;
@@ -66,7 +73,7 @@ void	draw_square(int x, int y, int size, t_img *img)
 		pixel_put(img, x + j, y + i, 0xFFFFFF);
 	}
 }
-
+//DISPLAY OF MAP // WBU TEXTUE ??
 void	draw_map(char map[10][8], t_img *img)
 {
 	int	x;
@@ -113,7 +120,7 @@ int	render(t_game *game)
 	clear(game);
 	pixel_put(game->img, player->pos_x * BLOCK, player->pos_y * BLOCK,
 		0xFFFF00);
-	// draw_map(map, game->img);
+	draw_map(map, game->img);
 	cast_rays(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->mlx_img, 0,
 		0);
@@ -124,7 +131,13 @@ int	main(int ac, char **av)
 {
 	t_game	*game;
 
-	(void)ac, (void)av;
+	if (parsing(ac, av))
+		return (-1);
+	else
+	{
+		dprintf(STDERR_FILENO, "END OF PARSING\n");
+		return (0);
+	}
 	game = malloc(sizeof(t_game));
 	init(game);
 	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
@@ -132,4 +145,5 @@ int	main(int ac, char **av)
 	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, game);
 	mlx_loop_hook(game->mlx_ptr, render, game);
 	mlx_loop(game->mlx_ptr);
+	return (0);
 }
