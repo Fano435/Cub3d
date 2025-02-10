@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/10 14:41:36 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:55:58 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,15 @@ int error_msg(int error_code)
     else if (error_code == 3)
         msg = "Texture needs to be given in this format: identifier ./file\n";
     else if (error_code == 4)
-        msg = "Configuration file needs to include 4 texture, 2 color and 1 map description\n";
+        msg = "Configuration file needs to include 4 texture, 2 color and\
+                 1 map description\n";
     else if (error_code == 5)
         msg = "Texture file cannot be opened\n";
     else if (error_code == 6)
         msg = "Malloc issue\n";
+    else if (error_code == 7)
+        msg = "Colors needs to respect this format: identifier R, G, B with\
+                 R, G and B between 0 and 255\n";
     write(STDERR_FILENO, msg, ft_strlen(msg));
     return (-1);
 }
@@ -51,21 +55,18 @@ int is_texture(char *line, int *id)
     return (id);
 }
 
-/*Return the id corresponding to the color (floor or ceilling))*/
-int is_color(char *line, int *id)
-{
-    id = 0;
-    if (!ft_strncmp(line, "F", ft_strlen("F")))
-        id = F;
-    else if (!ft_strncmp(line, "C", ft_strlen("C")))
-        id = C;
-    return (id);
-}
-
 /*Check is char is a space*/
 int is_space(char *c)
 {
     if (c >= 9 && c <= 13 || c == 32)
+        return (1);
+    return (0);
+}
+
+/*Check is char is a space*/
+int is_digit(char *c)
+{
+    if (c >= '0' && c <= '9')
         return (1);
     return (0);
 }
@@ -77,7 +78,7 @@ int get_texture_file(char **texture_file, char *line, int pos)
     int     len;
 
     len = 0;
-    while (!is_space(line[pos + len]))
+    while (line[pos + len] && !is_space(line[pos + len]))
         len++;
     *texture_file = (char *)malloc(sizeof(char) * (len + 1));
     if (*texture_file)

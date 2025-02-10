@@ -75,7 +75,13 @@ typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_img		*img;
+	t_img		*img; //a virer une fois toutes les textures parse
+	t_img		*north_text;
+	t_img		*south_text;
+	t_img		*east_text;
+	t_img		*west_text;
+	int			floor_color;
+	int			ceiling_color;
 	t_player	*player;
 	t_ray		*ray;
 }				t_game;
@@ -84,6 +90,7 @@ void			render_wall(t_game *game, t_ray *ray, int pos);
 void			render_floor_ceiling(t_game *game, t_ray *ray, int pos);
 bool			touch(int x, int y);
 void			pixel_put(t_img *img, int x, int y, int color);
+
 // events.c
 int				close_game(t_game *game);
 int				key_press(int keysym, t_player *player);
@@ -100,14 +107,24 @@ void			rotate_player(t_player *player);
 // raycasting.c
 void			cast_rays(t_game *game);
 
-//parsing.c
+// parsing.c
+int     parsing(int argc, char **argv);
+int		parse_texture(char *line, int *done, int *id);
+int		arg_parsing(int argc, char **argv);
 
 
-//parsing_utils.c
-int				is_color(char *line, int *id);
+// parsing_utils.c
 int				is_texture(char *line, int *id);
 int				error_msg(int error_code);
+int				get_texture_file(char **texture_file,
+					char *line, int pos);
+int				is_space(char *c);
+int				is_digit(char *c);
 
+//parsing_color.c
+int				is_color(char *line, int *id);
+int				get_color(char *line, int pos, int first_nb);
+int				parse_color(char *line, int *done, int *id);
 
 
 # define WIN_WIDTH 960
