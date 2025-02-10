@@ -22,6 +22,15 @@
 # include <stdio.h>
 # include <string.h>
 
+enum Direction {
+  NO,
+  SO,
+  WE,
+  EA,
+  C,
+  F
+};
+
 typedef struct s_img
 {
 	void		*mlx_img;
@@ -90,6 +99,16 @@ void			rotate_player(t_player *player);
 
 // raycasting.c
 void			cast_rays(t_game *game);
+
+//parsing.c
+
+
+//parsing_utils.c
+int				is_color(char *line, int *id);
+int				is_texture(char *line, int *id);
+int				error_msg(int error_code);
+
+
 
 # define WIN_WIDTH 960
 # define WIN_HEIGHT 540

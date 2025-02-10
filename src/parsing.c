@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/10 14:26:41 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:42:29 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int arg_parsing(int argc, char **argv)
     return (fd_config);
 }
 
+/*Check the texture line for errors & opens it + put the fd in the struct*/
 int parse_texture(char *line, int *done, int *id)
 {
     int     pos;
@@ -43,11 +44,14 @@ int parse_texture(char *line, int *done, int *id)
         pos++;
     if (!(line[pos] == '.' && line[pos + 1] == '/'))
         return (error_msg(3));
-    texture_file = get_texture_file();
+    if (get_texture_file(&texture_file, line, pos))
+        return (-1);
+    dprintf(STDERR_FILENO, "texture file is %s", texture_file);
     fd_texture = open(texture_file, O_RDONLY);
     free(texture_file);
     if (fd_texture == -1)
         return (error_msg(5));
+    *done++;
     return (0);
 }
 
@@ -71,13 +75,13 @@ int     parsing(int argc, char **argv)
                 error_msg(4);
             break;
         }
-        dprintf(STDOUT_FILENO, "%s", line);
+        dprintf(STDOUT_FILENO, "line is: %s", line);
         if (is_texture(line, &id) && parse_texture(line, &done, &id))
             return (-1);
-        if (is_color(line) && parse_color(line, &done))
-            return (-1);
-        if (is_map(line, &done) && parse_map(line, done))
-            return (-1);
+        // if (is_color(line, &id) && parse_color(line, &done))
+        //     return (-1);
+        // if (is_map(line, &done) && parse_map(line, done))
+            // return (-1);
         free(line);
     }
     close(fd_config);

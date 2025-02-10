@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/10 14:26:42 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:41:36 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,34 @@ int is_color(char *line, int *id)
     else if (!ft_strncmp(line, "C", ft_strlen("C")))
         id = C;
     return (id);
+}
+
+/*Check is char is a space*/
+int is_space(char *c)
+{
+    if (c >= 9 && c <= 13 || c == 32)
+        return (1);
+    return (0);
+}
+
+/*Get the texture file*/
+int get_texture_file(char **texture_file, char *line, int pos)
+{
+    char    *texture_file;
+    int     len;
+
+    len = 0;
+    while (!is_space(line[pos + len]))
+        len++;
+    *texture_file = (char *)malloc(sizeof(char) * (len + 1));
+    if (*texture_file)
+        return (error_msg(6));
+    len = 0;
+    while (line[pos + len])
+    {
+        *texture_file[pos] = line[pos + len];
+        len++;
+    }
+    texture_file[pos] = '\0';
+    return (0);
 }
