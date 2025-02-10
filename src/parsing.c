@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/10 14:42:29 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:57:36 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int arg_parsing(int argc, char **argv)
     return (fd_config);
 }
 
-/*Check the texture line for errors & opens it + put the fd in the struct*/
+/*Check the texture line for errors & try to opens it
++ put the file relative path in the struct*/
 int parse_texture(char *line, int *done, int *id)
 {
     int     pos;
@@ -51,6 +52,7 @@ int parse_texture(char *line, int *done, int *id)
     free(texture_file);
     if (fd_texture == -1)
         return (error_msg(5));
+    close(fd_texture);
     *done++;
     return (0);
 }
