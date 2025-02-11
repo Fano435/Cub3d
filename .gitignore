@@ -1,4 +1,4 @@
-.o
-/libft.o
-.swp
-.tmp
+*.o
+*/libft.o
+*.swp
+*.tmp

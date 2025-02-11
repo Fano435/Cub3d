@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/11 11:23:41 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:47:13 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int is_texture(char *line, int *id)
         *id = WE;
     else if (!my_strncmp(line, "EA", ft_strlen("EA")))
         *id = EA;
-    dprintf(STDERR_FILENO, "at the end of is_texture, identifier is %d\n", *id);
+    // dprintf(STDERR_FILENO, "at the end of is_texture, identifier is %d\n", *id);
     return (*id);
 }
 

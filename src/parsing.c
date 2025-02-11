@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/11 11:15:06 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:43:26 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int     parsing(int argc, char **argv)
         line = get_next_line(fd_config);
         if (!line)
             break;
-        dprintf(STDOUT_FILENO, "line is: %s", line);
+        // dprintf(STDOUT_FILENO, "line is: %s", line);
         if (is_texture(line, &id) && parse_texture(line, &done, &id))
         {
             dprintf(STDERR_FILENO, "Error while parsing textures\n");
@@ -90,8 +90,8 @@ int     parsing(int argc, char **argv)
         }
         free(line);
     }
-    // if (parse_map(done, fd_config))
-    //         return (-1);
+    if (parse_map(argv[1], done, fd_config))
+            return (-1);
     close(fd_config);
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/11 11:34:49 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:47:25 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int is_color(char *line, int *id)
         *id = F;
     else if (!my_strncmp(line, "C", ft_strlen("C")))
         *id = C;
-    dprintf(STDERR_FILENO, "at the end of is_color, identifier is %d\n", *id);
+    // dprintf(STDERR_FILENO, "at the end of is_color, identifier is %d\n", *id);
     return (*id);
 }
 
