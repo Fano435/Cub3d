@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/10 18:15:37 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:41:28 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 /*Return the id corresponding to the color (floor or ceilling))*/
 int is_color(char *line, int *id)
 {
-    id = 0;
-    if (!ft_strncmp(line, "F", ft_strlen("F")))
-        id = F;
-    else if (!ft_strncmp(line, "C", ft_strlen("C")))
-        id = C;
-    return (id);
+    *id = 0;
+    if (!my_strncmp(line, "F", ft_strlen("F")))
+        *id = F;
+    else if (!my_strncmp(line, "C", ft_strlen("C")))
+        *id = C;
+    dprintf(STDERR_FILENO, "at the end of is_color, identifier is %d\n", *id);
+    return (*id);
 }
 
 /*get each R G B in int format*/
@@ -72,6 +73,7 @@ int parse_color(char *line, int *done, int *id)
     converted_color = (red << 16 | green << 8 | blue);
     dprintf(STDERR_FILENO, "converted color is %d\n", converted_color);
     //RESTE A ADD DANS LA BONNE STRUCTURE AU BON ENDROIT
-    done++;
+    (void)id;
+    (*done)++;
     return (0);
 }

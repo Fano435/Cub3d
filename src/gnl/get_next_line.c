@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrasamim <jrasamim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:42:58 by jrasamim          #+#    #+#             */
-/*   Updated: 2024/11/07 14:04:55 by jrasamim         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:30:04 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*fill_stash(int fd, char *stash)
 		stash = ft_calloc(1, 1);
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	bytes_read = 1;
-	while (!ft_strchr(buffer, '\n') && bytes_read > 0)
+	while (!gnl_strchr(buffer, '\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)

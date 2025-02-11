@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/10 18:47:38 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:07:20 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int is_map(char *line)
 
 int parse_map(int *done, int fd_config)
 {
-    char    **map;
+    // char    **map;
     char    *line;
     int     height;
 
-    if (done != 6)
+    if (*done != 6)
         return (error_msg(4));
     height = 0;
     while (1)

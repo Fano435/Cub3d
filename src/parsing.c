@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/10 18:41:45 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:15:06 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int arg_parsing(int argc, char **argv)
 int parse_texture(char *line, int *done, int *id)
 {
     int     pos;
-    int     len;
     char    *texture_file;
     int     fd_texture;
 
@@ -45,14 +44,18 @@ int parse_texture(char *line, int *done, int *id)
     if (!(line[pos] == '.' && line[pos + 1] == '/'))
         return (error_msg(3));
     if (get_texture_file(&texture_file, line, pos))
+    {
+        dprintf(STDERR_FILENO, "get_texture_file error\n");
         return (-1);
-    dprintf(STDERR_FILENO, "texture file is %s", texture_file);
+    }
+    dprintf(STDERR_FILENO, RED "texture file is %s\n" RESET, texture_file);
     fd_texture = open(texture_file, O_RDONLY);
     free(texture_file);
     if (fd_texture == -1)
         return (error_msg(5));
     close(fd_texture);
-    *done++;
+    (*done)++;
+    (void)id;
     //RESTE A ADD DANS LA BONNE STRUCTURE AU BON ENDROIT
     return (0);
 }
@@ -76,13 +79,19 @@ int     parsing(int argc, char **argv)
             break;
         dprintf(STDOUT_FILENO, "line is: %s", line);
         if (is_texture(line, &id) && parse_texture(line, &done, &id))
+        {
+            dprintf(STDERR_FILENO, "Error while parsing textures\n");
             return (-1);
+        }
         if (is_color(line, &id) && parse_color(line, &done, &id))
+        {
+            dprintf(STDERR_FILENO, "Error while parsing colors\n");
             return (-1);
+        }
         free(line);
     }
-    if (parse_map(done, fd_config))
-            return (-1);
+    // if (parse_map(done, fd_config))
+    //         return (-1);
     close(fd_config);
     return (0);
 }

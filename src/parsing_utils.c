@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/10 18:36:47 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:23:41 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,52 +43,42 @@ int error_msg(int error_code)
 /*Return the id corresponding to the texture*/
 int is_texture(char *line, int *id)
 {
-    id = 0;
-    if (!ft_strncmp(line, "NO", ft_strlen("NO")))
-        id = NO;
-    else if (!ft_strncmp(line, "SO", ft_strlen("SO")))
-        id = SO;
-    else if (!ft_strncmp(line, "WE", ft_strlen("WE")))
-        id = WE;
-    else if (!ft_strncmp(line, "EA", ft_strlen("EA")))
-        id = EA;
-    return (id);
-}
-
-/*Check is char is a space*/
-int is_space(char *c)
-{
-    if (c >= 9 && c <= 13 || c == 32)
-        return (1);
-    return (0);
-}
-
-/*Check is char is a space*/
-int is_digit(char *c)
-{
-    if (c >= '0' && c <= '9')
-        return (1);
-    return (0);
+    *id = 0;
+    if (!my_strncmp(line, "NO", ft_strlen("NO")))
+        *id = NO;
+    else if (!my_strncmp(line, "SO", ft_strlen("SO")))
+        *id = SO;
+    else if (!my_strncmp(line, "WE", ft_strlen("WE")))
+        *id = WE;
+    else if (!my_strncmp(line, "EA", ft_strlen("EA")))
+        *id = EA;
+    dprintf(STDERR_FILENO, "at the end of is_texture, identifier is %d\n", *id);
+    return (*id);
 }
 
 /*Get the texture file*/
 int get_texture_file(char **texture_file, char *line, int pos)
 {
-    char    *texture_file;
     int     len;
 
     len = 0;
     while (line[pos + len] && !is_space(line[pos + len]))
         len++;
     *texture_file = (char *)malloc(sizeof(char) * (len + 1));
-    if (*texture_file)
+    if (!(*texture_file))
         return (error_msg(6));
-    len = 0;
     while (line[pos + len])
     {
-        *texture_file[pos] = line[pos + len];
+        if (!is_space(line[pos + len]))
+            return (error_msg(3));
         len++;
     }
-    texture_file[pos] = '\0';
+    len = 0;
+    while (line[pos + len] && !is_space(line[pos + len]))
+    {
+        (*texture_file)[len] = line[pos + len];
+        len++;
+    }
+    (*texture_file)[len] = '\0';
     return (0);
 }

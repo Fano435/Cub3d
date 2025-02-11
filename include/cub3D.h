@@ -21,15 +21,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
-
-enum Direction {
-  NO,
-  SO,
-  WE,
-  EA,
-  C,
-  F
-};
+# include "../libft/libft.h"
 
 typedef struct s_img
 {
@@ -75,7 +67,7 @@ typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_img		*img; //a virer une fois toutes les textures parse
+	t_img		*img; //a virer une fois toutes les textures parse ??
 	t_img		*north_text;
 	t_img		*south_text;
 	t_img		*east_text;
@@ -118,8 +110,11 @@ int				is_texture(char *line, int *id);
 int				error_msg(int error_code);
 int				get_texture_file(char **texture_file,
 					char *line, int pos);
-int				is_space(char *c);
-int				is_digit(char *c);
+
+// parsing_libft.c -> a delete et mettre dans la libft quand la compilaiton est fixed
+int				is_space(char c);
+int				is_digit(char c);
+int				my_strncmp(const char *s1, const char *s2, int n);
 
 //parsing_color.c
 int				is_color(char *line, int *id);
@@ -142,5 +137,17 @@ int				parse_color(char *line, int *done, int *id);
 # define KEY_ESC 65307
 # define LEFT 65361
 # define RIGHT 65363
+
+# define NO 2
+# define SO 3
+# define WE 4
+# define EA 5
+# define C  6
+# define F  7
+
+//FOR DEBUG ONLY//
+#define RED   "\x1B[31m"
+#define RESET "\x1B[0m"
+/////////////////
 
 #endif

@@ -6,8 +6,7 @@ yellow          = /bin/echo -e "\x1b[33m\#\# $1\x1b[0m"
 blue            = /bin/echo -e "\x1b[34m\#\# $1\x1b[0m"
 purple          = /bin/echo -e "\x1b[35m\#\# $1\x1b[0m"
 
-FILES = main events get_next_line get_next_line_utils player init raycasting render 
-		parsing/parsing parsing/parsing_utils parsing/parsing_map parsing/parsing_color
+FILES = main events get_next_line get_next_line_utils player init raycasting render parsing parsing_utils parsing_map parsing_color parsing_libft
 
 LIBFT = libft/libft.a
 LIBFT_DIR = libft

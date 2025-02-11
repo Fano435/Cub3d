@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:36:24 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/10 12:40:17 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:35:19 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	main(int ac, char **av)
 		return (-1);
 	else
 	{
-		dprintf(STDERR_FILENO, "END OF PARSING\n");
+		dprintf(STDERR_FILENO, "\nEND OF PARSING\n");
 		return (0);
 	}
 	game = malloc(sizeof(t_game));
