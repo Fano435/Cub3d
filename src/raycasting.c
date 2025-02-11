@@ -61,7 +61,6 @@ double	get_horizontal_intersections(t_game *game, double angle)
 	return (sqrt(pow(player->pos_x - h_x, 2) + pow(player->pos_y - h_y, 2)));
 }
 
-// Il manque plus qu'a faire les textures du coup
 double	get_vertical_intersections(t_game *game, double angle)
 {
 	int			v_x;
@@ -115,29 +114,5 @@ void	cast_rays(t_game *game)
 		if (ray->angle > 2 * M_PI)
 			ray->angle -= 2 * M_PI;
 		i++;
-	}
-}
-
-void	render_wall(t_game *game, t_ray *ray, int pos)
-{
-	double	dist_proj_plane;
-	int		wall_pixel;
-
-	dist_proj_plane = (WIN_WIDTH / 2) / tan(game->player->fov);
-	if (ray->wall_dist < 0)
-		ray->wall_dist = 0.1;
-	ray->line_height = (1 / ray->wall_dist) * dist_proj_plane;
-	if (ray->line_height > WIN_HEIGHT)
-		ray->line_height = WIN_HEIGHT - 1;
-	ray->draw_start = WIN_HEIGHT / 2 + ray->line_height / 2;
-	ray->draw_end = WIN_HEIGHT / 2 - ray->line_height / 2;
-	wall_pixel = ray->draw_start;
-	while (wall_pixel > ray->draw_end)
-	{
-		if (ray->side == 1)
-			pixel_put(game->img, pos, wall_pixel, 0xFF0000);
-		else
-			pixel_put(game->img, pos, wall_pixel, 0xAA0000);
-		wall_pixel--;
 	}
 }
