@@ -118,7 +118,7 @@ int				my_strncmp(const char *s1, const char *s2, int n);
 
 //parsing_color.c
 int				is_color(char *line, int *id);
-int				get_color(char *line, int pos, int first_nb);
+int				get_color(char *line, int *pos, int first_nb);
 int				parse_color(char *line, int *done, int *id);
 
 // parsing_map.c

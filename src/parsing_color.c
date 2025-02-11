@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/11 10:41:28 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:34:49 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,25 @@ int is_color(char *line, int *id)
 }
 
 /*get each R G B in int format*/
-int get_color(char *line, int pos, int first_nb)
+int get_color(char *line, int *pos, int first_nb)
 {
     int color;
 
     if (first_nb)
     {
-        while (line[pos] && (is_space(line[pos])))
-            pos++;
+        while (line[*pos] && (is_space(line[*pos])))
+            (*pos)++;
     }
     else
     {
-        while (line[pos] && (is_space(line[pos]) || line[pos] == ','))
-            pos++;
+        while (line[*pos] && (is_space(line[*pos]) || line[*pos] == ','))
+            (*pos)++;
     }
     color = 0;
-    while (line[pos] && is_digit(line[pos]))
+    while (line[*pos] && is_digit(line[*pos]))
     {
-        color = color * 10 + (line[pos] - '0');
-        pos++;
+        color = color * 10 + (line[*pos] - '0');
+        (*pos)++;
     }
     return (color);
 }
@@ -59,9 +59,9 @@ int parse_color(char *line, int *done, int *id)
     int converted_color;
 
     pos = 2;
-    red = get_color(line, pos, 1);
-    green = get_color(line, pos, 0);
-    blue = get_color(line, pos, 0);
+    red = get_color(line, &pos, 1);
+    green = get_color(line, &pos, 0);
+    blue = get_color(line, &pos, 0);
     if (red < 0 || red > 255 || blue < 0 || blue > 255
         || green < 0 || green > 255)
         return (error_msg(7));
@@ -69,6 +69,7 @@ int parse_color(char *line, int *done, int *id)
     {
         if(!is_space(line[pos]))
             return (error_msg(7));
+        pos++;
     }
     converted_color = (red << 16 | green << 8 | blue);
     dprintf(STDERR_FILENO, "converted color is %d\n", converted_color);
@@ -77,3 +78,4 @@ int parse_color(char *line, int *done, int *id)
     (*done)++;
     return (0);
 }
+
