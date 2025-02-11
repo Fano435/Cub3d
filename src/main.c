@@ -85,11 +85,11 @@ int	main(int ac, char **av)
 	game = malloc(sizeof(t_game));
 	if (parsing(ac, av, game))
 		return (-1);
-	else
-	{
-		dprintf(STDERR_FILENO, "\nEND OF PARSING\n");
-		return (0);
-	}
+	// else
+	// {
+	// 	dprintf(STDERR_FILENO, "\nEND OF PARSING\n");
+	// 	return (0);
+	// }
 	init(game);
 	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);

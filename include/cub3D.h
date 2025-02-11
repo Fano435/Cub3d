@@ -27,6 +27,7 @@ typedef struct s_img
 {
 	void		*mlx_img;
 	char		*addr;
+	char		*path;
 	int			bits_per_pixel;
 	int			line_len;
 	int			endian;
@@ -70,8 +71,8 @@ typedef struct s_ray
 	double		angle;
 	int			map_x;
 	int			map_y;
-	double		hit_x[2];
-	double		hit_y[2];
+	double		vertical_hit;
+	double		horizontal_hit;
 	double		wall_dist;
 	int			line_height;
 	int			draw_start;

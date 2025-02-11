@@ -56,6 +56,7 @@ double	get_horizontal_intersections(t_game *game, double angle)
 		h_x += x_step;
 		h_y += y_step;
 	}
+	game->ray->horizontal_hit = h_x;
 	// pixel_put(game->img, h_x * BLOCK, h_y * BLOCK, 0xFF0000);
 	// printf("Horizontal hit x : %f, Horizontal hit y : %d\n", h_x, h_y);
 	return (sqrt(pow(player->pos_x - h_x, 2) + pow(player->pos_y - h_y, 2)));
@@ -81,6 +82,7 @@ double	get_vertical_intersections(t_game *game, double angle)
 		v_x += x_step;
 		v_y += y_step;
 	}
+	game->ray->vertical_hit = v_y;
 	// pixel_put(game->img, v_x * BLOCK, v_y * BLOCK, 0x0000FF);
 	// printf("Vertical hit x : %d, Vertical hit y : %f\n", v_x, v_y);
 	return (sqrt(pow(player->pos_x - v_x, 2) + pow(player->pos_y - v_y, 2)));

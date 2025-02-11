@@ -34,12 +34,11 @@ void	init_texture(char *path, int id, t_game *game)
 {
 	t_img	texture;
 
-	texture.mlx_img = mlx_xpm_file_to_image(game->mlx_ptr, path, &texture.width,
-			&texture.height);
+	texture.path = ft_strdup(path);
+	texture.addr = NULL;
+	texture.mlx_img = NULL;
 	game->textures[id] = texture;
-	printf("ID : %d\n", id);
-	texture.addr = mlx_get_data_addr(texture.mlx_img, &texture.bits_per_pixel,
-			&texture.line_len, &texture.endian);
+	// printf("ID : %d, path : %s\n", id, texture.path);
 }
 
 /*Check the texture line for errors & try to opens it
@@ -62,12 +61,12 @@ int	parse_texture(char *line, int *done, int id, t_game *game)
 	}
 	dprintf(STDERR_FILENO, RED "texture file is %s\n" RESET, texture_file);
 	fd_texture = open(texture_file, O_RDONLY);
-	free(texture_file);
 	if (fd_texture == -1)
 		return (error_msg(5));
 	close(fd_texture);
 	(*done)++;
-	init_texture(line, id, game);
+	init_texture(texture_file, id, game);
+	free(texture_file);
 	return (0);
 }
 
