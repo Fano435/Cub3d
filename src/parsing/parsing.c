@@ -38,7 +38,7 @@ void	init_texture(char *path, int id, t_game *game)
 	texture.addr = NULL;
 	texture.mlx_img = NULL;
 	game->textures[id] = texture;
-	// printf("ID : %d, path : %s\n", id, texture.path);
+	printf("ID : %d, path : %s\n", id, texture.path);
 }
 
 /*Check the texture line for errors & try to opens it
@@ -88,7 +88,7 @@ int	parsing(int argc, char **argv, t_game *game)
 		line = get_next_line(fd_config);
 		if (!line)
 			break ;
-		// dprintf(STDOUT_FILENO, "line is: %s", line);
+		dprintf(STDOUT_FILENO, "line is: %s", line);
 		if (is_texture(line, &id) && parse_texture(line, &done, id, game))
 		{
 			dprintf(STDERR_FILENO, "Error while parsing textures\n");

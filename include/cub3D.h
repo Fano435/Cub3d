@@ -96,9 +96,13 @@ typedef struct s_game
 	t_ray		*ray;
 }				t_game;
 
+// texture.c
+int				get_pixel_color(t_game *game, t_ray *ray, int y);
+
 // render.c
 void			render_wall(t_game *game, t_ray *ray, int pos);
 void			render_floor_ceiling(t_game *game, t_ray *ray, int pos);
+
 bool			touch(int x, int y);
 void			pixel_put(t_img *img, int x, int y, int color);
 
