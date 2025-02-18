@@ -157,6 +157,10 @@ void			free_map(char **map);
 # define EA 5
 # define C  6
 # define F  7
+# define FIRST_COL   8
+# define LAST_COL    9
+# define FIRST_LINE  10
+# define LAST_LINE   11
 
 //FOR DEBUG ONLY//
 #define RED   "\x1B[31m"

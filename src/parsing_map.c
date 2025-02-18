@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/18 14:18:01 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:48:48 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,60 +67,6 @@ char **file_to_array(int fd_config, char *config_file, int height)
     }
     map[i] = NULL;
     return (map);
-}
-
-int valid_char(char **map, int line_p, int char_p, int top)
-{
-    dprintf(STDERR_FILENO, "line %d, char %d: '%c'\n", line_p, char_p, map[line_p][char_p]);
-    if (map[line_p][char_p] == '1')
-        return (1);
-    else if (is_space(map[line_p][char_p]))
-    {
-        if (top)
-            line_p++;
-        else
-            line_p--;
-        return (valid_char(map, line_p, char_p, top));
-    }
-    else // == '0' or N S W E
-        return (error_msg_map(2));
-}
-
-int valid_outer_line(char **map, int line_p, int top)
-{
-    int char_p;
-
-    char_p = 0;
-    while(map[line_p][char_p])
-    {
-        if (valid_char(map, line_p, char_p, top) == 1)
-            char_p++;
-        else if (valid_char(map, line_p, char_p, top) == -1)
-            return (-1);
-    }
-    return (1);
-}
-
-int valid_map(char **map, int height)
-{
-    int line_pos;
-
-    line_pos = 0;
-    if (valid_outer_line(map, line_pos, 1) == -1)
-    {
-        dprintf(STDERR_FILENO, "invalid first line !\n");
-        free_map(map); //to move at the end of the code once I merge with the rest
-        return (-1);
-    }
-    line_pos = height - 1;
-    if (valid_outer_line(map, line_pos, 0) == -1)
-    {
-        dprintf(STDERR_FILENO, "invalid last line !\n");
-        free_map(map); //to move at the end of the code once I merge with the rest
-        return (-1);
-    }
-    dprintf(STDERR_FILENO, "map is valid for now !\n");
-    return (1);
 }
 
 /*Main fonction handling the parsing of the map*/
