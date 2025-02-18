@@ -128,6 +128,9 @@ int				parse_map(char *config_file, int done, int fd_config);
 int				get_height(int fd_config, char *config_file);
 char			**file_to_array(int fd_config, char *config_file, int height);
 
+//parsing_map_bound.c
+int				valid_map(char **map, int height);
+void			flood_fill(char **map, int x, int y, int height);
 
 // parsing_map_utils.c
 int				error_msg_map(int error_code);
@@ -157,10 +160,6 @@ void			free_map(char **map);
 # define EA 5
 # define C  6
 # define F  7
-# define FIRST_COL   8
-# define LAST_COL    9
-# define FIRST_LINE  10
-# define LAST_LINE   11
 
 //FOR DEBUG ONLY//
 #define RED   "\x1B[31m"
