@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/11 14:46:02 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:36:32 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ int error_msg_map(int error_code)
 int is_map(char *line)
 {
     int pos;
+    int id;
 
     pos = 0;
+    if (is_color(line, &id) || is_texture(line, &id) || line[pos] == '\n')
+        return (0);
     while (line[pos])
     {
         if (line[pos] != '1' && line[pos] != '0' 
