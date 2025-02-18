@@ -131,6 +131,7 @@ char			**file_to_array(int fd_config, char *config_file, int height);
 //parsing_map_bound.c
 int				valid_map(char **map, int height);
 void			flood_fill(char **map, int x, int y, int height);
+int				check_flooded_map(char **map, int height);
 
 // parsing_map_utils.c
 int				error_msg_map(int error_code);

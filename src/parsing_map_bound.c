@@ -6,12 +6,13 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:49:07 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/18 17:21:17 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:29:23 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
+/*Usual flood fill*/
 void    flood_fill(char **map, int x, int y, int height)
 {
     if (x < 0 || y < 0 || x > ((int)ft_strlen(map[y]) - 1) 
@@ -24,6 +25,31 @@ void    flood_fill(char **map, int x, int y, int height)
     flood_fill(map, x, y + 1, height);
 }
 
+/*Check the flooded map to make sure that no space filled is a limit of the map*/
+int check_flooded_map(char **map, int height)
+{
+    int x;
+    int y;
+
+    x = 0;
+    y = 0;
+    while (map[y])
+    {
+        x = 0;
+        while (map[y][x])
+        {
+            if (map[y][x] == 'F' && (x == 0 
+                || x == ((int)ft_strlen(map[y]) - 1) 
+                || y == (height - 1) || y == 0))
+                return (error_msg_map(2));
+            x++;
+        }
+        y++;
+    }
+    return (1);
+}
+
+/*Main function to verify the converted map is correct*/
 int valid_map(char **map, int height)
 {
     int     x;
@@ -51,9 +77,10 @@ int valid_map(char **map, int height)
         y++;
     }///////////////////////////fonction se finira ici
     dprintf(STDERR_FILENO, "player starts in pos x: %d, y is %d\n", x, y);
-    flood_fill(map, x, y, height); //maybe do it with a copied map to avoid any issues 
-    // if (check_flooded_map)
+    flood_fill(map, x, y, height); //maybe do it with a copied map to avoid any issues
     print_map(map);
+    if (check_flooded_map(map, height) == -1)
+        return (-1);
     dprintf(STDERR_FILENO, RED "Map is valid !\n" RESET);
     return (1);
 }
