@@ -125,7 +125,16 @@ int				parse_color(char *line, int *done, int *id);
 
 // parsing_map.c
 int				parse_map(char *config_file, int done, int fd_config);
+int				get_height(int fd_config, char *config_file);
+char			**file_to_array(int fd_config, char *config_file, int height);
+
+
+// parsing_map_utils.c
+int				error_msg_map(int error_code);
 int				is_map(char *line);
+void			print_map(char **map);
+void			free_map(char **map);
+
 
 # define WIN_WIDTH 960
 # define WIN_HEIGHT 540

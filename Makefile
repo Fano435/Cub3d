@@ -17,6 +17,7 @@ FILES = main\
 		parsing\
 		parsing_utils\
 		parsing_map\
+		parsing_map_utils\
 		parsing_color\
 		parsing_libft\
 

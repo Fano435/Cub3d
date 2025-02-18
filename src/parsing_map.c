@@ -6,64 +6,21 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/18 13:21:22 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:18:01 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int error_msg_map(int error_code)
-{
-    char    *msg;
-
-    write(STDERR_FILENO, "Error\n", 6);
-    if (error_code == 1)
-        msg = "Map should only contains 0 (floor), 1 (walls) and\n";
-    write(STDERR_FILENO, msg, ft_strlen(msg));
-    return (-1);
-}
-
-int is_map(char *line)
-{
-    int pos;
-    int id;
-
-    pos = 0;
-    if (is_color(line, &id) || is_texture(line, &id) || line[pos] == '\n')
-        return (0);
-    while (line[pos])
-    {
-        if (line[pos] != '1' && line[pos] != '0' 
-            && !is_space(line[pos]) && line[pos] != 'N'
-            && line[pos] != 'S' && line[pos] != 'E'
-            && line[pos] != 'W')
-            return (error_msg_map(1));
-        pos++;
-    }
-    return (1);
-}
-int get_len(char *line, int max_len)
-{
-    int     pos;
-
-    pos = 0;
-    while (line[pos])
-        pos++;
-    if (pos > max_len)
-        return (pos);
-    else
-        return (max_len);
-}
-
+/*Get the heigh of the map to alloc the char ** 
+& check that the map description contains ONLY authorized characters*/
 int get_height(int fd_config, char *config_file)
 {
     int     height;
     int     ret_map;
     char    *line;
-    int     max_len;
 
     height = 0;
-    max_len = 0;
     close(fd_config);
     fd_config = open(config_file, O_RDONLY);
     while (1)
@@ -75,42 +32,15 @@ int get_height(int fd_config, char *config_file)
         ret_map = is_map(line);
         if (ret_map == 1)
             height++;
-        else if (ret_map == -1)
+        else if (ret_map == -1 
+                || (height > 0 && !ret_map))
             return (-1);
-        max_len = get_len(line, max_len);
         free(line);
     }
     return (height);
 }
 
-int get_len2(int fd_config, char *config_file)
-{
-    int     height;
-    int     ret_map;
-    char    *line;
-    int     max_len;
-
-    height = 0;
-    max_len = 0;
-    close(fd_config);
-    fd_config = open(config_file, O_RDONLY);
-    while (1)
-    {
-        ret_map = 0;
-        line = get_next_line(fd_config);
-        if (!line)
-            break; 
-        ret_map = is_map(line);
-        if (ret_map == 1)
-            height++;
-        else if (ret_map == -1)
-            return (-1);
-        max_len = get_len(line, max_len);
-        free(line);
-    }
-    return (max_len);
-}
-
+/*Convert the map into a char ** to finish the parsing*/
 char **file_to_array(int fd_config, char *config_file, int height)
 {
     char    **map;
@@ -139,62 +69,81 @@ char **file_to_array(int fd_config, char *config_file, int height)
     return (map);
 }
 
-void    print_map(char **map)
+int valid_char(char **map, int line_p, int char_p, int top)
 {
-    int i;
-    int j;
-
-    i = 0;
-    while (map[i])
+    dprintf(STDERR_FILENO, "line %d, char %d: '%c'\n", line_p, char_p, map[line_p][char_p]);
+    if (map[line_p][char_p] == '1')
+        return (1);
+    else if (is_space(map[line_p][char_p]))
     {
-        j = 0;
-        while (map[i][j])
-        {
-            dprintf(STDERR_FILENO, "%c", map[i][j]);
-            j++;
-        }
-        dprintf(STDERR_FILENO, "\n");
-        i++;
+        if (top)
+            line_p++;
+        else
+            line_p--;
+        return (valid_char(map, line_p, char_p, top));
     }
+    else // == '0' or N S W E
+        return (error_msg_map(2));
 }
 
-void    free_map(char **map)
+int valid_outer_line(char **map, int line_p, int top)
 {
-    int i;
+    int char_p;
 
-    i = 0;
-    while (map[i])
+    char_p = 0;
+    while(map[line_p][char_p])
     {
-        free(map[i]);
-        i++;
+        if (valid_char(map, line_p, char_p, top) == 1)
+            char_p++;
+        else if (valid_char(map, line_p, char_p, top) == -1)
+            return (-1);
     }
-    free(map);
+    return (1);
 }
 
+int valid_map(char **map, int height)
+{
+    int line_pos;
+
+    line_pos = 0;
+    if (valid_outer_line(map, line_pos, 1) == -1)
+    {
+        dprintf(STDERR_FILENO, "invalid first line !\n");
+        free_map(map); //to move at the end of the code once I merge with the rest
+        return (-1);
+    }
+    line_pos = height - 1;
+    if (valid_outer_line(map, line_pos, 0) == -1)
+    {
+        dprintf(STDERR_FILENO, "invalid last line !\n");
+        free_map(map); //to move at the end of the code once I merge with the rest
+        return (-1);
+    }
+    dprintf(STDERR_FILENO, "map is valid for now !\n");
+    return (1);
+}
+
+/*Main fonction handling the parsing of the map*/
 int parse_map(char *config_file, int done, int fd_config)
 {
     char    **map;
     int     height;
-    int     len;
 
     if (done != 6)
         return (error_msg(4));
     close(fd_config);
     fd_config = open(config_file, O_RDONLY);
     height = get_height(fd_config, config_file);
-    len = get_len2(fd_config, config_file);
-    dprintf(STDERR_FILENO, "len is %d\n", len);
-    dprintf(STDERR_FILENO, "height is %d\n", height);
-    if (height < 1 || len < 1)
+    if (height < 1)
         return (-1);
     map = file_to_array(fd_config, config_file, height);
     if (!map)
-    {
-        dprintf(STDERR_FILENO, "no map description\n");
-        return (-1);
-    }
-    print_map(map);
-    free_map(map);
+        return (-1); //chekc proper error msg
+    
+    print_map(map); //only for debug
+    if (valid_map(map, height) == -1)
+        return (-1); //make sure to add proper error_msg
     done++;
+    free_map(map); //to move at the end of the code once I merge with the rest
     return (0);
 }
