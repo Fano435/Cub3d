@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/18 11:33:26 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/18 13:21:22 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,11 @@ int get_len2(int fd_config, char *config_file)
     return (max_len);
 }
 
-char **file_to_array(int fd_config, char *config_file, int len, int height)
+char **file_to_array(int fd_config, char *config_file, int height)
 {
     char    **map;
     char    *line;
     int     i;
-    int     j;
-    int     pos;
 
     close(fd_config);
     fd_config = open(config_file, O_RDONLY);
@@ -129,25 +127,48 @@ char **file_to_array(int fd_config, char *config_file, int len, int height)
     {
         line = get_next_line(fd_config);
         if (!line)
-            break; 
-        if (is_map(line) == 1)
+            break;
+        if (is_map(line) == 1) //externaliser
         {
-            pos = 0;
-            map[i] = (char *)malloc(sizeof(char) * (len + 1));
-            if (!map[i])
-                return (error_msg(6), NULL);
-            j = 0;
-            while (line[pos])
-            {
-                map[i][j] = line[pos];
-                j++;
-                pos++;
-            }
-            map[i][j] = '\0';
+            map[i] = my_strdup(line);
+            i++;
         }
+        free(line);
     }
     map[i] = NULL;
     return (map);
+}
+
+void    print_map(char **map)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            dprintf(STDERR_FILENO, "%c", map[i][j]);
+            j++;
+        }
+        dprintf(STDERR_FILENO, "\n");
+        i++;
+    }
+}
+
+void    free_map(char **map)
+{
+    int i;
+
+    i = 0;
+    while (map[i])
+    {
+        free(map[i]);
+        i++;
+    }
+    free(map);
 }
 
 int parse_map(char *config_file, int done, int fd_config)
@@ -166,8 +187,14 @@ int parse_map(char *config_file, int done, int fd_config)
     dprintf(STDERR_FILENO, "height is %d\n", height);
     if (height < 1 || len < 1)
         return (-1);
-    map = file_to_array(fd_config, config_file, len, height);
-    // print_map();
+    map = file_to_array(fd_config, config_file, height);
+    if (!map)
+    {
+        dprintf(STDERR_FILENO, "no map description\n");
+        return (-1);
+    }
+    print_map(map);
+    free_map(map);
     done++;
     return (0);
 }

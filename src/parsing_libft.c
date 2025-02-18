@@ -6,13 +6,15 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 10:15:42 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/11 10:30:31 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/18 13:18:39 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*This file needs to be deleted and these functions added to libft 
 but right now I am not able to use libft directly (compilation fails
 and treats the functions form the libft as undefined)*/
+
+#include "../include/cub3D.h"
 
 /*Check is char is a space*/
 int is_space(char c)
@@ -41,4 +43,40 @@ int	my_strncmp(const char *s1, const char *s2, int n)
 	while (s1[i] && s1[i] == s2[i] && i < n - 1)
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+/*copy a string*/
+char	*my_strcpy(char *dest, char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] && src[i] != '\n')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+int	my_strlen(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && s[i] != '\n')
+		i++;
+	return (i);
+}
+/*Copy a string in a new, malloced string*/
+char	*my_strdup(char *s)
+{
+	char	*string;
+
+	string = (char *)malloc(sizeof(char) * my_strlen(s) + 1);
+	if (!string)
+		return (NULL);
+	my_strcpy(string, s);
+	return (string);
 }
