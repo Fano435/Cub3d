@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/11 14:43:26 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:53:47 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ int     parsing(int argc, char **argv)
             return (-1);
         }
         free(line);
+    }
+    if (done > 6)
+    {
+        dprintf(STDERR_FILENO, "replace by error msg: too many colors or too many textures\n");
+        return (-1);
     }
     if (parse_map(argv[1], done, fd_config))
             return (-1);
