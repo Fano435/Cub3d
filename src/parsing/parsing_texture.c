@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 16:56:41 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:14:40 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ void    add_text_to_game(char *texture_file, int id, t_game *game)
         curr_text = game->img_text_w;
     else //i.e. is EA
         curr_text = game->img_text_e;
-    curr_text->path = ft_strdup(texture_file);
-    curr_text->addr = NULL;
-    curr_text->mlx_img = NULL;    
+    curr_text->path = texture_file;
     return ;
 }
 
@@ -100,6 +98,6 @@ int	parse_texture(char *line, int *done, int id, t_game *game)
 	close(fd_texture);
     add_text_to_game(texture_file, id, game);
 	(*done)++;
-	free(texture_file);
+	// free(texture_file);
 	return (0);
 }
