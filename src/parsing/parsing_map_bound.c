@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:49:07 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 13:45:18 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:24:34 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int check_flooded_map(char **map, int height)
 }
 
 /*Main function to verify the converted map is correct*/
-int valid_map(char **map, int height)
+int valid_map(char **map, int height, t_game *game)
 {
     int     x;
     int     y;
@@ -88,5 +88,6 @@ int valid_map(char **map, int height)
         return (free_map(map_copy), -1);
     free_map(map_copy);
     dprintf(STDERR_FILENO, RED "Map is valid !\n" RESET);
+    game->map = map;
     return (1);
 }

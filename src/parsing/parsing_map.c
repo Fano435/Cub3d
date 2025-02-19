@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 15:10:51 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:29:13 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,38 @@ char **file_to_array(int fd_config, char *config_file, int height)
     return (map);
 }
 
+
+int get_starting_pos(char **map, t_game *game)
+{
+    int     x;
+    int     y;
+    int     found;
+
+    x = 0;
+    y = 0;
+    found = 0;
+    while (map[y])
+    {
+        x = 0;
+        while (map[y][x])
+        {
+            if (map[y][x] == 'N' || map[y][x] == 'W'
+                || map[y][x] == 'E' || map[y][x] == 'S')
+            {
+                found = 1;
+                break;
+            }
+            x++;
+        }
+        if (found == 1)
+            break;
+        y++;
+    }
+    return (add_pos_game(x, y, found, game));
+}
+
 /*Main fonction handling the parsing of the map*/
-int parse_map(char *config_file, int done, int fd_config)
+int parse_map(char *config_file, int done, int fd_config, t_game *game)
 {
     char    **map;
     int     height;
@@ -115,7 +145,9 @@ int parse_map(char *config_file, int done, int fd_config)
     if (!map)
         return (-1); //chekc proper error msg
     print_map(map); //only for debug
-    if (valid_map(map, height) == -1)
+    if (get_starting_pos(map, game) == -1)
+        return (-1);
+    if (valid_map(map, height, game) == -1)
         return (-1); //make sure to add proper error_msg
     done++;
     free_map(map); //to move at the end of the code once I merge with the rest

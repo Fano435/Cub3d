@@ -35,17 +35,6 @@ typedef struct s_img
 	int			height;
 }				t_img;
 
-// typedef struct s_texture
-// {
-// 	void		*ptr;
-// 	char		*addr;
-// 	char		*path;
-// 	int			bits_per_pixel;
-// 	int			line_len;
-// 	int			endian;
-// 	int			width;
-// 	int			height;
-// }				t_texture;
 
 typedef struct s_player
 {
@@ -57,7 +46,6 @@ typedef struct s_player
 	double		plane_y;
 	double		angle;
 	int			fov;
-
 	bool		key_up;
 	bool		key_right;
 	bool		key_down;
@@ -82,6 +70,7 @@ typedef struct s_ray
 
 typedef struct s_game
 {
+	char		**map;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		*img;
@@ -150,13 +139,13 @@ int				get_color(char *line, int *pos, int first_nb);
 int				parse_color(char *line, int *done, int id, t_game *game);
 
 // parsing_map.c
-int				parse_map(char *config_file, int done, int fd_config);
+int				parse_map(char *config_file, int done, int fd_config, t_game *game);
 int				get_height(int fd_config);
 char			**file_to_array(int fd_config, char *config_file, int height);
 int				is_map(char *line, int *player_pos);
 
 //parsing_map_bound.c
-int				valid_map(char **map, int height);
+int				valid_map(char **map, int height, t_game *game);
 void			flood_fill(char **map, int x, int y, int height);
 int				check_flooded_map(char **map, int height);
 

@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 10:42:59 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:31:01 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,14 @@ char    **copy_map(char **original, int height)
     }
     copy[i] = NULL;
     return (copy);
+}
+
+/*Adding the starting position and orientation of the player*/
+int add_pos_game(int x, int y, int found, t_game *game)
+{
+    if (!found)
+        return (-1);
+    game->player->pos_x = x;
+    game->player->pos_y = y;
+    return (1);
 }
