@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:49:07 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/18 17:29:23 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 09:42:37 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 void    flood_fill(char **map, int x, int y, int height)
 {
     if (x < 0 || y < 0 || x > ((int)ft_strlen(map[y]) - 1) 
-        || y > (height - 1) || map[y][x] == '1' || map[y][x] == 'F')
+        || y > (height - 1) || map[y][x] == '1' || is_space(map[y][x])
+        || map[y][x] == 'F' )
         return ;
     map[y][x] = 'F';
     flood_fill(map, x - 1, y, height);
@@ -40,7 +41,9 @@ int check_flooded_map(char **map, int height)
         {
             if (map[y][x] == 'F' && (x == 0 
                 || x == ((int)ft_strlen(map[y]) - 1) 
-                || y == (height - 1) || y == 0))
+                || y == (height - 1) || y == 0 
+                || is_space(map[y][x + 1]) || is_space(map[y][x - 1])
+                || is_space(map[y + 1][x]) || is_space(map[y - 1][x]) ))
                 return (error_msg_map(2));
             x++;
         }
