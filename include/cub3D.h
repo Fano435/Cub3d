@@ -91,11 +91,11 @@ int				get_pixel_color(t_game *game, t_ray *ray, int y);
 void			render_wall(t_game *game, t_ray *ray, int pos);
 void			render_floor_ceiling(t_game *game, t_ray *ray, int pos);
 
-bool			touch(int x, int y);
+bool			touch(int x, int y, t_game *game);
 void			pixel_put(t_img *img, int x, int y, int color);
 
 // debug.c
-void			draw_map(char map[10][8], t_img *img);
+// void			draw_map(char map[10][8], t_img *img);
 void			draw_square(int x, int y, int size, t_img *img);
 
 // events.c
@@ -109,7 +109,7 @@ void			init_player(t_player *player);
 void			init_ray(t_ray *ray);
 
 // player.c
-void			rotate_player(t_player *player);
+void			rotate_player(t_player *player, t_game *game);
 
 // raycasting.c
 void			cast_rays(t_game *game);

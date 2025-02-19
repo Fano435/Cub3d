@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrasamim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:17:48 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/03 17:18:35 by jrasamim         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:53:49 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ double	get_horizontal_intersections(t_game *game, double angle)
 	pixel = h_check(angle, &h_y, &y_step);
 	x_step = y_step / tan(angle);
 	h_x = player->pos_x + (h_y - player->pos_y) / tan(angle);
-	while (!touch((int)h_x, h_y + pixel))
+	while (!touch((int)h_x, h_y + pixel, game))
 	{
 		h_x += x_step;
 		h_y += y_step;
@@ -75,7 +75,7 @@ double	get_vertical_intersections(t_game *game, double angle)
 	pixel = v_check(angle, &v_x, &x_step);
 	y_step = x_step * tan(angle);
 	v_y = player->pos_y + (v_x - player->pos_x) * tan(angle);
-	while (!touch(v_x + pixel, (int)v_y))
+	while (!touch(v_x + pixel, (int)v_y, game))
 	{
 		v_x += x_step;
 		v_y += y_step;

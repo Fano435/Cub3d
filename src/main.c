@@ -6,27 +6,27 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:36:24 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/19 14:58:57 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:52:43 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 /*SWITCH WITH MAP GIVEN IN CONFIGUATION FILE*/
-char	map[10][8] = {{'1', '1', '1', '1', '1', '1', '1', '1'}, {'1', '0', '1',
-		'0', '0', '0', '0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '1', '0', '1'}, {'1', '0', '0', '0', '0', '1',
-		'0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'}, {'1', '0', '0',
-		'0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '1', '0', '0', '1'},
-		{'1', '0', '0', '1', '0', '0', '0', '1'}, {'1', '1', '1', '1', '1', '1',
-		'1', '1'}};
+// char	map[10][8] = {{'1', '1', '1', '1', '1', '1', '1', '1'}, {'1', '0', '1',
+// 		'0', '0', '0', '0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'},
+// 		{'1', '0', '0', '0', '0', '1', '0', '1'}, {'1', '0', '0', '0', '0', '1',
+// 		'0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'}, {'1', '0', '0',
+// 		'0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '1', '0', '0', '1'},
+// 		{'1', '0', '0', '1', '0', '0', '0', '1'}, {'1', '1', '1', '1', '1', '1',
+// 		'1', '1'}};
 /////////////////////////////////////////////
 
-bool	touch(int x, int y)
+bool	touch(int x, int y, t_game *game)
 {
 	if (x > WIN_WIDTH / BLOCK || x < 0 || y > WIN_HEIGHT / BLOCK || y < 0)
 		return (true);
-	if (map[y][x] == '1')
+	if (game->map[y][x] == '1')
 		return (true);
 	return (false);
 }
@@ -66,7 +66,7 @@ int	render(t_game *game)
 	t_player	*player;
 
 	player = game->player;
-	rotate_player(player);
+	rotate_player(player, game);
 	clear(game);
 	pixel_put(game->img, player->pos_x * BLOCK, player->pos_y * BLOCK,
 		0xFFFF00);
@@ -84,14 +84,11 @@ int	main(int ac, char **av)
 	i = 0;
 	game = ft_calloc(sizeof(t_game), 1);
 	init(game);
-	dprintf(STDERR_FILENO, "game init done\n");
 	parsing(ac, av, game);
-	dprintf(STDERR_FILENO, "end of parsing\n");
-	return (0);
-	// mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
-	// mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);
-	// mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, game);
-	// mlx_loop_hook(game->mlx_ptr, render, game);
-	// mlx_loop(game->mlx_ptr);
+	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
+	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);
+	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, game);
+	mlx_loop_hook(game->mlx_ptr, render, game);
+	mlx_loop(game->mlx_ptr);
 	return (0);
 }

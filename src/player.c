@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrasamim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:27:48 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/01/21 14:27:50 by jrasamim         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:45:06 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	rotate_player(t_player *player)
+void	rotate_player(t_player *player, t_game *game)
 {
 	double	speed;
 	float	angle_speed;
@@ -57,7 +57,7 @@ void	rotate_player(t_player *player)
 		next_x += sin(player->angle) * speed;
 		next_y -= cos(player->angle) * speed;
 	}
-	if (!touch((int)(next_x), (int)(next_y)))
+	if (!touch((int)(next_x), (int)(next_y), game))
 	{
 		player->pos_x = next_x;
 		player->pos_y = next_y;
