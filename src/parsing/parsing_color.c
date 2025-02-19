@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/11 13:47:25 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:56:02 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ int get_color(char *line, int *pos, int first_nb)
         color = color * 10 + (line[*pos] - '0');
         (*pos)++;
     }
+    if (color < 0 || color > 255)
+        return (-1);
     return (color);
 }
-
 
 /*Main function for parsing of the colors*/
 int parse_color(char *line, int *done, int id, t_game *game)
@@ -62,8 +63,7 @@ int parse_color(char *line, int *done, int id, t_game *game)
     red = get_color(line, &pos, 1);
     green = get_color(line, &pos, 0);
     blue = get_color(line, &pos, 0);
-    if (red < 0 || red > 255 || blue < 0 || blue > 255
-        || green < 0 || green > 255)
+    if (red < 0 || blue < 0 || green < 0)
         return (error_msg(7));
     while (line[pos])
     {
@@ -72,8 +72,6 @@ int parse_color(char *line, int *done, int id, t_game *game)
         pos++;
     }
     converted_color = (red << 16 | green << 8 | blue);
-    dprintf(STDERR_FILENO, "converted color is %d\n", converted_color);
-    // C'EST BON
     if (id == C)
         game->ceiling_color = converted_color;
     else if (id == F)

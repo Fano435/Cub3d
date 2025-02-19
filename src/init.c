@@ -3,22 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrasamim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 21:37:18 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/01/23 21:37:19 by jrasamim         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:14:29 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../include/cub3D.h"
 
 void	init(t_game *game)
 {
 	void	*win;
 
-	game->img = malloc(sizeof(t_img));
-	game->player = malloc(sizeof(t_player));
-	game->ray = malloc(sizeof(t_ray));
+	//CHECK IF NECESSARY OR NOT WITH FT_CALLOC
+	// game->img = malloc(sizeof(t_img)); 
+	// //malloc for the textures
+	// game->img_text_n = malloc(sizeof(t_img));
+	// game->img_text_s = malloc(sizeof(t_img));
+	// game->img_text_e = malloc(sizeof(t_img));
+	// game->img_text_w = malloc(sizeof(t_img));
+	// //until here
+	// game->player = malloc(sizeof(t_player));
+	// game->ray = malloc(sizeof(t_ray));
 	init_player(game->player);
 	game->mlx_ptr = mlx_init();
 	win = mlx_new_window(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
@@ -27,18 +34,20 @@ void	init(t_game *game)
 	game->img->addr = mlx_get_data_addr(game->img->mlx_img,
 			&game->img->bits_per_pixel, &game->img->line_len,
 			&game->img->endian);
+	game->floor_color = -1; //to update while parsing colors
+	game->ceiling_color = -1; //to update while parsing colors
 }
 
 void	init_player(t_player *player)
 {
-	player->fov = (60 * M_PI) / 180;
-	player->pos_x = 2;
-	player->pos_y = 7;
+	player->fov = (60 * M_PI) / 180; //pb ici ????
+	player->pos_x = -1; //player pos to update in the map
+	player->pos_y = -1; //player pos to update in the map
 	player->dir_x = 0;
 	player->dir_y = 0;
 	player->plane_x = 0;
 	player->plane_y = 0;
-	player->angle = 0.3;
+	player->angle = -1; //to update depending on NSEW orientation
 	player->key_up = false;
 	player->key_right = false;
 	player->key_down = false;

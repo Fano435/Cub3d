@@ -84,12 +84,11 @@ typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_img *img; // a virer une fois toutes les textures parse ??
-	// t_texture	*north_text;
-	// t_texture	*south_text;
-	// t_texture	*east_text;
-	// t_texture	*west_text;
-	t_img		textures[4];
+	t_img		*img;
+	t_img		*img_text_n;
+	t_img		*img_text_s;
+	t_img		*img_text_e;
+	t_img		*img_text_w;
 	int			floor_color;
 	int			ceiling_color;
 	t_player	*player;
@@ -126,15 +125,17 @@ void			rotate_player(t_player *player);
 // raycasting.c
 void			cast_rays(t_game *game);
 
+////////////////////////*PARSING*////////////////////////////////////////////
+
 // parsing.c
+int				error_msg(int error_code);
 int				parsing(int argc, char **argv, t_game *game);
-int				parse_texture(char *line, int *done, int id, t_game *game);
 int				arg_parsing(int argc, char **argv);
 
 // parsing_utils.c
 int				is_texture(char *line, int *id);
-int				error_msg(int error_code);
 int				get_texture_file(char **texture_file, char *line, int pos);
+int				parse_texture(char *line, int *done, int id, t_game *game);
 
 // parsing_libft.c
 int				is_space(char c);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrasamim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:38:39 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/12 16:38:40 by jrasamim         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:37:18 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ t_img	get_texture_img(t_game *game, t_ray *ray)
 	if (ray->side)
 	{
 		if (cos(ray->angle) > 0)
-			return (game->textures[EA]);
+			return (*(game->img_text_e));
 		else
-			return (game->textures[WE]);
+			return (*(game->img_text_w));
 	}
 	else
 	{
 		if (sin(ray->angle) > 0)
-			return (game->textures[SO]);
+			return (*(game->img_text_s));
 		else
-			return (game->textures[NO]);
+			return (*(game->img_text_n));
 	}
 }
 

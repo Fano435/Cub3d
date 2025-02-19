@@ -1,44 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   parsing_texture.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/18 10:52:44 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:35:37 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
-
-/*Displaying the correct error message*/
-int error_msg(int error_code)
-{
-    char    *msg;
-
-    write(STDERR_FILENO, "Error\n", 6);
-    if (error_code == 0)
-        msg = "Program needs one argument\n";
-    else if (error_code == 1)
-        msg = "Program needs a configuration file as argument\n";
-    else if (error_code == 2)
-        msg = "Configuration file cannot be opened, check permission\n";
-    else if (error_code == 3)
-        msg = "Texture needs to be given in this format: identifier ./file\n";
-    else if (error_code == 4)
-        msg = "Configuration file needs to include FIRST 4 textures and 2 color and\
-                 THEN 1 map description\n";
-    else if (error_code == 5)
-        msg = "Texture file cannot be opened\n";
-    else if (error_code == 6)
-        msg = "Malloc issue\n";
-    else if (error_code == 7)
-        msg = "Colors needs to respect this format: identifier R, G, B with\
-                 R, G and B between 0 and 255\n";
-    write(STDERR_FILENO, msg, ft_strlen(msg));
-    return (-1);
-}
 
 /*Return the id corresponding to the texture*/
 int is_texture(char *line, int *id)
@@ -52,7 +24,7 @@ int is_texture(char *line, int *id)
         *id = WE;
     else if (!my_strncmp(line, "EA", ft_strlen("EA")))
         *id = EA;
-    // dprintf(STDERR_FILENO, "at the end of is_texture, identifier is %d\n", *id);
+    dprintf(STDERR_FILENO, "at the end of is_texture, identifier is %d\n", *id);
     return (*id);
 }
 
@@ -81,4 +53,47 @@ int get_texture_file(char **texture_file, char *line, int pos)
     }
     (*texture_file)[len] = '\0';
     return (0);
+}
+
+void    add_text_to_game(char *texture_file, int id, t_game *game)
+{
+    t_img   *curr_text;
+
+    if (id == NO)
+        curr_text = game->img_text_n;
+    else if (id == SO)
+        curr_text = game->img_text_s;
+    else if (id == WE)
+        curr_text = game->img_text_w;
+    else //i.e. is EA
+        curr_text = game->img_text_e;
+    curr_text->path = ft_strdup(texture_file);
+    free(texture_file);
+    return ;
+}
+
+/*Check the texture line for errors & try to opens it
++ put the file relative path in the struct*/
+int	parse_texture(char *line, int *done, int id, t_game *game)
+{
+	int		pos;
+	char	*texture_file;
+	int		fd_texture;
+
+	pos = 3;
+	while (line[pos] && is_space(line[pos]))
+		pos++;
+	if (!(line[pos] == '.' && line[pos + 1] == '/'))
+		return (error_msg(3));
+	if (get_texture_file(&texture_file, line, pos))
+		return (-1);
+	dprintf(STDERR_FILENO, RED "texture file is %s\n" RESET, texture_file);
+	fd_texture = open(texture_file, O_RDONLY);
+	if (fd_texture == -1)
+		return (error_msg(5));
+	close(fd_texture);
+    add_text_to_game(texture_file, id, game);
+	(*done)++;
+	free(texture_file);
+	return (0);
 }

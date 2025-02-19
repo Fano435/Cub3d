@@ -15,11 +15,11 @@ FILES = main\
 		raycasting\
 		render\
 		parsing\
-		parsing_utils\
+		parsing_color\
+		parsing_texture\
 		parsing_map\
 		parsing_map_utils\
 		parsing_map_bound\
-		parsing_color\
 		parsing_libft\
 		debug\
 		texture\

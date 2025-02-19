@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:36:24 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/19 11:27:49 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:14:55 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,12 @@ int	main(int ac, char **av)
 	int		i;
 
 	i = 0;
-	game = malloc(sizeof(t_game));
+	game = ft_calloc(sizeof(t_game), 1);
+	init(game);
+	dprintf(STDERR_FILENO, "game init done\n");
 	parsing(ac, av, game);
 	dprintf(STDERR_FILENO, "end of parsing\n");
 	return (0);
-	init(game);
 	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);
 	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, game);

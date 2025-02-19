@@ -6,11 +6,39 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 11:31:38 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:34:57 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
+
+/*Displaying the correct error message*/
+int error_msg(int error_code)
+{
+    char    *msg;
+
+    write(STDERR_FILENO, "Error\n", 6);
+    if (error_code == 0)
+        msg = "Program needs one argument\n";
+    else if (error_code == 1)
+        msg = "Program needs a configuration file as argument\n";
+    else if (error_code == 2)
+        msg = "Configuration file cannot be opened, check permission\n";
+    else if (error_code == 3)
+        msg = "Texture needs to be given in this format: identifier ./file\n";
+    else if (error_code == 4)
+        msg = "Configuration file needs to include FIRST 4 textures and 2 color and\
+                 THEN 1 map description\n";
+    else if (error_code == 5)
+        msg = "Texture file cannot be opened\n";
+    else if (error_code == 6)
+        msg = "Malloc issue\n";
+    else if (error_code == 7)
+        msg = "Colors needs to respect this format: identifier R, G, B with\
+                 R, G and B between 0 and 255\n";
+    write(STDERR_FILENO, msg, ft_strlen(msg));
+    return (-1);
+}
 
 /*Checking that there is only one argument ending with .cub & opens it*/
 int	arg_parsing(int argc, char **argv)
@@ -30,48 +58,8 @@ int	arg_parsing(int argc, char **argv)
 	return (fd_config);
 }
 
-void	init_texture(char *path, int id, t_game *game)
-{
-	t_img	texture;
-
-	texture.path = ft_strdup(path);
-	texture.addr = NULL;
-	texture.mlx_img = NULL;
-	game->textures[id] = texture;
-	printf("ID : %d, path : %s\n", id, texture.path);
-}
-
-/*Check the texture line for errors & try to opens it
-+ put the file relative path in the struct*/
-int	parse_texture(char *line, int *done, int id, t_game *game)
-{
-	int		pos;
-	char	*texture_file;
-	int		fd_texture;
-
-	pos = 3;
-	while (line[pos] && is_space(line[pos]))
-		pos++;
-	if (!(line[pos] == '.' && line[pos + 1] == '/'))
-		return (error_msg(3));
-	if (get_texture_file(&texture_file, line, pos))
-	{
-		dprintf(STDERR_FILENO, "get_texture_file error\n");
-		return (-1);
-	}
-	dprintf(STDERR_FILENO, RED "texture file is %s\n" RESET, texture_file);
-	fd_texture = open(texture_file, O_RDONLY);
-	if (fd_texture == -1)
-		return (error_msg(5));
-	close(fd_texture);
-	(*done)++;
-	init_texture(texture_file, id, game);
-	free(texture_file);
-	return (0);
-}
-
 /*Main parsing function -> A COUPER EN 2*/
-int     parsing(int argc, char **argv)
+int     parsing(int argc, char **argv, t_game *game)
 {
     char    *line;
     int     fd_config;
@@ -87,13 +75,13 @@ int     parsing(int argc, char **argv)
         line = get_next_line(fd_config);
         if (!line)
             break;
-        // dprintf(STDOUT_FILENO, "line is: %s", line);
-        if (is_texture(line, &id) && parse_texture(line, &done, &id))
+        dprintf(STDOUT_FILENO, "line is: %s", line);
+        if (is_texture(line, &id) && parse_texture(line, &done, id, game))
         {
             dprintf(STDERR_FILENO, "Error while parsing textures\n");
             return (-1);
         }
-        if (is_color(line, &id) && parse_color(line, &done, &id))
+        if (is_color(line, &id) && parse_color(line, &done, id, game))
         {
             dprintf(STDERR_FILENO, "Error while parsing colors\n");
             return (-1);
