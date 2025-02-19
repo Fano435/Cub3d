@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 15:06:09 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:08:42 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int parse_color(char *line, int *done, int id, t_game *game)
         pos++;
     }
     converted_color = (red << 16 | green << 8 | blue);
+    dprintf(STDERR_FILENO, RED "converted color is %d\n" RESET, converted_color);
     if (id == C)
         game->ceiling_color = converted_color;
     else if (id == F)

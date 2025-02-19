@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 14:34:57 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:09:10 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int     parsing(int argc, char **argv, t_game *game)
         line = get_next_line(fd_config);
         if (!line)
             break;
-        dprintf(STDOUT_FILENO, "line is: %s", line);
+        // dprintf(STDOUT_FILENO, "line is: %s", line);
         if (is_texture(line, &id) && parse_texture(line, &done, id, game))
         {
             dprintf(STDERR_FILENO, "Error while parsing textures\n");
