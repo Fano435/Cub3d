@@ -127,6 +127,7 @@ int				parse_color(char *line, int *done, int *id);
 int				parse_map(char *config_file, int done, int fd_config);
 int				get_height(int fd_config);
 char			**file_to_array(int fd_config, char *config_file, int height);
+int				is_map(char *line, int *player_pos);
 
 //parsing_map_bound.c
 int				valid_map(char **map, int height);
@@ -135,9 +136,9 @@ int				check_flooded_map(char **map, int height);
 
 // parsing_map_utils.c
 int				error_msg_map(int error_code);
-int				is_map(char *line, int *player_pos);
 void			print_map(char **map);
 void			free_map(char **map);
+char			**copy_map(char **original, int height);
 
 
 # define WIN_WIDTH 960

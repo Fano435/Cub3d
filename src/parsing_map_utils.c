@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 10:21:41 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 10:42:59 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,6 @@ int error_msg_map(int error_code)
         msg = "Map description cannot contain more than 1 starting position for the player\n";
     write(STDERR_FILENO, msg, ft_strlen(msg));
     return (-1);
-}
-
-/*Check if the line is part of the map/contain only authorize map characters*/
-int is_map(char *line, int *player_pos)
-{
-    int pos;
-    int id;
-
-    pos = 0;
-    if (is_color(line, &id) || is_texture(line, &id) || line[pos] == '\n')
-        return (0);
-    while (line[pos])
-    {
-        if (line[pos] != '1' && line[pos] != '0' 
-            && !is_space(line[pos]) && line[pos] != 'N'
-            && line[pos] != 'S' && line[pos] != 'E'
-            && line[pos] != 'W')
-            return (error_msg_map(1));
-        if (player_pos && (line[pos] == 'N' || line[pos] == 'S' 
-            || line[pos] == 'E' || line[pos] == 'W'))
-            (*player_pos)++;
-        if (player_pos && *player_pos > 1)
-            return (error_msg_map(3));
-        pos++;
-    }
-    return (1);
 }
 
 /*Display the map (DEBUG ONLY)*/
@@ -86,4 +60,24 @@ void    free_map(char **map)
         i++;
     }
     free(map);
+}
+
+/*copy the map into a new char ** to avoid changing the real map
+when doing the flood fill check*/
+char    **copy_map(char **original, int height)
+{
+    char    **copy;
+    int     i;
+    
+    copy = (char **)malloc(sizeof(char *) * (height + 1));
+    if (!copy)
+        return (NULL);
+    i = 0;
+    while (i < height)
+    {
+        copy[i] = ft_strdup(original[i]);
+        i++;
+    }
+    copy[i] = NULL;
+    return (copy);
 }

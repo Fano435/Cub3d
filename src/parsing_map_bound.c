@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:49:07 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 09:46:45 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 10:44:21 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int valid_map(char **map, int height)
     int     x;
     int     y;
     int     found;
+    char    **map_copy;
 
     x = 0;
     y = 0;
@@ -81,10 +82,11 @@ int valid_map(char **map, int height)
         y++;
     }///////////////////////////fonction se finira ici
     dprintf(STDERR_FILENO, "player starts in pos x: %d, y is %d\n", x, y);
-    flood_fill(map, x, y, height); //maybe do it with a copied map to avoid any issues
-    print_map(map);
-    if (check_flooded_map(map, height) == -1)
-        return (-1);
+    map_copy = copy_map(map, height);
+    flood_fill(map_copy, x, y, height);
+    if (check_flooded_map(map_copy, height) == -1)
+        return (free_map(map_copy), -1);
+    free_map(map_copy);
     dprintf(STDERR_FILENO, RED "Map is valid !\n" RESET);
     return (1);
 }

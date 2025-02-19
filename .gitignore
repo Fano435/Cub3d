@@ -1,4 +1,6 @@
 *.o
 */libft.o
+cub3D
+libft.a
 *.swp
 *.tmp

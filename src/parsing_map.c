@@ -6,11 +6,37 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 10:23:22 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 10:42:29 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+/*Check if the line is part of the map/contain only authorize map characters*/
+int is_map(char *line, int *player_pos)
+{
+    int pos;
+    int id;
+
+    pos = 0;
+    if (is_color(line, &id) || is_texture(line, &id) || line[pos] == '\n')
+        return (0);
+    while (line[pos])
+    {
+        if (line[pos] != '1' && line[pos] != '0' 
+            && !is_space(line[pos]) && line[pos] != 'N'
+            && line[pos] != 'S' && line[pos] != 'E'
+            && line[pos] != 'W')
+            return (error_msg_map(1));
+        if (player_pos && (line[pos] == 'N' || line[pos] == 'S' 
+            || line[pos] == 'E' || line[pos] == 'W'))
+            (*player_pos)++;
+        if (player_pos && *player_pos > 1)
+            return (error_msg_map(3));
+        pos++;
+    }
+    return (1);
+}
 
 /*Get the heigh of the map to alloc the char ** 
 & check that the map description contains ONLY authorized characters*/
