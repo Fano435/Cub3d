@@ -13,6 +13,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include "../libft/libft.h"
 # include "../mlx/mlx.h"
 # include "../src/gnl/get_next_line.h"
 # include <X11/X.h>
@@ -21,16 +22,30 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
-# include "../libft/libft.h"
 
 typedef struct s_img
 {
 	void		*mlx_img;
 	char		*addr;
+	char		*path;
 	int			bits_per_pixel;
 	int			line_len;
 	int			endian;
+	int			width;
+	int			height;
 }				t_img;
+
+// typedef struct s_texture
+// {
+// 	void		*ptr;
+// 	char		*addr;
+// 	char		*path;
+// 	int			bits_per_pixel;
+// 	int			line_len;
+// 	int			endian;
+// 	int			width;
+// 	int			height;
+// }				t_texture;
 
 typedef struct s_player
 {
@@ -56,6 +71,8 @@ typedef struct s_ray
 	double		angle;
 	int			map_x;
 	int			map_y;
+	double		vertical_hit;
+	double		horizontal_hit;
 	double		wall_dist;
 	int			line_height;
 	int			draw_start;
@@ -67,22 +84,31 @@ typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_img		*img; //a virer une fois toutes les textures parse ??
-	t_img		*north_text;
-	t_img		*south_text;
-	t_img		*east_text;
-	t_img		*west_text;
+	t_img *img; // a virer une fois toutes les textures parse ??
+	// t_texture	*north_text;
+	// t_texture	*south_text;
+	// t_texture	*east_text;
+	// t_texture	*west_text;
+	t_img		textures[4];
 	int			floor_color;
 	int			ceiling_color;
 	t_player	*player;
 	t_ray		*ray;
 }				t_game;
 
+// texture.c
+int				get_pixel_color(t_game *game, t_ray *ray, int y);
+
 // render.c
 void			render_wall(t_game *game, t_ray *ray, int pos);
 void			render_floor_ceiling(t_game *game, t_ray *ray, int pos);
+
 bool			touch(int x, int y);
 void			pixel_put(t_img *img, int x, int y, int color);
+
+// debug.c
+void			draw_map(char map[10][8], t_img *img);
+void			draw_square(int x, int y, int size, t_img *img);
 
 // events.c
 int				close_game(t_game *game);
@@ -101,27 +127,26 @@ void			rotate_player(t_player *player);
 void			cast_rays(t_game *game);
 
 // parsing.c
-int     		parsing(int argc, char **argv);
-int				parse_texture(char *line, int *done, int *id);
+int				parsing(int argc, char **argv, t_game *game);
+int				parse_texture(char *line, int *done, int id, t_game *game);
 int				arg_parsing(int argc, char **argv);
 
 // parsing_utils.c
 int				is_texture(char *line, int *id);
 int				error_msg(int error_code);
-int				get_texture_file(char **texture_file,
-					char *line, int pos);
+int				get_texture_file(char **texture_file, char *line, int pos);
 
-// parsing_libft.c -> a delete et mettre dans la libft quand la compilaiton est fixed
+// parsing_libft.c
 int				is_space(char c);
 int				is_digit(char c);
 int				my_strncmp(const char *s1, const char *s2, int n);
 char			*my_strcpy(char *dest, char *src);
 char			*my_strdup(char *s);
 
-//parsing_color.c
+// parsing_color.c
 int				is_color(char *line, int *id);
 int				get_color(char *line, int *pos, int first_nb);
-int				parse_color(char *line, int *done, int *id);
+int				parse_color(char *line, int *done, int id, t_game *game);
 
 // parsing_map.c
 int				parse_map(char *config_file, int done, int fd_config);
@@ -156,16 +181,16 @@ char			**copy_map(char **original, int height);
 # define LEFT 65361
 # define RIGHT 65363
 
-# define NO 2
-# define SO 3
-# define WE 4
-# define EA 5
-# define C  6
-# define F  7
+# define NO 0
+# define SO 1
+# define WE 2
+# define EA 3
+# define C 6
+# define F 7
 
-//FOR DEBUG ONLY//
-#define RED   "\x1B[31m"
-#define RESET "\x1B[0m"
+// FOR DEBUG ONLY//
+# define RED "\x1B[31m"
+# define RESET "\x1B[0m"
 /////////////////
 
 #endif

@@ -50,7 +50,7 @@ int get_color(char *line, int *pos, int first_nb)
 
 
 /*Main function for parsing of the colors*/
-int parse_color(char *line, int *done, int *id)
+int parse_color(char *line, int *done, int id, t_game *game)
 {
     int red;
     int green;
@@ -73,8 +73,11 @@ int parse_color(char *line, int *done, int *id)
     }
     converted_color = (red << 16 | green << 8 | blue);
     dprintf(STDERR_FILENO, "converted color is %d\n", converted_color);
-    //RESTE A ADD DANS LA BONNE STRUCTURE AU BON ENDROIT
-    (void)id;
+    // C'EST BON
+    if (id == C)
+        game->ceiling_color = converted_color;
+    else if (id == F)
+        game->floor_color = converted_color;
     (*done)++;
     return (0);
 }

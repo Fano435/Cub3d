@@ -1,9 +1,9 @@
 
 
-NO ./pics/greystone.png
-SO ./pics/mossy.png
-WE ./pics/purplestone.png
-EA ./pics/bluestone.png
+NO ./assets/greystone.xpm
+SO ./assets/mossy.xpm
+WE ./assets/purplestone.xpm
+EA ./assets/bluestone.xpm
 
 
 

@@ -13,17 +13,13 @@
 #include "cub3D.h"
 
 /*SWITCH WITH MAP GIVEN IN CONFIGUATION FILE*/
-char	map[10][8] = {
-	{'1', '1', '1', '1', '1', '1', '1', '1'}, 
-	{'1', '0', '1', '0', '0', '0', '0', '1'},
-	{'1', '0', '1', '0', '0', '0', '0', '1'},
-	{'1', '0', '0', '0', '0', '1', '0', '1'},
-	{'1', '0', '0', '0', '0', '1', '0', '1'},
-	{'1', '0', '1', '0', '0', '0', '0', '1'},
-	{'1', '0', '0', '0', '0', '0', '0', '1'},
-	{'1', '0', '0', '0', '1', '0', '0', '1'},
-	{'1', '0', '0', '1', '0', '0', '0', '1'},
-	{'1', '1', '1', '1', '1', '1', '1', '1'}};
+char	map[10][8] = {{'1', '1', '1', '1', '1', '1', '1', '1'}, {'1', '0', '1',
+		'0', '0', '0', '0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'},
+		{'1', '0', '0', '0', '0', '1', '0', '1'}, {'1', '0', '0', '0', '0', '1',
+		'0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'}, {'1', '0', '0',
+		'0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '1', '0', '0', '1'},
+		{'1', '0', '0', '1', '0', '0', '0', '1'}, {'1', '1', '1', '1', '1', '1',
+		'1', '1'}};
 /////////////////////////////////////////////
 
 bool	touch(int x, int y)
@@ -33,11 +29,6 @@ bool	touch(int x, int y)
 	if (map[y][x] == '1')
 		return (true);
 	return (false);
-}
-
-int	rgb_to_int(int r, int g, int b)
-{
-	return ((r << 16) | (g << 8) | (b));
 }
 
 void	pixel_put(t_img *img, int x, int y, int color)
@@ -50,47 +41,6 @@ void	pixel_put(t_img *img, int x, int y, int color)
 	offset = (y * img->line_len + x * (img->bits_per_pixel / 8));
 	pixel = img->addr + offset;
 	*(int *)pixel = color;
-}
-
-//DISPLAY OF EACH WALL //DEPEND ON TEXTUE ???
-void	draw_square(int x, int y, int size, t_img *img)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	j = -1;
-	x *= BLOCK;
-	y *= BLOCK;
-	while (j++ < size)
-	{
-		pixel_put(img, x + j, y, 0xFFFFFF);
-		pixel_put(img, x, y + j, 0xFFFFFF);
-	}
-	while (i++ < size)
-	{
-		pixel_put(img, x + i, y + j, 0xFFFFFF);
-		pixel_put(img, x + j, y + i, 0xFFFFFF);
-	}
-}
-//DISPLAY OF MAP // WBU TEXTUE ??
-void	draw_map(char map[10][8], t_img *img)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < 10)
-	{
-		x = 0;
-		while (x < 8)
-		{
-			if (map[y][x] == '1')
-				draw_square(x, y, BLOCK, img);
-			x++;
-		}
-		y++;
-	}
 }
 
 void	clear(t_game *game)
@@ -120,7 +70,6 @@ int	render(t_game *game)
 	clear(game);
 	pixel_put(game->img, player->pos_x * BLOCK, player->pos_y * BLOCK,
 		0xFFFF00);
-	draw_map(map, game->img);
 	cast_rays(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->mlx_img, 0,
 		0);
@@ -130,15 +79,17 @@ int	render(t_game *game)
 int	main(int ac, char **av)
 {
 	t_game	*game;
+	int		i;
 
-	if (parsing(ac, av))
+	i = 0;
+	game = malloc(sizeof(t_game));
+	if (parsing(ac, av, game))
 		return (-1);
 	else
 	{
 		dprintf(STDERR_FILENO, "\nEND OF PARSING\n");
 		return (0);
 	}
-	game = malloc(sizeof(t_game));
 	init(game);
 	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);

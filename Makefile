@@ -21,6 +21,8 @@ FILES = main\
 		parsing_map_bound\
 		parsing_color\
 		parsing_libft\
+		debug\
+		texture\
 
 LIBFT = libft/libft.a
 LIBFT_DIR = libft
@@ -82,7 +84,7 @@ re:
 	@$(call blue,"🗑️  $(NAME) fcleaned")
 
 
-vpath %.c $(SRC_DIR) $(SRC_DIR)gnl
+vpath %.c $(SRC_DIR) $(SRC_DIR)gnl $(SRC_DIR)parsing $(SRC_DIR)render
 
 .PHONY: all clean fclean re
 
