@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 16:37:32 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:41:40 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,24 +88,20 @@ char    **copy_map(char **original, int height)
 int add_pos_game(int x, int y, int found, t_game *game)
 {
     char    orientation;
-    double  angle;
+
     if (!found)
         return (-1);
     game->player->pos_x = x;
     game->player->pos_y = y;
     orientation = game->map[y][x];
     dprintf(STDERR_FILENO, RED "orientation is %c\n" RESET, orientation);
-    angle = -1;
     if (orientation == 'N')
-        angle = M_PI/2;
+        game->player->angle = M_PI/2;
     else if (orientation == 'S')
-        angle = 3 * M_PI / 2;
+        game->player->angle = 3 * M_PI / 2;
     else if (orientation == 'E')
-        angle = 0;
+        game->player->angle = 0;
     else if (orientation == 'W')
-        angle = M_PI;
-    if (angle == -1)
-        return (-1);
-    game->player->angle = angle;
-    return (1);
+        game->player->angle = M_PI;
+    return (game->player->angle);
 }

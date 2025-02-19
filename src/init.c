@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 21:37:18 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/19 16:31:03 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:39:53 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	init(t_game *game)
 
 void	init_player(t_player *player)
 {
-	player->fov = (60 * M_PI) / 180; //pb ici ????
-	player->pos_x = -1; //player pos to update in the map
-	player->pos_y = -1; //player pos to update in the map
+	player->fov = (60 * M_PI) / 180;
+	player->pos_x = -1;
+	player->pos_y = -1;
 	player->dir_x = 0;
 	player->dir_y = 0;
 	player->plane_x = 0;
 	player->plane_y = 0;
-	player->angle = -1; //to update depending on NSEW orientation
+	player->angle = -1;
 	player->key_up = false;
 	player->key_right = false;
 	player->key_down = false;
