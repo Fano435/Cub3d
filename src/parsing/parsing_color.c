@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 13:56:02 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:06:09 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 /*Return the id corresponding to the color (floor or ceilling))*/
 int is_color(char *line, int *id)
 {
+    int i;
+
+    i = 0;
+    while (is_space(line[i]))
+        i++;
     *id = 0;
-    if (!my_strncmp(line, "F", ft_strlen("F")))
+    if (!my_strncmp(&line[i], "F", ft_strlen("F")))
         *id = F;
-    else if (!my_strncmp(line, "C", ft_strlen("C")))
+    else if (!my_strncmp(&line[i], "C", ft_strlen("C")))
         *id = C;
     // dprintf(STDERR_FILENO, "at the end of is_color, identifier is %d\n", *id);
     return (*id);
