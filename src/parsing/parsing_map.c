@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 10:42:29 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:10:51 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,6 @@ int parse_map(char *config_file, int done, int fd_config)
         return (-1); //make sure to add proper error_msg
     done++;
     free_map(map); //to move at the end of the code once I merge with the rest
+    close(fd_config);
     return (0);
 }
