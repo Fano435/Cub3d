@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:36:24 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/19 14:14:55 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:58:57 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int	main(int ac, char **av)
 	parsing(ac, av, game);
 	dprintf(STDERR_FILENO, "end of parsing\n");
 	return (0);
-	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
-	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);
-	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, game);
-	mlx_loop_hook(game->mlx_ptr, render, game);
-	mlx_loop(game->mlx_ptr);
+	// mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
+	// mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);
+	// mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, game);
+	// mlx_loop_hook(game->mlx_ptr, render, game);
+	// mlx_loop(game->mlx_ptr);
 	return (0);
 }

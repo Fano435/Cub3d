@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 14:35:37 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:04:07 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,19 @@
 /*Return the id corresponding to the texture*/
 int is_texture(char *line, int *id)
 {
-    *id = 0;
-    if (!my_strncmp(line, "NO", ft_strlen("NO")))
+    int i;
+
+    i = 0;
+    while (is_space(line[i]))
+        i++;
+    *id = 0;    
+    if (!my_strncmp(&line[i], "NO", ft_strlen("NO")))
         *id = NO;
-    else if (!my_strncmp(line, "SO", ft_strlen("SO")))
+    else if (!my_strncmp(&line[i], "SO", ft_strlen("SO")))
         *id = SO;
-    else if (!my_strncmp(line, "WE", ft_strlen("WE")))
+    else if (!my_strncmp(&line[i], "WE", ft_strlen("WE")))
         *id = WE;
-    else if (!my_strncmp(line, "EA", ft_strlen("EA")))
+    else if (!my_strncmp(&line[i], "EA", ft_strlen("EA")))
         *id = EA;
     dprintf(STDERR_FILENO, "at the end of is_texture, identifier is %d\n", *id);
     return (*id);

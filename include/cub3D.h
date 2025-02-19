@@ -182,10 +182,10 @@ char			**copy_map(char **original, int height);
 # define LEFT 65361
 # define RIGHT 65363
 
-# define NO 0
-# define SO 1
-# define WE 2
-# define EA 3
+# define NO 2
+# define SO 3
+# define WE 4
+# define EA 5
 # define C 6
 # define F 7
 

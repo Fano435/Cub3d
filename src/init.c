@@ -6,26 +6,27 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 21:37:18 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/19 14:14:29 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:57:52 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
+# define M_PI 3.14159265358979323846
+
 void	init(t_game *game)
 {
 	void	*win;
 
-	//CHECK IF NECESSARY OR NOT WITH FT_CALLOC
-	// game->img = malloc(sizeof(t_img)); 
-	// //malloc for the textures
-	// game->img_text_n = malloc(sizeof(t_img));
-	// game->img_text_s = malloc(sizeof(t_img));
-	// game->img_text_e = malloc(sizeof(t_img));
-	// game->img_text_w = malloc(sizeof(t_img));
-	// //until here
-	// game->player = malloc(sizeof(t_player));
-	// game->ray = malloc(sizeof(t_ray));
+	game->img = malloc(sizeof(t_img)); 
+	//malloc for the textures
+	game->img_text_n = malloc(sizeof(t_img));
+	game->img_text_s = malloc(sizeof(t_img));
+	game->img_text_e = malloc(sizeof(t_img));
+	game->img_text_w = malloc(sizeof(t_img));
+	//until here
+	game->player = malloc(sizeof(t_player));
+	game->ray = malloc(sizeof(t_ray));
 	init_player(game->player);
 	game->mlx_ptr = mlx_init();
 	win = mlx_new_window(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
