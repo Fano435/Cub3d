@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:36:24 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/11 10:35:19 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 11:27:49 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,9 @@ int	main(int ac, char **av)
 
 	i = 0;
 	game = malloc(sizeof(t_game));
-	if (parsing(ac, av, game))
-		return (-1);
-	else
-	{
-		dprintf(STDERR_FILENO, "\nEND OF PARSING\n");
-		return (0);
-	}
+	parsing(ac, av, game);
+	dprintf(STDERR_FILENO, "end of parsing\n");
+	return (0);
 	init(game);
 	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);

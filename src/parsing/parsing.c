@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/11 14:43:26 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 11:31:38 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	arg_parsing(int argc, char **argv)
 	if (argc != 2)
 		return (error_msg(0));
 	len = ft_strlen(argv[1]);
-	if (!(argv[1][len - 1] == 'b' && argv[1][len - 2] == 'u' && argv[1][len
-			- 3] == 'c' && argv[1][len - 4] == '.'))
+	if (!(argv[1][len - 1] == 'b' && argv[1][len - 2] == 'u'
+		&& argv[1][len - 3] == 'c' && argv[1][len - 4] == '.'))
 		return (error_msg(1));
 	fd_config = open(argv[1], O_RDONLY);
 	if (fd_config == -1)
@@ -71,38 +71,42 @@ int	parse_texture(char *line, int *done, int id, t_game *game)
 }
 
 /*Main parsing function -> A COUPER EN 2*/
-int	parsing(int argc, char **argv, t_game *game)
+int     parsing(int argc, char **argv)
 {
-	char	*line;
-	int		fd_config;
-	int		done;
-	int		id;
+    char    *line;
+    int     fd_config;
+    int     done;
+    int     id;
 
-	id = 0;
-	fd_config = arg_parsing(argc, argv);
-	if (fd_config == -1)
-		return (-1);
-	done = 0;
-	while (1)
-	{
-		line = get_next_line(fd_config);
-		if (!line)
-			break ;
-		dprintf(STDOUT_FILENO, "line is: %s", line);
-		if (is_texture(line, &id) && parse_texture(line, &done, id, game))
-		{
-			dprintf(STDERR_FILENO, "Error while parsing textures\n");
-			return (-1);
-		}
-		if (is_color(line, &id) && parse_color(line, &done, id, game))
-		{
-			dprintf(STDERR_FILENO, "Error while parsing colors\n");
-			return (-1);
-		}
-		free(line);
-	}
-	// if (parse_map(argv[1], done, fd_config))
-	// 	return (-1);
-	// close(fd_config);
-	return (0);
+    fd_config = arg_parsing(argc, argv);
+    if (fd_config == -1)
+        return (-1);
+    done = 0;
+    while (1)
+    {
+        line = get_next_line(fd_config);
+        if (!line)
+            break;
+        // dprintf(STDOUT_FILENO, "line is: %s", line);
+        if (is_texture(line, &id) && parse_texture(line, &done, &id))
+        {
+            dprintf(STDERR_FILENO, "Error while parsing textures\n");
+            return (-1);
+        }
+        if (is_color(line, &id) && parse_color(line, &done, &id))
+        {
+            dprintf(STDERR_FILENO, "Error while parsing colors\n");
+            return (-1);
+        }
+        free(line);
+    }
+    if (done > 6)
+    {
+        dprintf(STDERR_FILENO, "replace by error msg: too many colors or too many textures\n");
+        return (-1);
+    }
+    if (parse_map(argv[1], done, fd_config))
+            return (-1);
+    close(fd_config);
+    return (0);
 }
