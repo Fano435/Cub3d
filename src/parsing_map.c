@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/18 14:48:48 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 10:23:22 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,32 @@
 
 /*Get the heigh of the map to alloc the char ** 
 & check that the map description contains ONLY authorized characters*/
-int get_height(int fd_config, char *config_file)
+int get_height(int fd_config)
 {
     int     height;
     int     ret_map;
     char    *line;
+    int     player_pos;
+    int     stop;
 
     height = 0;
-    close(fd_config);
-    fd_config = open(config_file, O_RDONLY);
+    player_pos = 0;
+    stop = 0;
     while (1)
     {
-        ret_map = 0;
         line = get_next_line(fd_config);
         if (!line)
-            break; 
-        ret_map = is_map(line);
+            break;
+        if (!stop)
+            ret_map = is_map(line, &player_pos);
         if (ret_map == 1)
             height++;
-        else if (ret_map == -1 
-                || (height > 0 && !ret_map))
-            return (-1);
+        else if (ret_map == -1 || (height > 0 && !ret_map))
+            stop = 1;
         free(line);
     }
+    if (stop)
+        return (-1);
     return (height);
 }
 
@@ -58,7 +61,7 @@ char **file_to_array(int fd_config, char *config_file, int height)
         line = get_next_line(fd_config);
         if (!line)
             break;
-        if (is_map(line) == 1) //externaliser
+        if (is_map(line, NULL) == 1) //externaliser
         {
             map[i] = my_strdup(line);
             i++;
@@ -79,13 +82,12 @@ int parse_map(char *config_file, int done, int fd_config)
         return (error_msg(4));
     close(fd_config);
     fd_config = open(config_file, O_RDONLY);
-    height = get_height(fd_config, config_file);
+    height = get_height(fd_config);
     if (height < 1)
         return (-1);
     map = file_to_array(fd_config, config_file, height);
     if (!map)
         return (-1); //chekc proper error msg
-    
     print_map(map); //only for debug
     if (valid_map(map, height) == -1)
         return (-1); //make sure to add proper error_msg

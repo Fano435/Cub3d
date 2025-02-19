@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:49:07 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 09:42:37 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 09:46:45 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void    flood_fill(char **map, int x, int y, int height)
     flood_fill(map, x, y + 1, height);
 }
 
-/*Check the flooded map to make sure that no space filled is a limit of the map*/
+/*Check the flooded map to make sure that the position filled are not limits of the map
+or adjacent to spaces*/
 int check_flooded_map(char **map, int height)
 {
     int x;
