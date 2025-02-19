@@ -6,13 +6,11 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 21:37:18 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/19 14:57:52 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:31:03 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
-
-# define M_PI 3.14159265358979323846
 
 void	init(t_game *game)
 {

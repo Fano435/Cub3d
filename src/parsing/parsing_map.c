@@ -6,13 +6,14 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 15:29:13 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:34:06 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-/*Check if the line is part of the map/contain only authorize map characters*/
+/*Check if the line is part of the map/contain only only 1, 0, spaces
+and no more than one player position charater*/
 int is_map(char *line, int *player_pos)
 {
     int pos;
@@ -125,6 +126,7 @@ int get_starting_pos(char **map, t_game *game)
             break;
         y++;
     }
+    dprintf(STDERR_FILENO, "player starts in pos x: %d, y is %d\n", x, y); //for debug
     return (add_pos_game(x, y, found, game));
 }
 
@@ -143,11 +145,12 @@ int parse_map(char *config_file, int done, int fd_config, t_game *game)
         return (-1);
     map = file_to_array(fd_config, config_file, height);
     if (!map)
-        return (-1); //chekc proper error msg
-    print_map(map); //only for debug
+        return (error_msg_map(4)); //check proper error msg
+    game->map = map;
     if (get_starting_pos(map, game) == -1)
         return (-1);
-    if (valid_map(map, height, game) == -1)
+    print_map(map); //only for debug
+    if (valid_map(height, game) == -1)
         return (-1); //make sure to add proper error_msg
     done++;
     free_map(map); //to move at the end of the code once I merge with the rest

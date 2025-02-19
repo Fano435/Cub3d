@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:49:07 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 15:24:34 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:26:53 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,40 +54,19 @@ int check_flooded_map(char **map, int height)
 }
 
 /*Main function to verify the converted map is correct*/
-int valid_map(char **map, int height, t_game *game)
+int valid_map(int height, t_game *game)
 {
     int     x;
     int     y;
-    int     found;
     char    **map_copy;
 
-    x = 0;
-    y = 0;
-    found = 0;
-    while (map[y]) //sera externaliser dans une fonciton une fois la struct rempli
-    {
-        x = 0;
-        while (map[y][x])
-        {
-            if (map[y][x] == 'N' || map[y][x] == 'W'
-                || map[y][x] == 'E' || map[y][x] == 'S')
-            {
-                found = 1;
-                break;
-            }
-            x++;
-        }
-        if (found == 1)
-            break;
-        y++;
-    }///////////////////////////fonction se finira ici
-    dprintf(STDERR_FILENO, "player starts in pos x: %d, y is %d\n", x, y);
-    map_copy = copy_map(map, height);
+    x = game->player->pos_x;
+    y = game->player->pos_y;
+    map_copy = copy_map(game->map, height);
     flood_fill(map_copy, x, y, height);
     if (check_flooded_map(map_copy, height) == -1)
         return (free_map(map_copy), -1);
     free_map(map_copy);
     dprintf(STDERR_FILENO, RED "Map is valid !\n" RESET);
-    game->map = map;
     return (1);
 }

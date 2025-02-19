@@ -143,9 +143,10 @@ int				parse_map(char *config_file, int done, int fd_config, t_game *game);
 int				get_height(int fd_config);
 char			**file_to_array(int fd_config, char *config_file, int height);
 int				is_map(char *line, int *player_pos);
+int				get_starting_pos(char **map, t_game *game);
 
 //parsing_map_bound.c
-int				valid_map(char **map, int height, t_game *game);
+int				valid_map(int height, t_game *game);
 void			flood_fill(char **map, int x, int y, int height);
 int				check_flooded_map(char **map, int height);
 
@@ -154,6 +155,7 @@ int				error_msg_map(int error_code);
 void			print_map(char **map);
 void			free_map(char **map);
 char			**copy_map(char **original, int height);
+int				add_pos_game(int x, int y, int found, t_game *game);
 
 
 # define WIN_WIDTH 960
@@ -177,6 +179,8 @@ char			**copy_map(char **original, int height);
 # define EA 5
 # define C 6
 # define F 7
+
+# define M_PI 3.14159265358979323846
 
 // FOR DEBUG ONLY//
 # define RED "\x1B[31m"

@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 15:15:08 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:21:25 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int     parsing(int argc, char **argv, t_game *game)
             return (-1);
         free(line);
     }
-    if (parse_map(argv[1], done, fd_config))
+    if (parse_map(argv[1], done, fd_config, game))
             return (-1);
     return (0);
 }

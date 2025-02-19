@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 15:31:01 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:37:32 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int error_msg_map(int error_code)
         msg = "Map is not bound by walls\n";
     if (error_code == 3)
         msg = "Map description cannot contain more than 1 starting position for the player\n";
+    if (error_code == 4)
+        msg = "Map description could not be converted into array\n";
     write(STDERR_FILENO, msg, ft_strlen(msg));
     return (-1);
 }
@@ -85,9 +87,25 @@ char    **copy_map(char **original, int height)
 /*Adding the starting position and orientation of the player*/
 int add_pos_game(int x, int y, int found, t_game *game)
 {
+    char    orientation;
+    double  angle;
     if (!found)
         return (-1);
     game->player->pos_x = x;
     game->player->pos_y = y;
+    orientation = game->map[y][x];
+    dprintf(STDERR_FILENO, RED "orientation is %c\n" RESET, orientation);
+    angle = -1;
+    if (orientation == 'N')
+        angle = M_PI/2;
+    else if (orientation == 'S')
+        angle = 3 * M_PI / 2;
+    else if (orientation == 'E')
+        angle = 0;
+    else if (orientation == 'W')
+        angle = M_PI;
+    if (angle == -1)
+        return (-1);
+    game->player->angle = angle;
     return (1);
 }
