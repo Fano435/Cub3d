@@ -33,21 +33,21 @@ void	draw_square(int x, int y, int size, t_img *img)
 	}
 }
 /*REPLACED BY PRINT_MAP IN PARSING_MAP_UTILS*/
-// void	draw_map(char map[10][8], t_img *img)
-// {
-// 	int	x;
-// 	int	y;
+void	draw_map(char **map, t_img *img)
+{
+	int	i;
+	int	j;
 
-// 	y = 0;
-// 	while (y < 10)
-// 	{
-// 		x = 0;
-// 		while (x < 8)
-// 		{
-// 			if (map[y][x] == '1')
-// 				draw_square(x, y, BLOCK, img);
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == '1')
+				draw_square(j, i, BLOCK, img);
+			j++;
+		}
+		i++;
+	}
+}

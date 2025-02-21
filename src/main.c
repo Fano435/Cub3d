@@ -12,19 +12,11 @@
 
 #include "cub3D.h"
 
-/*SWITCH WITH MAP GIVEN IN CONFIGUATION FILE*/
-// char	map[10][8] = {{'1', '1', '1', '1', '1', '1', '1', '1'}, {'1', '0', '1',
-// 		'0', '0', '0', '0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'},
-// 		{'1', '0', '0', '0', '0', '1', '0', '1'}, {'1', '0', '0', '0', '0', '1',
-// 		'0', '1'}, {'1', '0', '1', '0', '0', '0', '0', '1'}, {'1', '0', '0',
-// 		'0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '1', '0', '0', '1'},
-// 		{'1', '0', '0', '1', '0', '0', '0', '1'}, {'1', '1', '1', '1', '1', '1',
-// 		'1', '1'}};
-/////////////////////////////////////////////
-
 bool	touch(int x, int y, t_game *game)
 {
-	if (x > WIN_WIDTH / BLOCK || x < 0 || y > WIN_HEIGHT / BLOCK || y < 0)
+	// printf("%d %d\n", x, y);
+	// Remplacer x par map_width une fois qu'il sera recupere
+	if (x > 29 || x <= 0 || y >= game->map_height || y <= 0)
 		return (true);
 	if (game->map[y][x] == '1')
 		return (true);
@@ -70,6 +62,7 @@ int	render(t_game *game)
 	clear(game);
 	pixel_put(game->img, player->pos_x * BLOCK, player->pos_y * BLOCK,
 		0xFFFF00);
+	// draw_map(game->map, game->img);
 	cast_rays(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->mlx_img, 0,
 		0);

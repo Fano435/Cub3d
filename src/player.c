@@ -25,13 +25,13 @@ void	rotate_player(t_player *player, t_game *game)
 	{
 		player->angle -= angle_speed;
 		if (player->angle < 0)
-			player->angle = 2 * M_PI;
+			player->angle += 2 * M_PI;
 	}
 	if (player->rotate_r)
 	{
 		player->angle += angle_speed;
 		if (player->angle > 2 * M_PI)
-			player->angle = 0;
+			player->angle -= 2 * M_PI;
 	}
 	player->dir_x = cos(player->angle);
 	player->dir_y = sin(player->angle);

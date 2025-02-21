@@ -12,22 +12,22 @@
 
 #include "cub3D.h"
 
-t_img	get_texture_img(t_game *game, t_ray *ray)
+t_img	*get_texture_img(t_game *game, t_ray *ray)
 {
 	// Si le rayon rencontre un mur vertical
 	if (ray->side)
 	{
 		if (cos(ray->angle) > 0)
-			return (*(game->img_text_e));
+			return ((game->img_text_e));
 		else
-			return (*(game->img_text_w));
+			return ((game->img_text_w));
 	}
 	else
 	{
 		if (sin(ray->angle) > 0)
-			return (*(game->img_text_s));
+			return ((game->img_text_s));
 		else
-			return (*(game->img_text_n));
+			return ((game->img_text_n));
 	}
 }
 
@@ -53,25 +53,26 @@ int	pixel_get(t_img *texture, double x, double y)
 
 int	get_pixel_color(t_game *game, t_ray *ray, int y)
 {
-	t_img	texture;
+	t_img	*texture;
 	int		color;
 	double	pixel_x;
 	double	pixel_y;
 
 	color = 0x00000000;
 	texture = get_texture_img(game, ray);
-	if (!texture.path)
+	if (!texture->path)
 		return (color);
-	if (!texture.addr)
+	if (!texture->addr)
 	{
-		texture.mlx_img = mlx_xpm_file_to_image(game->mlx_ptr, texture.path,
-				&texture.width, &texture.height);
-		texture.addr = mlx_get_data_addr(texture.mlx_img,
-				&texture.bits_per_pixel, &texture.line_len, &texture.endian);
+		// printf("TEST\n");
+		texture->mlx_img = mlx_xpm_file_to_image(game->mlx_ptr, texture->path,
+				&texture->width, &texture->height);
+		texture->addr = mlx_get_data_addr(texture->mlx_img,
+				&texture->bits_per_pixel, &texture->line_len, &texture->endian);
 	}
-	pixel_x = get_pixel_x(texture, ray);
-	pixel_y = (y * 1.0 / WIN_HEIGHT) * texture.height;
-	color = pixel_get(&texture, pixel_x, pixel_y);
+	pixel_x = get_pixel_x(*texture, ray);
+	pixel_y = (y * 1.0 / WIN_HEIGHT) * texture->height;
+	color = pixel_get(texture, pixel_x, pixel_y);
 	// printf("Text width %d, Text height %d Text x : %f, Text y :%f, y :%d\n",
 	// 	texture.width, texture.height, pixel_x, pixel_y, y);
 	// printf("Color : %d\n", color);

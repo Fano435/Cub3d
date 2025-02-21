@@ -35,7 +35,6 @@ typedef struct s_img
 	int			height;
 }				t_img;
 
-
 typedef struct s_player
 {
 	double		pos_x;
@@ -80,6 +79,7 @@ typedef struct s_game
 	t_img		*img_text_w;
 	int			floor_color;
 	int			ceiling_color;
+	int			map_height;
 	t_player	*player;
 	t_ray		*ray;
 }				t_game;
@@ -95,7 +95,7 @@ bool			touch(int x, int y, t_game *game);
 void			pixel_put(t_img *img, int x, int y, int color);
 
 // debug.c
-// void			draw_map(char map[10][8], t_img *img);
+void			draw_map(char **map, t_img *img);
 void			draw_square(int x, int y, int size, t_img *img);
 
 // events.c
@@ -139,13 +139,14 @@ int				get_color(char *line, int *pos, int first_nb);
 int				parse_color(char *line, int *done, int id, t_game *game);
 
 // parsing_map.c
-int				parse_map(char *config_file, int done, int fd_config, t_game *game);
+int				parse_map(char *config_file, int done, int fd_config,
+					t_game *game);
 int				get_height(int fd_config);
 char			**file_to_array(int fd_config, char *config_file, int height);
 int				is_map(char *line, int *player_pos);
 int				get_starting_pos(char **map, t_game *game);
 
-//parsing_map_bound.c
+// parsing_map_bound.c
 int				valid_map(int height, t_game *game);
 void			flood_fill(char **map, int x, int y, int height);
 int				check_flooded_map(char **map, int height);
@@ -157,14 +158,13 @@ void			free_map(char **map);
 char			**copy_map(char **original, int height);
 int				add_pos_game(int x, int y, int found, t_game *game);
 
-
 # define WIN_WIDTH 960
 # define WIN_HEIGHT 540
-# define BLOCK 48
+# define BLOCK 32
 # define FOV 60
 
-# define X 0
-# define Y 1
+// # define X 0
+// # define Y 1
 # define W 119
 # define A 97
 # define S 115

@@ -50,8 +50,8 @@ void	render_wall(t_game *game, t_ray *ray, int pos)
 		// 	pixel_put(game->img, pos, y, 0xFF0000);
 		// else
 		// 	pixel_put(game->img, pos, y, 0xAA0000);
-		// pixel_put(game->img, pos, y, get_pixel_color(game, ray, y));
-		get_pixel_color(game, ray, y);
+		pixel_put(game->img, pos, y, get_pixel_color(game, ray, y));
+		// get_pixel_color(game, ray, y);
 		y--;
 	}
 }
