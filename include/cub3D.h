@@ -133,8 +133,7 @@ int				parse_texture(char *line, int *done, int id, t_game *game);
 int				is_space(char c);
 int				is_digit(char c);
 int				my_strncmp(const char *s1, const char *s2, int n);
-char			*my_strcpy(char *dest, char *src);
-char			*my_strdup(char *s);
+
 
 // parsing_color.c
 int				is_color(char *line, int *id);
@@ -144,9 +143,10 @@ int				parse_color(char *line, int *done, int id, t_game *game);
 // parsing_map.c
 int				parse_map(char *config_file, int done, int fd_config,
 					t_game *game);
-int				get_height(int fd_config);
-char			**file_to_array(int fd_config, char *config_file, int height);
-int				is_map(char *line, int *player_pos);
+int				get_height(int fd_config, t_game *game);
+char			**file_to_array(int fd_config, char *config_file, int height, 
+					t_game *game);
+int				is_map(char *line, int *player_pos, t_game *game);
 int				get_starting_pos(char **map, t_game *game);
 
 // parsing_map_bound.c

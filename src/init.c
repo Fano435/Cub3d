@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 21:37:18 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/19 17:20:07 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:59:31 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,10 @@ void	init(t_game *game)
 	win = mlx_new_window(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
 	game->win_ptr = win;
 	init_img(game);
-	// init_img(game->img_text_n, game);
-	// init_img(game->img_text_s, game);
-	// init_img(game->img_text_e, game);
-	// init_img(game->img_text_w, game);
 	game->floor_color = -1;
 	game->ceiling_color = -1;
+	game->map_height = -1;
+	game->map_width = -1;
 }
 
 void	init_player(t_player *player)

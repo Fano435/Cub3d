@@ -6,74 +6,75 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 17:14:40 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:22:03 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
 /*Return the id corresponding to the texture*/
-int is_texture(char *line, int *id)
+int	is_texture(char *line, int *id)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (is_space(line[i]))
-        i++;
-    *id = 0;    
-    if (!my_strncmp(&line[i], "NO", ft_strlen("NO")))
-        *id = NO;
-    else if (!my_strncmp(&line[i], "SO", ft_strlen("SO")))
-        *id = SO;
-    else if (!my_strncmp(&line[i], "WE", ft_strlen("WE")))
-        *id = WE;
-    else if (!my_strncmp(&line[i], "EA", ft_strlen("EA")))
-        *id = EA;
-    // dprintf(STDERR_FILENO, "at the end of is_texture, identifier is %d\n", *id);
-    return (*id);
+	i = 0;
+	while (is_space(line[i]))
+		i++;
+	*id = 0;
+	if (!my_strncmp(&line[i], "NO", ft_strlen("NO")))
+		*id = NO;
+	else if (!my_strncmp(&line[i], "SO", ft_strlen("SO")))
+		*id = SO;
+	else if (!my_strncmp(&line[i], "WE", ft_strlen("WE")))
+		*id = WE;
+	else if (!my_strncmp(&line[i], "EA", ft_strlen("EA")))
+		*id = EA;
+	return (*id);
 }
 
 /*Get the texture file*/
-int get_texture_file(char **texture_file, char *line, int pos)
+int	get_texture_file(char **texture_file, char *line, int pos)
 {
-    int     len;
+	int	len;
 
-    len = 0;
-    while (line[pos + len] && !is_space(line[pos + len]))
-        len++;
-    *texture_file = (char *)malloc(sizeof(char) * (len + 1));
-    if (!(*texture_file))
-        return (error_msg(6));
-    while (line[pos + len])
-    {
-        if (!is_space(line[pos + len]))
-            return (error_msg(3));
-        len++;
-    }
-    len = 0;
-    while (line[pos + len] && !is_space(line[pos + len]))
-    {
-        (*texture_file)[len] = line[pos + len];
-        len++;
-    }
-    (*texture_file)[len] = '\0';
-    return (0);
+	len = 0;
+	while (line[pos + len] && !is_space(line[pos + len]))
+		len++;
+	*texture_file = (char *)malloc(sizeof(char) * (len + 1));
+	if (!(*texture_file))
+		return (error_msg(6));
+	while (line[pos + len])
+	{
+		if (!is_space(line[pos + len]))
+			return (error_msg(3));
+		len++;
+	}
+	len = 0;
+	while (line[pos + len] && !is_space(line[pos + len]))
+	{
+		(*texture_file)[len] = line[pos + len];
+		len++;
+	}
+	(*texture_file)[len] = '\0';
+	return (0);
 }
 
-void    add_text_to_game(char *texture_file, int id, t_game *game)
+/*Adding the parsed texture to the appropriate 
+variable of the game struct*/
+void	add_text_to_game(char *texture_file, int id, t_game *game)
 {
-    t_img   *curr_text;
+	t_img	*curr_text;
 
-    if (id == NO)
-        curr_text = game->img_text_n;
-    else if (id == SO)
-        curr_text = game->img_text_s;
-    else if (id == WE)
-        curr_text = game->img_text_w;
-    else //i.e. is EA
-        curr_text = game->img_text_e;
-    curr_text->path = texture_file;
-    return ;
+	if (id == NO)
+		curr_text = game->img_text_n;
+	else if (id == SO)
+		curr_text = game->img_text_s;
+	else if (id == WE)
+		curr_text = game->img_text_w;
+	else
+		curr_text = game->img_text_e;
+	curr_text->path = texture_file;
+	return ;
 }
 
 /*Check the texture line for errors & try to opens it
@@ -91,13 +92,11 @@ int	parse_texture(char *line, int *done, int id, t_game *game)
 		return (error_msg(3));
 	if (get_texture_file(&texture_file, line, pos))
 		return (-1);
-	dprintf(STDERR_FILENO, RED "texture file is %s\n" RESET, texture_file);
 	fd_texture = open(texture_file, O_RDONLY);
 	if (fd_texture == -1)
 		return (error_msg(5));
 	close(fd_texture);
-    add_text_to_game(texture_file, id, game);
+	add_text_to_game(texture_file, id, game);
 	(*done)++;
-	// free(texture_file);
 	return (0);
 }
