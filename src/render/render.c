@@ -12,6 +12,18 @@
 
 #include "cub3D.h"
 
+void	pixel_put(t_img *img, int x, int y, int color)
+{
+	char	*pixel;
+	int		offset;
+
+	if (x >= WIN_WIDTH || x < 0 || y >= WIN_HEIGHT || y < 0)
+		return ;
+	offset = (y * img->line_len + x * (img->bits_per_pixel / 8));
+	pixel = img->addr + offset;
+	*(int *)pixel = color;
+}
+
 void	render_floor_ceiling(t_game *game, t_ray *ray, int pos)
 {
 	int	ceiling_pixel;
@@ -46,12 +58,7 @@ void	render_wall(t_game *game, t_ray *ray, int pos)
 	(void)pos;
 	while (y > ray->draw_end)
 	{
-		// if (ray->side == 1)
-		// 	pixel_put(game->img, pos, y, 0xFF0000);
-		// else
-		// 	pixel_put(game->img, pos, y, 0xAA0000);
 		pixel_put(game->img, pos, y, get_pixel_color(game, ray, y));
-		// get_pixel_color(game, ray, y);
 		y--;
 	}
 }

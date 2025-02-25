@@ -64,17 +64,13 @@ int	get_pixel_color(t_game *game, t_ray *ray, int y)
 		return (color);
 	if (!texture->addr)
 	{
-		// printf("TEST\n");
 		texture->mlx_img = mlx_xpm_file_to_image(game->mlx_ptr, texture->path,
 				&texture->width, &texture->height);
 		texture->addr = mlx_get_data_addr(texture->mlx_img,
 				&texture->bits_per_pixel, &texture->line_len, &texture->endian);
 	}
 	pixel_x = get_pixel_x(*texture, ray);
-	pixel_y = (y * 1.0 / WIN_HEIGHT) * texture->height;
+	pixel_y = ((y - ray->draw_end) * 1.0 * texture->height / ray->line_height);
 	color = pixel_get(texture, pixel_x, pixel_y);
-	// printf("Text width %d, Text height %d Text x : %f, Text y :%f, y :%d\n",
-	// 	texture.width, texture.height, pixel_x, pixel_y, y);
-	// printf("Color : %d\n", color);
 	return (color);
 }

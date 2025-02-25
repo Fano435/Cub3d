@@ -12,29 +12,6 @@
 
 #include "cub3D.h"
 
-bool	touch(int x, int y, t_game *game)
-{
-	// printf("%d %d\n", x, y);
-	// Remplacer x par map_width une fois qu'il sera recupere
-	if (x > 29 || x <= 0 || y >= game->map_height || y <= 0)
-		return (true);
-	if (game->map[y][x] == '1')
-		return (true);
-	return (false);
-}
-
-void	pixel_put(t_img *img, int x, int y, int color)
-{
-	char	*pixel;
-	int		offset;
-
-	if (x >= WIN_WIDTH || x < 0 || y >= WIN_HEIGHT || y < 0)
-		return ;
-	offset = (y * img->line_len + x * (img->bits_per_pixel / 8));
-	pixel = img->addr + offset;
-	*(int *)pixel = color;
-}
-
 void	clear(t_game *game)
 {
 	int	i;
@@ -55,14 +32,8 @@ void	clear(t_game *game)
 
 int	render(t_game *game)
 {
-	t_player	*player;
-
-	player = game->player;
-	rotate_player(player, game);
+	move_player(game, game->player);
 	clear(game);
-	pixel_put(game->img, player->pos_x * BLOCK, player->pos_y * BLOCK,
-		0xFFFF00);
-	// draw_map(game->map, game->img);
 	cast_rays(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->mlx_img, 0,
 		0);

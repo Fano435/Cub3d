@@ -90,8 +90,6 @@ int				get_pixel_color(t_game *game, t_ray *ray, int y);
 // render.c
 void			render_wall(t_game *game, t_ray *ray, int pos);
 void			render_floor_ceiling(t_game *game, t_ray *ray, int pos);
-
-bool			touch(int x, int y, t_game *game);
 void			pixel_put(t_img *img, int x, int y, int color);
 
 // debug.c
@@ -109,7 +107,8 @@ void			init_player(t_player *player);
 void			init_ray(t_ray *ray);
 
 // player.c
-void			rotate_player(t_player *player, t_game *game);
+void			move_player(t_game *game, t_player *player);
+bool			touch(int x, int y, t_game *game);
 
 // raycasting.c
 void			cast_rays(t_game *game);

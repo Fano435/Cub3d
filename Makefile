@@ -84,7 +84,7 @@ re:
 	@$(call blue,"🗑️  $(NAME) fcleaned")
 
 
-vpath %.c $(SRC_DIR) $(SRC_DIR)gnl $(SRC_DIR)parsing $(SRC_DIR)render
+vpath %.c $(SRC_DIR) $(SRC_DIR)gnl $(SRC_DIR)parsing $(SRC_DIR)render $(SRC_DIR)gameplay
 
 .PHONY: all clean fclean re
 
