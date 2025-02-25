@@ -51,7 +51,7 @@ double	get_horizontal_intersections(t_game *game, double angle)
 	pixel = h_check(angle, &h_y, &y_step);
 	x_step = y_step / tan(angle);
 	h_x = player->pos_x + (h_y - player->pos_y) / tan(angle);
-	while (!touch((int)h_x, h_y + pixel, game))
+	while (!touch(h_x, h_y + pixel, game))
 	{
 		h_x += x_step;
 		h_y += y_step;
@@ -75,7 +75,7 @@ double	get_vertical_intersections(t_game *game, double angle)
 	pixel = v_check(angle, &v_x, &x_step);
 	y_step = x_step * tan(angle);
 	v_y = player->pos_y + (v_x - player->pos_x) * tan(angle);
-	while (!touch(v_x + pixel, (int)v_y, game))
+	while (!touch(v_x + pixel, v_y, game))
 	{
 		v_x += x_step;
 		v_y += y_step;

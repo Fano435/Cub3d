@@ -14,12 +14,15 @@
 
 bool	touch(int x, int y, t_game *game)
 {
-	// Remplacer x par map_width une fois qu'il sera recupere
-	if (x > 29 || x <= 0 || y >= game->map_height || y <= 0)
+	int	grid_x;
+	int	grid_y;
+
+	grid_x = (int)(x);
+	grid_y = (int)(y);
+	// Remplacer 29 par map width
+	if (grid_x < 0 || grid_x >= 29 || grid_y < 0 || grid_y >= game->map_height)
 		return (true);
-	if (game->map[y][x] == '1')
-		return (true);
-	return (false);
+	return (game->map[grid_y][grid_x] == '1');
 }
 
 void	handle_rotate(t_player *player)
@@ -70,16 +73,28 @@ void	handle_movement(t_player *player, double *next_x, double *next_y)
 	}
 }
 
-int	will_colide(t_game *game, t_player *player, double x, double y)
+int	will_colide(t_game *game, double x, double y)
 {
-	if (player->pos_x != (int)x && player->pos_y != (int)y)
-	{
-		if (touch(player->pos_x, (int)y, game))
-			return (1);
-		if (touch((int)x, player->pos_y, game))
-			return (1);
-	}
-	return (touch((int)x, (int)y, game));
+	float	radius;
+
+	radius = 0.25;
+	if (touch(x + radius, y + radius, game))
+		return (1);
+	else if (touch(x - radius, y - radius, game))
+		return (1);
+	else if (touch(x + radius, y - radius, game))
+		return (1);
+	else if (touch(x - radius, y + radius, game))
+		return (1);
+	else if (touch(x + radius, y, game))
+		return (1);
+	else if (touch(x - radius, y, game))
+		return (1);
+	else if (touch(x, y + radius, game))
+		return (1);
+	else if (touch(x, y - radius, game))
+		return (1);
+	return (0);
 }
 
 void	move_player(t_game *game, t_player *player)
@@ -91,10 +106,9 @@ void	move_player(t_game *game, t_player *player)
 	next_y = player->pos_y;
 	handle_rotate(player);
 	handle_movement(player, &next_x, &next_y);
-	if (!will_colide(game, player, next_x, next_y))
+	if (!will_colide(game, next_x, next_y))
 	{
 		player->pos_x = next_x;
 		player->pos_y = next_y;
 	}
-	// printf("PosX : %f\nPosY : %f\n", player->pos_x, player->pos_y);
 }
