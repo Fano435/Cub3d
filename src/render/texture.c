@@ -63,10 +63,12 @@ int	get_pixel_color(t_game *game, t_ray *ray, int y)
 		return (color);
 	if (!texture->addr)
 	{
-		texture->mlx_img = mlx_xpm_file_to_image(game->mlx_ptr, texture->path,
-				&texture->width, &texture->height);
-		texture->addr = mlx_get_data_addr(texture->mlx_img,
-				&texture->bits_per_pixel, &texture->line_len, &texture->endian);
+		// printf("END\n");
+		// texture->mlx_img = mlx_xpm_file_to_image(game->mlx_ptr,
+		// texture->path,
+		// 		&texture->width, &texture->height);
+		// texture->addr = mlx_get_data_addr(texture->mlx_img,
+		// 		&texture->bits_per_pixel, &texture->line_len, &texture->endian);
 	}
 	pixel_x = get_pixel_x(*texture, ray);
 	pixel_y = ((y - ray->draw_end) * 1.0 * texture->height / ray->line_height);

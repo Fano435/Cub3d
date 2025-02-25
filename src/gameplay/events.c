@@ -12,17 +12,30 @@
 
 #include "cub3D.h"
 
+void	free_images(t_game *game)
+{
+	mlx_destroy_image(game->mlx_ptr, game->img->mlx_img);
+	mlx_destroy_image(game->mlx_ptr, game->img_text_n->mlx_img);
+	mlx_destroy_image(game->mlx_ptr, game->img_text_e->mlx_img);
+	mlx_destroy_image(game->mlx_ptr, game->img_text_s->mlx_img);
+	mlx_destroy_image(game->mlx_ptr, game->img_text_w->mlx_img);
+	free(game->img_text_n);
+	free(game->img_text_e);
+	free(game->img_text_s);
+	free(game->img_text_w);
+}
+
 int	close_game(t_game *game)
 {
+	free_images(game);
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-	mlx_destroy_image(game->mlx_ptr, game->img->mlx_img);
 	mlx_destroy_display(game->mlx_ptr);
-	if (game->img)
-		free(game->img);
+	free(game->mlx_ptr);
 	if (game->player)
 		free(game->player);
 	free_map(game->map);
 	free(game);
+	exit(0);
 	return (0);
 }
 

@@ -33,7 +33,7 @@ OBJ_DIR = obj/
 
 INCLUDE = 	-I ./include -Imlx 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror $(DEBUG)
+CFLAGS = -Wall -Wextra -Werror -O3 $(DEBUG)
 DEBUG = -g3 
 MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
 

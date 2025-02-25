@@ -37,6 +37,34 @@ void	init_img(t_game *game)
 	game->img_text_w->path = NULL;
 }
 
+void	init_mlx_textures(t_game *game)
+{
+	game->img_text_e->mlx_img = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->img_text_e->path, &game->img_text_e->width,
+			&game->img_text_e->height);
+	game->img_text_e->addr = mlx_get_data_addr(game->img_text_e->mlx_img,
+			&game->img_text_e->bits_per_pixel, &game->img_text_e->line_len,
+			&game->img_text_e->endian);
+	game->img_text_n->mlx_img = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->img_text_n->path, &game->img_text_n->width,
+			&game->img_text_n->height);
+	game->img_text_n->addr = mlx_get_data_addr(game->img_text_n->mlx_img,
+			&game->img_text_n->bits_per_pixel, &game->img_text_n->line_len,
+			&game->img_text_n->endian);
+	game->img_text_s->mlx_img = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->img_text_s->path, &game->img_text_s->width,
+			&game->img_text_s->height);
+	game->img_text_s->addr = mlx_get_data_addr(game->img_text_s->mlx_img,
+			&game->img_text_s->bits_per_pixel, &game->img_text_s->line_len,
+			&game->img_text_e->endian);
+	game->img_text_w->mlx_img = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->img_text_w->path, &game->img_text_w->width,
+			&game->img_text_w->height);
+	game->img_text_w->addr = mlx_get_data_addr(game->img_text_w->mlx_img,
+			&game->img_text_w->bits_per_pixel, &game->img_text_w->line_len,
+			&game->img_text_w->endian);
+}
+
 void	init(t_game *game)
 {
 	void	*win;

@@ -106,6 +106,7 @@ int				key_release(int keysym, t_game *game);
 void			init(t_game *game);
 void			init_player(t_player *player);
 void			init_ray(t_ray *ray);
+void			init_mlx_textures(t_game *game);
 
 // player.c
 void			move_player(t_game *game, t_player *player);
@@ -134,7 +135,6 @@ int				is_space(char c);
 int				is_digit(char c);
 int				my_strncmp(const char *s1, const char *s2, int n);
 
-
 // parsing_color.c
 int				is_color(char *line, int *id);
 int				get_color(char *line, int *pos, int first_nb);
@@ -144,7 +144,7 @@ int				parse_color(char *line, int *done, int id, t_game *game);
 int				parse_map(char *config_file, int done, int fd_config,
 					t_game *game);
 int				get_height(int fd_config, t_game *game);
-char			**file_to_array(int fd_config, char *config_file, int height, 
+char			**file_to_array(int fd_config, char *config_file, int height,
 					t_game *game);
 int				is_map(char *line, int *player_pos, t_game *game);
 int				get_starting_pos(char **map, t_game *game);

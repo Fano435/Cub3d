@@ -49,10 +49,11 @@ int	main(int ac, char **av)
 	game = ft_calloc(sizeof(t_game), 1);
 	init(game);
 	parsing(ac, av, game);
-	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
+	init_mlx_textures(game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);
 	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, game);
 	mlx_loop_hook(game->mlx_ptr, render, game);
+	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
 	mlx_loop(game->mlx_ptr);
 	return (0);
 }
