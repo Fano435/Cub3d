@@ -130,8 +130,7 @@ int				parse_texture(char *line, int *done, int id, t_game *game);
 int				is_space(char c);
 int				is_digit(char c);
 int				my_strncmp(const char *s1, const char *s2, int n);
-char			*my_strcpy(char *dest, char *src);
-char			*my_strdup(char *s);
+
 
 // parsing_color.c
 int				is_color(char *line, int *id);

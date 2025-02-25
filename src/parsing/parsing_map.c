@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/25 15:12:38 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:19:07 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	**file_to_array(int fd_config, char *config_file, int height,
 			break ;
 		if (is_map(line, NULL, game) == 1)
 		{
-			map[i] = my_strdup(line);
+			map[i] = ft_strdup(line);
 			i++;
 		}
 		free(line);
