@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/25 15:07:49 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:12:38 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	get_height(int fd_config, t_game *game)
 }
 
 /*Convert the map into a char ** to finish the parsing*/
-char	**file_to_array(int fd_config, char *config_file, int height, t_game *game)
+char	**file_to_array(int fd_config, char *config_file, int height,
+		t_game *game)
 {
 	char	**map;
 	char	*line;
@@ -89,7 +90,7 @@ char	**file_to_array(int fd_config, char *config_file, int height, t_game *game)
 		line = get_next_line(fd_config);
 		if (!line)
 			break ;
-		if (is_map(line, NULL, game) == 1) // externaliser
+		if (is_map(line, NULL, game) == 1)
 		{
 			map[i] = my_strdup(line);
 			i++;
@@ -150,7 +151,7 @@ int	parse_map(char *config_file, int done, int fd_config, t_game *game)
 	if (get_starting_pos(map, game) == -1)
 		return (-1);
 	if (valid_map(height, game) == -1)
-		return (-1); // make sure to add proper error_msg
+		return (-1);
 	done++;
 	close(fd_config);
 	return (0);
