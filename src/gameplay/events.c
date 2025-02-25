@@ -17,11 +17,11 @@ int	close_game(t_game *game)
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	mlx_destroy_image(game->mlx_ptr, game->img->mlx_img);
 	mlx_destroy_display(game->mlx_ptr);
-	free(game->mlx_ptr);
 	if (game->img)
 		free(game->img);
 	if (game->player)
 		free(game->player);
+	free_map(game->map);
 	free(game);
 	return (0);
 }

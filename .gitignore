@@ -1,4 +1,6 @@
-.o
-/libft.o
-.swp
-.tmp
+*.o
+*/libft.o
+cub3D
+libft/libft.a
+*.swp
+*.tmp

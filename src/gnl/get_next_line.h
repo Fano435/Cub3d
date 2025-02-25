@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrasamim <jrasamim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:43:19 by jrasamim          #+#    #+#             */
-/*   Updated: 2024/06/14 14:58:48 by jrasamim         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:05:46 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, const char *s2);
-char	*ft_strchr(char *str, int c);
+char	*gnl_strchr(char *str, int c);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*get_next_line(int fd);
 

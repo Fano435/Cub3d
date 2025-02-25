@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrasamim <jrasamim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:43:08 by jrasamim          #+#    #+#             */
-/*   Updated: 2024/06/12 14:58:30 by jrasamim         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:06:08 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*ft_strdup(const char *s)
 	return (cpy);
 }
 
-char	*ft_strchr(char *str, int c)
+char	*gnl_strchr(char *str, int c)
 {
 	int	i;
 
