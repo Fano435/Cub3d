@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 17:14:40 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:01:45 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int is_texture(char *line, int *id)
         *id = WE;
     else if (!my_strncmp(&line[i], "EA", ft_strlen("EA")))
         *id = EA;
-    // dprintf(STDERR_FILENO, "at the end of is_texture, identifier is %d\n", *id);
     return (*id);
 }
 
@@ -91,13 +90,11 @@ int	parse_texture(char *line, int *done, int id, t_game *game)
 		return (error_msg(3));
 	if (get_texture_file(&texture_file, line, pos))
 		return (-1);
-	dprintf(STDERR_FILENO, RED "texture file is %s\n" RESET, texture_file);
 	fd_texture = open(texture_file, O_RDONLY);
 	if (fd_texture == -1)
 		return (error_msg(5));
 	close(fd_texture);
     add_text_to_game(texture_file, id, game);
 	(*done)++;
-	// free(texture_file);
 	return (0);
 }

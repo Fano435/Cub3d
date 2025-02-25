@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 16:41:40 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:07:58 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int add_pos_game(int x, int y, int found, t_game *game)
     game->player->pos_x = x;
     game->player->pos_y = y;
     orientation = game->map[y][x];
-    dprintf(STDERR_FILENO, RED "orientation is %c\n" RESET, orientation);
     if (orientation == 'N')
         game->player->angle = M_PI/2;
     else if (orientation == 'S')

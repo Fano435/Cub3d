@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:49:07 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/19 16:26:53 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:08:10 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,5 @@ int valid_map(int height, t_game *game)
     if (check_flooded_map(map_copy, height) == -1)
         return (free_map(map_copy), -1);
     free_map(map_copy);
-    dprintf(STDERR_FILENO, RED "Map is valid !\n" RESET);
     return (1);
 }
