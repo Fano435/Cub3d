@@ -19,7 +19,6 @@ bool	touch(int x, int y, t_game *game)
 
 	grid_x = (int)(x);
 	grid_y = (int)(y);
-	// Remplacer 29 par map width
 	if (grid_x < 0 || grid_x >= 29 || grid_y < 0 || grid_y >= game->map_height)
 		return (true);
 	return (game->map[grid_y][grid_x] == '1');

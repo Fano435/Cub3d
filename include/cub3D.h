@@ -114,6 +114,9 @@ bool			touch(int x, int y, t_game *game);
 // raycasting.c
 void			cast_rays(t_game *game);
 
+// raycasting_utils.c
+void			get_wall_distance(t_game *game, t_ray *ray);
+
 ////////////////////////*PARSING*////////////////////////////////////////////
 
 // parsing.c
