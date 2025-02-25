@@ -67,14 +67,11 @@ void	init_mlx_textures(t_game *game)
 
 void	init(t_game *game)
 {
-	void	*win;
-
+	// void	*win;
 	game->player = malloc(sizeof(t_player));
 	game->ray = malloc(sizeof(t_ray));
 	init_player(game->player);
 	game->mlx_ptr = mlx_init();
-	win = mlx_new_window(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
-	game->win_ptr = win;
 	init_img(game);
 	game->floor_color = -1;
 	game->ceiling_color = -1;
