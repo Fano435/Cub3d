@@ -21,7 +21,7 @@ int	error_msg(int error_code)
 	if (error_code == 0)
 		msg = "Program needs one argument\n";
 	else if (error_code == 1)
-		msg = "Program needs a configuration file as argument\n";
+		msg = "Program needs a configuration file .cub as argument\n";
 	else if (error_code == 2)
 		msg = "Configuration file cannot be opened, check permission\n";
 	else if (error_code == 3)

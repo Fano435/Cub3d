@@ -35,9 +35,9 @@ double	get_pixel_x(t_img texture, t_ray *ray)
 	double	x;
 
 	if (ray->side)
-		x = fmod(ray->vertical_hit, 1.0) * texture.width;
+		x = (ray->vertical_hit - floor(ray->vertical_hit)) * texture.width;
 	else
-		x = fmod(ray->horizontal_hit, 1.0) * texture.width;
+		x = (ray->horizontal_hit - floor(ray->horizontal_hit)) * texture.width;
 	return (x);
 }
 
@@ -61,15 +61,6 @@ int	get_pixel_color(t_game *game, t_ray *ray, int y)
 	texture = get_texture_img(game, ray);
 	if (!texture->path)
 		return (color);
-	if (!texture->addr)
-	{
-		// printf("END\n");
-		// texture->mlx_img = mlx_xpm_file_to_image(game->mlx_ptr,
-		// texture->path,
-		// 		&texture->width, &texture->height);
-		// texture->addr = mlx_get_data_addr(texture->mlx_img,
-		// 		&texture->bits_per_pixel, &texture->line_len, &texture->endian);
-	}
 	pixel_x = get_pixel_x(*texture, ray);
 	pixel_y = ((y - ray->draw_end) * 1.0 * texture->height / ray->line_height);
 	color = pixel_get(texture, pixel_x, pixel_y);

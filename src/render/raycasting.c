@@ -24,6 +24,7 @@ void	cast_rays(t_game *game)
 	{
 		init_ray(ray);
 		get_wall_distance(game, ray);
+		ray->wall_dist = ray->wall_dist * cos(game->player->angle - ray->angle);
 		render_wall(game, ray, i);
 		render_floor_ceiling(game, ray, i);
 		ray->angle += (double)game->player->fov / WIN_WIDTH;

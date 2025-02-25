@@ -47,11 +47,11 @@ void	render_wall(t_game *game, t_ray *ray, int pos)
 	int		y;
 
 	dist_proj_plane = (WIN_WIDTH / 2) / tan(game->player->fov);
-	if (ray->wall_dist < 0)
-		ray->wall_dist = 0.1;
+	if (ray->wall_dist < 0.2)
+		ray->wall_dist = 0.2;
 	ray->line_height = (1 / ray->wall_dist) * dist_proj_plane;
-	if (ray->line_height > WIN_HEIGHT)
-		ray->line_height = WIN_HEIGHT - 1;
+	if (ray->line_height > WIN_HEIGHT * 2)
+		ray->line_height = WIN_HEIGHT * 2;
 	ray->draw_start = WIN_HEIGHT / 2 + ray->line_height / 2;
 	ray->draw_end = WIN_HEIGHT / 2 - ray->line_height / 2;
 	y = ray->draw_start;

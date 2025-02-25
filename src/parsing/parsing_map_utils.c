@@ -19,13 +19,13 @@ int	error_msg_map(int error_code)
 
 	write(STDERR_FILENO, "Error\n", 6);
 	if (error_code == 1)
-		msg = "Map description should only contains 0 (floor),\
-		1 (walls) and 1 player orientation indicator (N, S, E, W)\n";
+		msg = "Map description should only contains 0 (floor),"
+				" 1 (walls) and 1 player orientation indicator (N, S, E, W)\n";
 	if (error_code == 2)
 		msg = "Map is not bound by walls\n";
 	if (error_code == 3)
-		msg = "Map description cannot contain more than 1 starting\
-        position for the player\n";
+		msg = "Map description cannot contain more than 1 starting"
+				" position for the player\n";
 	if (error_code == 4)
 		msg = "Map description could not be converted into array\n";
 	write(STDERR_FILENO, msg, ft_strlen(msg));

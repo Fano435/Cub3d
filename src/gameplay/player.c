@@ -19,7 +19,8 @@ bool	touch(int x, int y, t_game *game)
 
 	grid_x = (int)(x);
 	grid_y = (int)(y);
-	if (grid_x < 0 || grid_x >= 29 || grid_y < 0 || grid_y >= game->map_height)
+	if (grid_x < 0 || grid_x >= game->map_width || grid_y < 0
+		|| grid_y >= game->map_height)
 		return (true);
 	return (game->map[grid_y][grid_x] == '1');
 }
@@ -110,4 +111,5 @@ void	move_player(t_game *game, t_player *player)
 		player->pos_x = next_x;
 		player->pos_y = next_y;
 	}
+	// printf("Pos x %f, pos y %f\n", player->pos_x, player->pos_y);
 }

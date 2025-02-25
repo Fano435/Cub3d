@@ -40,6 +40,26 @@ int	render(t_game *game)
 	return (0);
 }
 
+void	free_game(t_game *game)
+{
+	mlx_destroy_image(game->mlx_ptr, game->img->mlx_img);
+	mlx_destroy_display(game->mlx_ptr);
+	free(game->mlx_ptr);
+	if (game->player)
+		free(game->player);
+	free(game->ray);
+	free(game->img_text_n->path);
+	free(game->img_text_e->path);
+	free(game->img_text_s->path);
+	free(game->img_text_w->path);
+	free(game->img_text_n);
+	free(game->img_text_e);
+	free(game->img_text_s);
+	free(game->img_text_w);
+	free(game->img);
+	free(game);
+}
+
 int	main(int ac, char **av)
 {
 	t_game	*game;
@@ -50,21 +70,9 @@ int	main(int ac, char **av)
 	init(game);
 	if (parsing(ac, av, game) == -1)
 	{
-		mlx_destroy_image(game->mlx_ptr, game->img->mlx_img);
-		mlx_destroy_display(game->mlx_ptr);
-		free(game->mlx_ptr);
-		if (game->player)
-			free(game->player);
-		free(game->ray);
-		free(game->img_text_n);
-		free(game->img_text_e);
-		free(game->img_text_s);
-		free(game->img_text_w);
-		free(game->img);
-		free(game);
+		free_game(game);
 		return (-1);
 	}
-	// game->mlx_ptr = mlx_init();
 	game->win_ptr = mlx_new_window(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT,
 			"Cub3D");
 	init_mlx_textures(game);
