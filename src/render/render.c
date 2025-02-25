@@ -55,7 +55,6 @@ void	render_wall(t_game *game, t_ray *ray, int pos)
 	ray->draw_start = WIN_HEIGHT / 2 + ray->line_height / 2;
 	ray->draw_end = WIN_HEIGHT / 2 - ray->line_height / 2;
 	y = ray->draw_start;
-	(void)pos;
 	while (y > ray->draw_end)
 	{
 		pixel_put(game->img, pos, y, get_pixel_color(game, ray, y));

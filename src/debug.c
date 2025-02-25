@@ -32,6 +32,7 @@ void	draw_square(int x, int y, int size, t_img *img)
 		pixel_put(img, x + j, y + i, 0xFFFFFF);
 	}
 }
+
 /*REPLACED BY PRINT_MAP IN PARSING_MAP_UTILS*/
 void	draw_map(char **map, t_img *img)
 {

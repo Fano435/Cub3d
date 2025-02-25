@@ -14,7 +14,6 @@
 
 t_img	*get_texture_img(t_game *game, t_ray *ray)
 {
-	// Si le rayon rencontre un mur vertical
 	if (ray->side)
 	{
 		if (cos(ray->angle) > 0)

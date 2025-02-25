@@ -80,6 +80,7 @@ typedef struct s_game
 	int			floor_color;
 	int			ceiling_color;
 	int			map_height;
+	int			map_width;
 	t_player	*player;
 	t_ray		*ray;
 }				t_game;
@@ -112,6 +113,9 @@ bool			touch(int x, int y, t_game *game);
 
 // raycasting.c
 void			cast_rays(t_game *game);
+
+// raycasting_utils.c
+void			get_wall_distance(t_game *game, t_ray *ray);
 
 ////////////////////////*PARSING*////////////////////////////////////////////
 

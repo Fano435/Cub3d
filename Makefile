@@ -13,6 +13,7 @@ FILES = main\
 		player\
 		init\
 		raycasting\
+		raycasting_utils\
 		render\
 		parsing\
 		parsing_color\
