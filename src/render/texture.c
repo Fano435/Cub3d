@@ -17,16 +17,16 @@ t_img	*get_texture_img(t_game *game, t_ray *ray)
 	if (ray->side)
 	{
 		if (cos(ray->angle) > 0)
-			return ((game->img_text_e));
-		else
 			return ((game->img_text_w));
+		else
+			return ((game->img_text_e));
 	}
 	else
 	{
 		if (sin(ray->angle) > 0)
-			return ((game->img_text_s));
-		else
 			return ((game->img_text_n));
+		else
+			return ((game->img_text_s));
 	}
 }
 

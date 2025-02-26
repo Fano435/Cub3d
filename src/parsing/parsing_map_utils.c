@@ -97,9 +97,9 @@ int	add_pos_game(int x, int y, int found, t_game *game)
 	game->player->pos_y = y;
 	orientation = game->map[y][x];
 	if (orientation == 'N')
-		game->player->angle = M_PI / 2;
-	else if (orientation == 'S')
 		game->player->angle = 3 * M_PI / 2;
+	else if (orientation == 'S')
+		game->player->angle = M_PI / 2;
 	else if (orientation == 'E')
 		game->player->angle = 0;
 	else if (orientation == 'W')

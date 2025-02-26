@@ -67,7 +67,6 @@ void	init_mlx_textures(t_game *game)
 
 void	init(t_game *game)
 {
-	// void	*win;
 	game->player = malloc(sizeof(t_player));
 	game->ray = malloc(sizeof(t_ray));
 	init_player(game->player);
