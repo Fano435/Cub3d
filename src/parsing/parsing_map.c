@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/26 16:16:11 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:45:14 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,36 +46,34 @@ int	is_map(char *line, int *player_pos, t_game *game)
 & check that the map description contains ONLY authorized characters*/
 int	get_height(int fd_config, t_game *game)
 {
-	int		height;
 	int		ret_map;
 	char	*line;
 	int		player_pos;
-	int		stop;
+	int		save;
 
-	height = 0;
+	game->map_height = 0;
 	player_pos = 0;
-	stop = 0;
+	save = 300;
 	while (1)
 	{
 		line = get_next_line(fd_config);
 		if (!line)
 			break ;
-		if (!stop)
+		if (game->map_height != -1)
 			ret_map = is_map(line, &player_pos, game);
-		if (ret_map == 1)
-			height++;
-		else if (ret_map == -1 || (height > 0 && !ret_map))
-			stop = 1;
+		if (ret_map == -1 || (game->map_height > 0 && !ret_map) 
+			|| (ret_map == 1 && save == 2  && game->map_height > 0))
+			game->map_height = -1;
+		if (game->map_height != -1 && ret_map == 1)
+			game->map_height++;
+		save = ret_map;
 		free(line);
 	}
-	if (stop)
-		return (-1);
-	return (height);
+	return (game->map_height);
 }
 
 /*Convert the map into a char ** to finish the parsing*/
-char	**file_to_array(int fd_config, char *config_file, int height,
-		t_game *game)
+char	**file_to_array(int fd_config, char *config_file, t_game *game)
 {
 	char	**map;
 	char	*line;
@@ -83,7 +81,7 @@ char	**file_to_array(int fd_config, char *config_file, int height,
 
 	close(fd_config);
 	fd_config = open(config_file, O_RDONLY);
-	map = (char **)malloc(sizeof(char *) * (height + 1));
+	map = (char **)malloc(sizeof(char *) * (game->map_height + 1));
 	if (!map)
 		return (error_msg(6), NULL);
 	i = 0;
@@ -103,6 +101,7 @@ char	**file_to_array(int fd_config, char *config_file, int height,
 	return (map);
 }
 
+/*Get the spawn point of the player + its orientation*/
 int	get_starting_pos(char **map, t_game *game)
 {
 	int	x;
@@ -136,21 +135,19 @@ int	get_starting_pos(char **map, t_game *game)
 int	parse_map(char *config_file, int fd_config, t_game *game)
 {
 	char	**map;
-	int		height;
 
 	close(fd_config);
 	fd_config = open(config_file, O_RDONLY);
-	height = get_height(fd_config, game);
-	if (height < 1)
+	get_height(fd_config, game);
+	if (game->map_height == -1)
 		return (-1);
-	map = file_to_array(fd_config, config_file, height, game);
+	map = file_to_array(fd_config, config_file, game);
 	if (!map)
 		return (error_msg_map(4));
 	game->map = map;
-	game->map_height = height;
 	if (get_starting_pos(map, game) == -1)
 		return (-1);
-	if (valid_map(height, game) == -1)
+	if (valid_map(game) == -1)
 		return (-1);
 	close(fd_config);
 	return (0);

@@ -141,8 +141,7 @@ int				parse_color(char *line, int *done, int id, t_game *game);
 // parsing_map.c
 int				parse_map(char *config_file, int fd_config, t_game *game);
 int				get_height(int fd_config, t_game *game);
-char			**file_to_array(int fd_config, char *config_file, int height,
-					t_game *game);
+char			**file_to_array(int fd_config, char *config_file, t_game *game);
 int				is_map(char *line, int *player_pos, t_game *game);
 int				get_starting_pos(char **map, t_game *game);
 
@@ -153,7 +152,7 @@ int				parse_texture(char *line, int *done, int id, t_game *game);
 int				add_text_to_game(char *texture_file, int id, t_game *game);
 
 // parsing_map_bound.c
-int				valid_map(int height, t_game *game);
+int				valid_map(t_game *game);
 void			flood_fill(char **map, int x, int y, int height);
 int				check_flooded_map(char **map, int height);
 
