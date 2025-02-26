@@ -124,11 +124,8 @@ void			get_wall_distance(t_game *game, t_ray *ray);
 int				error_msg(int error_code);
 int				parsing(int argc, char **argv, t_game *game);
 int				arg_parsing(int argc, char **argv);
-
-// parsing_utils.c
-int				is_texture(char *line, int *id);
-int				get_texture_file(char **texture_file, char *line, int pos);
-int				parse_texture(char *line, int *done, int id, t_game *game);
+int				parsing_text_col(int fd_config, int *done_text,
+					int *done_col, t_game *game);
 
 // parsing_libft.c
 int				is_space(char c);
@@ -141,13 +138,18 @@ int				get_color(char *line, int *pos, int first_nb);
 int				parse_color(char *line, int *done, int id, t_game *game);
 
 // parsing_map.c
-int				parse_map(char *config_file, int done, int fd_config,
-					t_game *game);
+int				parse_map(char *config_file, int fd_config, t_game *game);
 int				get_height(int fd_config, t_game *game);
 char			**file_to_array(int fd_config, char *config_file, int height,
 					t_game *game);
 int				is_map(char *line, int *player_pos, t_game *game);
 int				get_starting_pos(char **map, t_game *game);
+
+// parsing_texture.c
+int				is_texture(char *line, int *id);
+int				get_texture_file(char **texture_file, char *line, int pos);
+int				parse_texture(char *line, int *done, int id, t_game *game);
+int				add_text_to_game(char *texture_file, int id, t_game *game);
 
 // parsing_map_bound.c
 int				valid_map(int height, t_game *game);

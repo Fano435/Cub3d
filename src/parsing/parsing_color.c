@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/25 15:21:46 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:22:55 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	get_color(char *line, int *pos, int first_nb)
 }
 
 /*Main function for parsing of the colors*/
-int	parse_color(char *line, int *done, int id, t_game *game)
+int	parse_color(char *line, int *done_col, int id, t_game *game)
 {
 	int	red;
 	int	green;
@@ -63,6 +63,8 @@ int	parse_color(char *line, int *done, int id, t_game *game)
 	int	pos;
 	int	converted_color;
 
+	if (*done_col >= 2)
+		return (error_msg(4));
 	pos = 2;
 	red = get_color(line, &pos, 1);
 	green = get_color(line, &pos, 0);
@@ -80,6 +82,6 @@ int	parse_color(char *line, int *done, int id, t_game *game)
 		game->ceiling_color = converted_color;
 	else if (id == F)
 		game->floor_color = converted_color;
-	(*done)++;
+	(*done_col)++;
 	return (0);
 }
