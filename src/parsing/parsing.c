@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/26 11:46:44 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:04:22 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	parsing(int argc, char **argv, t_game *game)
 			break;
 	}
 	if (done_text != 4 || done_col != 2 
-		|| parse_map(argv[1], fd_config, game))
-		return (-1);
+		|| parse_map(argv[1], fd_config, game) == -1)
+		return (0);
 	return (0);
 }

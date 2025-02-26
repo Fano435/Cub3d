@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:36:24 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/25 15:01:10 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:03:04 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	main(int ac, char **av)
 	init(game);
 	if (parsing(ac, av, game) == -1)
 	{
+		dprintf(STDERR_FILENO, RED "I exit through here\n" RESET);
 		free_game(game);
 		return (-1);
 	}

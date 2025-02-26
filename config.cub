@@ -1,12 +1,14 @@
 
+NO ./assets/greystone.xpm
+SO ./assets/mossy.xpm
+WE ./assets/purplestone.xpm
+EA ./assets/bluestone.xpm
 
-EA ./assets/bluestone.xpm
-EA ./assets/bluestone.xpm
-EA ./assets/bluestone.xpm
-EA ./assets/bluestone.xpm
 
 F 0,255, 30
-C 100,30,200
+F 100,30,200
+
+
 
 
 
