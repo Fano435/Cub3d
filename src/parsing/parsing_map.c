@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/26 11:24:42 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:16:11 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ int	is_map(char *line, int *player_pos, t_game *game)
 	int	id;
 
 	pos = 0;
-	if (is_color(line, &id) || is_texture(line, &id) || line[pos] == '\n')
+	if (is_color(line, &id) || is_texture(line, &id))
 		return (0);
+	if (!my_strcmp(line, "\n"))
+		return (2);
 	while (line[pos])
 	{
 		if (line[pos] != '1' && line[pos] != '0' && !is_space(line[pos])
@@ -150,7 +152,6 @@ int	parse_map(char *config_file, int fd_config, t_game *game)
 		return (-1);
 	if (valid_map(height, game) == -1)
 		return (-1);
-	// done++;
 	close(fd_config);
 	return (0);
 }

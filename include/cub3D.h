@@ -131,6 +131,7 @@ int				parsing_text_col(int fd_config, int *done_text,
 int				is_space(char c);
 int				is_digit(char c);
 int				my_strncmp(const char *s1, const char *s2, int n);
+int				my_strcmp(const char *s1, const char *s2);
 
 // parsing_color.c
 int				is_color(char *line, int *id);
