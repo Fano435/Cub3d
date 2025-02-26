@@ -35,9 +35,9 @@ double	get_pixel_x(t_img texture, t_ray *ray)
 	double	x;
 
 	if (ray->side)
-		x = (ray->vertical_hit - floor(ray->vertical_hit)) * texture.width;
+		x = fmod(ray->vertical_hit, 1.0) * texture.width;
 	else
-		x = (ray->horizontal_hit - floor(ray->horizontal_hit)) * texture.width;
+		x = fmod(ray->horizontal_hit, 1.0) * texture.width;
 	return (x);
 }
 

@@ -80,7 +80,7 @@ void	init(t_game *game)
 
 void	init_player(t_player *player)
 {
-	player->fov = (60 * M_PI) / 180;
+	player->fov = (60.0 * M_PI) / 180.0;
 	player->pos_x = -1;
 	player->pos_y = -1;
 	player->dir_x = 0;

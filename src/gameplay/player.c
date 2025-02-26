@@ -77,7 +77,7 @@ int	will_colide(t_game *game, double x, double y)
 {
 	float	radius;
 
-	radius = 0.25;
+	radius = 0.20;
 	if (touch(x + radius, y + radius, game))
 		return (1);
 	else if (touch(x - radius, y - radius, game))
