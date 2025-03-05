@@ -44,18 +44,17 @@ void	render_floor_ceiling(t_game *game, t_ray *ray, int pos)
 void	render_wall(t_game *game, t_ray *ray, int pos)
 {
 	double	dist_proj_plane;
-	int		y;
+	double	y;
 
-	dist_proj_plane = (WIN_WIDTH / 2) / tan(game->player->fov);
+	dist_proj_plane = (WIN_WIDTH / 2) / tan(game->player->fov / 2);
 	ray->line_height = (1 / ray->wall_dist) * dist_proj_plane;
-	if (ray->line_height > WIN_HEIGHT * 2)
-		ray->line_height = WIN_HEIGHT * 2;
-	ray->draw_start = WIN_HEIGHT / 2 + ray->line_height / 2;
-	ray->draw_end = WIN_HEIGHT / 2 - ray->line_height / 2;
+	ray->draw_start = WIN_HEIGHT / 2.0 + ray->line_height / 2.0;
+	ray->draw_end = WIN_HEIGHT / 2.0 - ray->line_height / 2.0;
 	y = ray->draw_start;
+	(void)pos;
 	while (y > ray->draw_end)
 	{
-		pixel_put(game->img, pos, y, get_pixel_color(game, ray, y));
-		y--;
+		pixel_put(game->img, pos, (int)y, get_pixel_color(game, ray, y));
+		y -= 1.0;
 	}
 }

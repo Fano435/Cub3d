@@ -35,9 +35,9 @@ double	get_pixel_x(t_img texture, t_ray *ray)
 	double	x;
 
 	if (ray->side)
-		x = fmod(ray->vertical_hit, 1.0) * texture.width;
+		x = fmod(fabs(ray->vertical_hit), 1.0) * texture.width;
 	else
-		x = fmod(ray->horizontal_hit, 1.0) * texture.width;
+		x = fmod(fabs(ray->horizontal_hit), 1.0) * texture.width;
 	return (x);
 }
 
@@ -50,7 +50,7 @@ int	pixel_get(t_img *texture, double x, double y)
 	return (*(int *)pixel);
 }
 
-int	get_pixel_color(t_game *game, t_ray *ray, int y)
+int	get_pixel_color(t_game *game, t_ray *ray, double y)
 {
 	t_img	*texture;
 	int		color;
@@ -62,7 +62,7 @@ int	get_pixel_color(t_game *game, t_ray *ray, int y)
 	if (!texture->path)
 		return (color);
 	pixel_x = get_pixel_x(*texture, ray);
-	pixel_y = ((y - ray->draw_end) * 1.0 * texture->height / ray->line_height);
+	pixel_y = ((y - ray->draw_end) * texture->height / ray->line_height);
 	color = pixel_get(texture, pixel_x, pixel_y);
 	return (color);
 }
