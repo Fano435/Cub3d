@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/25 15:21:46 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:02:04 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,29 @@ int	get_color(char *line, int *pos, int first_nb)
 	return (color);
 }
 
+/*Adding the converted color to the proper variable of the game struct
+depending on if it is referring to floor or to ceiling*/
+int	add_color_game(int id, t_game *game, int converted_color)
+{
+	if (id == C)
+	{
+		if (game->ceiling_color != -1)
+			return (error_msg(4));
+		game->ceiling_color = converted_color;
+		return (0);
+	}
+	else if (id == F)
+	{
+		if (game->floor_color != -1)
+			return (error_msg(4));
+		game->floor_color = converted_color;
+		return (0);
+	}
+	return (-1);
+}
+
 /*Main function for parsing of the colors*/
-int	parse_color(char *line, int *done, int id, t_game *game)
+int	parse_color(char *line, int *done_col, int id, t_game *game)
 {
 	int	red;
 	int	green;
@@ -63,6 +84,8 @@ int	parse_color(char *line, int *done, int id, t_game *game)
 	int	pos;
 	int	converted_color;
 
+	if (*done_col >= 2)
+		return (error_msg(4));
 	pos = 2;
 	red = get_color(line, &pos, 1);
 	green = get_color(line, &pos, 0);
@@ -76,10 +99,8 @@ int	parse_color(char *line, int *done, int id, t_game *game)
 		pos++;
 	}
 	converted_color = (red << 16 | green << 8 | blue);
-	if (id == C)
-		game->ceiling_color = converted_color;
-	else if (id == F)
-		game->floor_color = converted_color;
-	(*done)++;
+	if (add_color_game(id, game, converted_color))
+		return (-1);
+	(*done_col)++;
 	return (0);
 }

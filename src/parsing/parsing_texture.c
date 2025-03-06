@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/25 15:22:03 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:55:05 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,31 +61,37 @@ int	get_texture_file(char **texture_file, char *line, int pos)
 
 /*Adding the parsed texture to the appropriate 
 variable of the game struct*/
-void	add_text_to_game(char *texture_file, int id, t_game *game)
+int	add_text_to_game(char *texture_file, int id, t_game *game)
 {
 	t_img	*curr_text;
 
 	if (id == NO)
 		curr_text = game->img_text_n;
-	else if (id == SO)
+		else if (id == SO)
 		curr_text = game->img_text_s;
 	else if (id == WE)
 		curr_text = game->img_text_w;
 	else
 		curr_text = game->img_text_e;
-	curr_text->path = texture_file;
-	return ;
+	if (curr_text->path)
+		return (error_msg(4));
+	curr_text->path = ft_strdup(texture_file);
+	free(texture_file);	
+	return (0);
 }
+
 
 /*Check the texture line for errors & try to opens it
 + put the file relative path in the struct*/
-int	parse_texture(char *line, int *done, int id, t_game *game)
+int	parse_texture(char *line, int *done_text, int id, t_game *game)
 {
 	int		pos;
 	char	*texture_file;
 	int		fd_texture;
 
 	pos = 3;
+	if (*done_text >= 4)
+		return (error_msg(4));
 	while (line[pos] && is_space(line[pos]))
 		pos++;
 	if (!(line[pos] == '.' && line[pos + 1] == '/'))
@@ -94,9 +100,10 @@ int	parse_texture(char *line, int *done, int id, t_game *game)
 		return (-1);
 	fd_texture = open(texture_file, O_RDONLY);
 	if (fd_texture == -1)
-		return (error_msg(5));
+		return (free(texture_file), error_msg(5));
 	close(fd_texture);
-	add_text_to_game(texture_file, id, game);
-	(*done)++;
+	if (add_text_to_game(texture_file, id, game))
+		return (free(texture_file), -1);
+	(*done_text)++;
 	return (0);
 }

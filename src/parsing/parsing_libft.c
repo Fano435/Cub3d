@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 10:15:42 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/25 15:23:26 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:15:07 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,27 @@ int	my_strncmp(const char *s1, const char *s2, int n)
 	while (s1[i] && s1[i] == s2[i] && i < n - 1)
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+/*Compares two strings*/
+int	my_strcmp(const char *s1, const char *s2)
+{
+	size_t			count;
+	unsigned char	*s1_2;
+	unsigned char	*s2_2;
+
+	s1_2 = (unsigned char *)s1;
+	s2_2 = (unsigned char *)s2;
+	count = 0;
+	while (s2_2[count] || s1_2[count])
+	{
+		if (s1_2[count] != s2_2[count])
+		{
+			if (s1_2[count] < s2_2[count])
+				return (-1);
+			return (EXIT_FAILURE);
+		}
+		count++;
+	}
+	return (EXIT_SUCCESS);
 }
