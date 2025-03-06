@@ -16,14 +16,14 @@ t_img	*get_texture_img(t_game *game, t_ray *ray)
 {
 	if (ray->side)
 	{
-		if (cos(ray->angle) > 0)
+		if (ray->angle > M_PI / 2 && ray->angle < 3 * M_PI / 2)
 			return ((game->img_text_w));
 		else
 			return ((game->img_text_e));
 	}
 	else
 	{
-		if (sin(ray->angle) > 0)
+		if (ray->angle > 0 && ray->angle < M_PI)
 			return ((game->img_text_n));
 		else
 			return ((game->img_text_s));
@@ -35,9 +35,9 @@ double	get_pixel_x(t_img texture, t_ray *ray)
 	double	x;
 
 	if (ray->side)
-		x = fmod(fabs(ray->vertical_hit), 1.0) * texture.width;
+		x = (ray->vertical_hit - floor(ray->vertical_hit)) * texture.width;
 	else
-		x = fmod(fabs(ray->horizontal_hit), 1.0) * texture.width;
+		x = (ray->horizontal_hit - floor(ray->horizontal_hit)) * texture.width;
 	return (x);
 }
 

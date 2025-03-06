@@ -44,7 +44,7 @@ typedef struct s_player
 	double		plane_x;
 	double		plane_y;
 	double		angle;
-	int			fov;
+	double		fov;
 	bool		key_up;
 	bool		key_right;
 	bool		key_down;
@@ -61,9 +61,9 @@ typedef struct s_ray
 	double		vertical_hit;
 	double		horizontal_hit;
 	double		wall_dist;
-	int			line_height;
-	int			draw_start;
-	int			draw_end;
+	double		line_height;
+	double		draw_start;
+	double		draw_end;
 	int			side;
 }				t_ray;
 
@@ -83,10 +83,11 @@ typedef struct s_game
 	int			map_width;
 	t_player	*player;
 	t_ray		*ray;
+
 }				t_game;
 
 // texture.c
-int				get_pixel_color(t_game *game, t_ray *ray, int y);
+int				get_pixel_color(t_game *game, t_ray *ray, double y);
 
 // render.c
 void			render_wall(t_game *game, t_ray *ray, int pos);

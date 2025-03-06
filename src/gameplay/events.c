@@ -14,7 +14,6 @@
 
 void	free_images(t_game *game)
 {
-	mlx_destroy_image(game->mlx_ptr, game->img->mlx_img);
 	mlx_destroy_image(game->mlx_ptr, game->img_text_n->mlx_img);
 	mlx_destroy_image(game->mlx_ptr, game->img_text_e->mlx_img);
 	mlx_destroy_image(game->mlx_ptr, game->img_text_s->mlx_img);

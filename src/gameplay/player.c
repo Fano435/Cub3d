@@ -29,14 +29,14 @@ void	handle_rotate(t_player *player)
 {
 	float	angle_speed;
 
-	angle_speed = 0.02;
+	angle_speed = 0.01;
 	if (player->rotate_l)
 	{
 		player->angle -= angle_speed;
 		if (player->angle < 0)
 			player->angle = 2 * M_PI;
 	}
-	if (player->rotate_r)
+	else if (player->rotate_r)
 	{
 		player->angle += angle_speed;
 		if (player->angle > 2 * M_PI)
@@ -50,7 +50,7 @@ void	handle_movement(t_player *player, double *next_x, double *next_y)
 {
 	double	speed;
 
-	speed = 0.04;
+	speed = 0.02;
 	if (player->key_up)
 	{
 		(*next_x) += cos(player->angle) * speed;
@@ -104,8 +104,8 @@ void	move_player(t_game *game, t_player *player)
 
 	next_x = player->pos_x;
 	next_y = player->pos_y;
-	handle_rotate(player);
 	handle_movement(player, &next_x, &next_y);
+	handle_rotate(player);
 	if (!will_colide(game, next_x, next_y))
 	{
 		player->pos_x = next_x;

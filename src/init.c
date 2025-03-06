@@ -15,10 +15,6 @@
 void	init_img(t_game *game)
 {
 	game->img = malloc(sizeof(t_img));
-	game->img->mlx_img = mlx_new_image(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
-	game->img->addr = mlx_get_data_addr(game->img->mlx_img,
-			&game->img->bits_per_pixel, &game->img->line_len,
-			&game->img->endian);
 	game->img_text_e = malloc(sizeof(t_img));
 	game->img_text_e->mlx_img = NULL;
 	game->img_text_e->addr = NULL;

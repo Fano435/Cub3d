@@ -12,37 +12,22 @@
 
 #include "cub3D.h"
 
-void	clear(t_game *game)
+int	render_loop(t_game *game)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < WIN_WIDTH)
-	{
-		j = 0;
-		while (j < WIN_HEIGHT)
-		{
-			pixel_put(game->img, i, j, 0x000000);
-			j++;
-		}
-		i++;
-	}
-}
-
-int	render(t_game *game)
-{
+	game->img->mlx_img = mlx_new_image(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	game->img->addr = mlx_get_data_addr(game->img->mlx_img,
+			&game->img->bits_per_pixel, &game->img->line_len,
+			&game->img->endian);
 	move_player(game, game->player);
-	clear(game);
 	cast_rays(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->mlx_img, 0,
 		0);
-	return (0);
+	mlx_destroy_image(game->mlx_ptr, game->img->mlx_img);
+	return (1);
 }
 
 void	free_game(t_game *game)
 {
-	mlx_destroy_image(game->mlx_ptr, game->img->mlx_img);
 	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	if (game->player)
@@ -63,9 +48,7 @@ void	free_game(t_game *game)
 int	main(int ac, char **av)
 {
 	t_game	*game;
-	int		i;
 
-	i = 0;
 	game = ft_calloc(sizeof(t_game), 1);
 	init(game);
 	if (parsing(ac, av, game) == -1)
@@ -78,7 +61,7 @@ int	main(int ac, char **av)
 	init_mlx_textures(game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);
 	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, game);
-	mlx_loop_hook(game->mlx_ptr, render, game);
+	mlx_loop_hook(game->mlx_ptr, render_loop, game);
 	mlx_hook(game->win_ptr, DestroyNotify, NoEventMask, close_game, game);
 	mlx_loop(game->mlx_ptr);
 	return (0);
