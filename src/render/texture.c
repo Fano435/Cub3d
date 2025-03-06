@@ -16,17 +16,17 @@ t_img	*get_texture_img(t_game *game, t_ray *ray)
 {
 	if (ray->side)
 	{
-		if (cos(ray->angle) > 0)
-			return ((game->img_text_e));
-		else
+		if (ray->angle > M_PI / 2 && ray->angle < 3 * M_PI / 2)
 			return ((game->img_text_w));
+		else
+			return ((game->img_text_e));
 	}
 	else
 	{
-		if (sin(ray->angle) > 0)
-			return ((game->img_text_s));
-		else
+		if (ray->angle > 0 && ray->angle < M_PI)
 			return ((game->img_text_n));
+		else
+			return ((game->img_text_s));
 	}
 }
 
@@ -50,7 +50,7 @@ int	pixel_get(t_img *texture, double x, double y)
 	return (*(int *)pixel);
 }
 
-int	get_pixel_color(t_game *game, t_ray *ray, int y)
+int	get_pixel_color(t_game *game, t_ray *ray, double y)
 {
 	t_img	*texture;
 	int		color;
@@ -62,7 +62,7 @@ int	get_pixel_color(t_game *game, t_ray *ray, int y)
 	if (!texture->path)
 		return (color);
 	pixel_x = get_pixel_x(*texture, ray);
-	pixel_y = ((y - ray->draw_end) * 1.0 * texture->height / ray->line_height);
+	pixel_y = ((y - ray->draw_end) * texture->height / ray->line_height);
 	color = pixel_get(texture, pixel_x, pixel_y);
 	return (color);
 }

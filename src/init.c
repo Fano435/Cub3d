@@ -15,10 +15,6 @@
 void	init_img(t_game *game)
 {
 	game->img = malloc(sizeof(t_img));
-	game->img->mlx_img = mlx_new_image(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
-	game->img->addr = mlx_get_data_addr(game->img->mlx_img,
-			&game->img->bits_per_pixel, &game->img->line_len,
-			&game->img->endian);
 	game->img_text_e = malloc(sizeof(t_img));
 	game->img_text_e->mlx_img = NULL;
 	game->img_text_e->addr = NULL;
@@ -67,7 +63,6 @@ void	init_mlx_textures(t_game *game)
 
 void	init(t_game *game)
 {
-	// void	*win;
 	game->player = malloc(sizeof(t_player));
 	game->ray = malloc(sizeof(t_ray));
 	init_player(game->player);
@@ -81,7 +76,7 @@ void	init(t_game *game)
 
 void	init_player(t_player *player)
 {
-	player->fov = (60 * M_PI) / 180;
+	player->fov = (60.0 * M_PI) / 180.0;
 	player->pos_x = -1;
 	player->pos_y = -1;
 	player->dir_x = 0;

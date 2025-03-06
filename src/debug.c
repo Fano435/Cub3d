@@ -12,6 +12,24 @@
 
 #include "cub3D.h"
 
+void	clear(t_game *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < WIN_WIDTH)
+	{
+		j = 0;
+		while (j < WIN_HEIGHT)
+		{
+			pixel_put(game->img, i, j, 0x000000);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	draw_square(int x, int y, int size, t_img *img)
 {
 	int	i;

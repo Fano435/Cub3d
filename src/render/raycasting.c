@@ -19,7 +19,7 @@ void	cast_rays(t_game *game)
 
 	ray = game->ray;
 	i = 0;
-	ray->angle = game->player->angle - M_PI / 6;
+	ray->angle = game->player->angle - (game->player->fov / 2);
 	while (i < WIN_WIDTH)
 	{
 		init_ray(ray);
@@ -27,7 +27,7 @@ void	cast_rays(t_game *game)
 		ray->wall_dist = ray->wall_dist * cos(game->player->angle - ray->angle);
 		render_wall(game, ray, i);
 		render_floor_ceiling(game, ray, i);
-		ray->angle += (double)game->player->fov / WIN_WIDTH;
+		ray->angle += game->player->fov / WIN_WIDTH;
 		if (ray->angle > 2 * M_PI)
 			ray->angle -= 2 * M_PI;
 		i++;

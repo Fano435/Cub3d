@@ -12,7 +12,7 @@
 
 #include "cub3D.h"
 
-int	h_check(double angle, int *h_y, int *step)
+int	h_check(double angle, double *h_y, double *step)
 {
 	if (sin(angle) > 0)
 	{
@@ -23,11 +23,11 @@ int	h_check(double angle, int *h_y, int *step)
 	return (-1);
 }
 
-int	v_check(double angle, int *v_x, int *step)
+int	v_check(double angle, double *v_x, double *step)
 {
 	if (cos(angle) > 0)
 	{
-		(*v_x)++;
+		(*v_x) += 1;
 		return (0);
 	}
 	*step *= -1;
@@ -37,13 +37,13 @@ int	v_check(double angle, int *v_x, int *step)
 double	get_horizontal_intersections(t_game *game, double angle)
 {
 	double	h_x;
-	int		h_y;
+	double	h_y;
 	double	x_step;
-	int		y_step;
+	double	y_step;
 	int		pixel;
 
 	y_step = 1;
-	h_y = (int)game->player->pos_y;
+	h_y = floor(game->player->pos_y);
 	pixel = h_check(angle, &h_y, &y_step);
 	x_step = y_step / tan(angle);
 	h_x = game->player->pos_x + (h_y - game->player->pos_y) / tan(angle);
@@ -53,20 +53,20 @@ double	get_horizontal_intersections(t_game *game, double angle)
 		h_y += y_step;
 	}
 	game->ray->horizontal_hit = h_x;
-	return (sqrt(pow(game->player->pos_x - h_x, 2) + pow(game->player->pos_y
-				- h_y, 2)));
+	return (sqrt(pow(h_x - game->player->pos_x, 2) + pow(h_y
+				- game->player->pos_y, 2)));
 }
 
 double	get_vertical_intersections(t_game *game, double angle)
 {
-	int		v_x;
+	double	v_x;
 	double	v_y;
-	int		x_step;
+	double	x_step;
 	double	y_step;
 	int		pixel;
 
 	x_step = 1;
-	v_x = (int)game->player->pos_x;
+	v_x = floor(game->player->pos_x);
 	pixel = v_check(angle, &v_x, &x_step);
 	y_step = x_step * tan(angle);
 	v_y = game->player->pos_y + (v_x - game->player->pos_x) * tan(angle);
@@ -76,8 +76,8 @@ double	get_vertical_intersections(t_game *game, double angle)
 		v_y += y_step;
 	}
 	game->ray->vertical_hit = v_y;
-	return (sqrt(pow(game->player->pos_x - v_x, 2) + pow(game->player->pos_y
-				- v_y, 2)));
+	return (sqrt(pow(v_x - game->player->pos_x, 2) + pow(v_y
+				- game->player->pos_y, 2)));
 }
 
 void	get_wall_distance(t_game *game, t_ray *ray)

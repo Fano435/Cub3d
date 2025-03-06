@@ -36,7 +36,7 @@ void	handle_rotate(t_player *player)
 		if (player->angle < 0)
 			player->angle = 2 * M_PI;
 	}
-	if (player->rotate_r)
+	else if (player->rotate_r)
 	{
 		player->angle += angle_speed;
 		if (player->angle > 2 * M_PI)
@@ -50,7 +50,7 @@ void	handle_movement(t_player *player, double *next_x, double *next_y)
 {
 	double	speed;
 
-	speed = 0.01;
+	speed = 0.02;
 	if (player->key_up)
 	{
 		(*next_x) += cos(player->angle) * speed;
@@ -77,7 +77,7 @@ int	will_colide(t_game *game, double x, double y)
 {
 	float	radius;
 
-	radius = 0.25;
+	radius = 0.20;
 	if (touch(x + radius, y + radius, game))
 		return (1);
 	else if (touch(x - radius, y - radius, game))
@@ -104,12 +104,11 @@ void	move_player(t_game *game, t_player *player)
 
 	next_x = player->pos_x;
 	next_y = player->pos_y;
-	handle_rotate(player);
 	handle_movement(player, &next_x, &next_y);
+	handle_rotate(player);
 	if (!will_colide(game, next_x, next_y))
 	{
 		player->pos_x = next_x;
 		player->pos_y = next_y;
 	}
-	// printf("Pos x %f, pos y %f\n", player->pos_x, player->pos_y);
 }
