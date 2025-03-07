@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 10:11:06 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:27:27 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	is_texture(char *line, int *id)
 		*id = WE;
 	else if (!my_strncmp(&line[i], "EA", ft_strlen("EA")))
 		*id = EA;
+	if (*id != 0 && (size_t)(i + 2) < ft_strlen(line) && !is_space(line[i + 2]))
+		*id = -1;
 	return (*id);
 }
 
@@ -89,8 +91,13 @@ int	parse_texture(char *line, int *done_text, int id, t_game *game)
 	int		fd_texture;
 
 	pos = 3;
+	if (id == -1)
+	{
+		*done_text = -1;
+		return (error_msg(3));
+	}
 	if (*done_text >= 4)
-		return (error_msg(4));
+		return (-1);
 	while (line[pos] && is_space(line[pos]))
 		pos++;
 	if (!(line[pos] == '.' && line[pos + 1] == '/'))

@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 14:56:28 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:28:04 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	is_color(char *line, int *id)
 		*id = F;
 	else if (!my_strncmp(&line[i], "C", ft_strlen("C")))
 		*id = C;
+	if (*id != 0 && (size_t)(i + 1) < ft_strlen(line) && !is_space(line[i + 1]))
+		*id = -1;
 	return (*id);
 }
 
@@ -88,8 +90,8 @@ int	parse_color(char *line, int *done_col, int id, t_game *game)
 	int	pos;
 	int	converted_color;
 
-	if (*done_col >= 2)
-		return (error_msg(4));
+	if (*done_col >= 2 || id == -1)
+		return (*done_col = -1, -1);
 	pos = 2;
 	red = get_color(line, &pos, 1);
 	green = get_color(line, &pos, 0);

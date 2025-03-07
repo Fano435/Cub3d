@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 15:53:19 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:22:36 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,9 @@ int	parsing(int argc, char **argv, t_game *game)
 		if (parsing_text_col(fd_config, &done_text, &done_col, game))
 			break ;
 	}
-	if (done_text == -2 || done_col == -2)
+	if (done_text != 4 || done_col != 2)
 		return (error_msg(4));
-	if (done_text != 4 || done_col != 2 || parse_map(argv[1], fd_config,
-			game) == -1)
+	if (parse_map(argv[1], fd_config, game) == -1)
 		return (close(fd_config), -1);
 	close(fd_config);
 	return (0);
