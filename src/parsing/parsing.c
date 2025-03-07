@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 10:16:01 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 10:50:06 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,24 @@ int	parsing_text_col(int fd_config, int *done_text, int *done_col, t_game *game)
 {
 	char	*line;
 	int		id;
+	int		placeholder;
 
 	line = get_next_line(fd_config);
+	placeholder = 0;
 	if (!line)
 		return (-1);
-	if (*done_col != -1 && *done_text != -1 && is_texture(line, &id)
+	if (*done_col > -1 && *done_text > -1 && is_texture(line, &id)
 		&& parse_texture(line, done_text, id, game))
 		*done_text = -1;
-	if (*done_text != -1 && *done_col != -1 && is_color(line, &id)
+	if (*done_text > -1 && *done_col > -1 && is_color(line, &id)
 		&& parse_color(line, done_col, id, game))
 		*done_col = -1;
+	if (*done_text < 4 && *done_col < 2
+		&& is_map(line, &placeholder, game) == 1)
+	{
+		*done_col = -2;
+		*done_text = -2;
+	}
 	free(line);
 	return (0);
 }
@@ -95,6 +103,8 @@ int	parsing(int argc, char **argv, t_game *game)
 		if (parsing_text_col(fd_config, &done_text, &done_col, game))
 			break ;
 	}
+	if (done_text == -2 || done_col == -2)
+		return (error_msg(4));
 	if (done_text != 4 || done_col != 2 || parse_map(argv[1], fd_config,
 			game) == -1)
 		return (-1);

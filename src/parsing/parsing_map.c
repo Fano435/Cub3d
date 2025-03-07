@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 10:23:27 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 10:51:51 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,23 @@ int	get_height(int fd_config, t_game *game)
 	game->map_height = 0;
 	player_pos = 0;
 	save = 300;
-	while (1)
+	line = get_next_line(fd_config);
+	while (line)
 	{
-		line = get_next_line(fd_config);
-		if (!line)
-			break ;
-		if (game->map_height != -1)
+		if (game->map_height > -1)
 			ret_map = is_map(line, &player_pos, game);
-		if (ret_map == -1 || (game->map_height > 0 && !ret_map)
+		if (ret_map <= -1
 			|| (ret_map == 1 && save == 2 && game->map_height > 0))
 			game->map_height = -1;
-		if (game->map_height != -1 && ret_map == 1)
+		if (game->map_height > 0 && !ret_map)
+			game->map_height = -2;
+		if (game->map_height > -1 && ret_map == 1)
 			game->map_height++;
 		save = ret_map;
 		free(line);
+		line = get_next_line(fd_config);
 	}
-	return (game->map_height);
+	return (free(line), game->map_height);
 }
 
 /*Convert the map into a char ** to finish the parsing*/
@@ -141,6 +142,8 @@ int	parse_map(char *config_file, int fd_config, t_game *game)
 	get_height(fd_config, game);
 	if (game->map_height == -1)
 		return (-1);
+	else if (game->map_height == -2)
+		return (error_msg_map(1));
 	map = file_to_array(fd_config, config_file, game);
 	if (!map)
 		return (error_msg_map(4));
