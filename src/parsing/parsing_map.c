@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 10:51:51 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:43:17 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,9 @@ int	parse_map(char *config_file, int fd_config, t_game *game)
 		return (error_msg_map(4));
 	game->map = map;
 	if (get_starting_pos(map, game) == -1)
-		return (-1);
+		return (free_map(map), -1);
 	if (valid_map(game) == -1)
-	{
-		free_map(map);
-		return (-1);
-	}
+		return (free_map(map), -1);
 	close(fd_config);
 	return (0);
 }
