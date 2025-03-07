@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 15:00:08 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:53:19 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	arg_parsing(int argc, char **argv)
 	fd_config = open(argv[1], O_RDONLY);
 	if (fd_config == -1)
 		return (error_msg(2));
-
 	return (fd_config);
 }
 
@@ -70,7 +69,7 @@ int	parsing_text_col(int fd_config, int *done_text, int *done_col, t_game *game)
 	line = get_next_line(fd_config);
 	placeholder = 0;
 	if (!line)
-		return (-1);
+		return (close(fd_config), -1);
 	if (*done_col > -1 && *done_text > -1 && is_texture(line, &id)
 		&& parse_texture(line, done_text, id, game))
 		*done_text = -1;
@@ -108,6 +107,7 @@ int	parsing(int argc, char **argv, t_game *game)
 		return (error_msg(4));
 	if (done_text != 4 || done_col != 2 || parse_map(argv[1], fd_config,
 			game) == -1)
-		return (-1);
+		return (close(fd_config), -1);
+	close(fd_config);
 	return (0);
 }

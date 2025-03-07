@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 15:00:49 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:00:06 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ int	error_msg_map(int error_code)
 	if (error_code == 1)
 		msg = "Map description should only contains 0 (floor),"
 			" 1 (walls) and 1 player orientation indicator (N, S, E, W)\n";
-	if (error_code == 2)
+	else if (error_code == 2)
 		msg = "Map is not bound by walls\n";
-	if (error_code == 3)
+	else if (error_code == 3)
 		msg = "Map description cannot contain more than 1 starting"
 			" position for the player\n";
-	if (error_code == 4)
+	else if (error_code == 4)
 		msg = "Map description could not be converted into array\n";
+	else if (error_code == 5)
+		msg = "No player starting position\n";
 	write(STDERR_FILENO, msg, ft_strlen(msg));
 	return (-1);
 }

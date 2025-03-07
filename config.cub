@@ -1,4 +1,5 @@
 
+
 SO ./assets/mossy.xpm
 WE ./assets/purplestone.xpm
 NO ./assets/greystone.xpm
@@ -6,9 +7,6 @@ EA ./assets/bluestone.xpm
 
 F 0, 255, 30
 C 100,30,200
-
-
-
 
         1111111111111111111111111
         1000000000110000000000001
