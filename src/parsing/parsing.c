@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/26 16:45:06 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 10:16:01 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ int	error_msg(int error_code)
 	else if (error_code == 3)
 		msg = "Texture needs to be given in this format: identifier ./file\n";
 	else if (error_code == 4)
-		msg = "Configuration file needs to include FIRST 4 textures and 2 color and "
-                "THEN 1 map description ONLY\n";
+		msg = "Configuration file needs to include FIRST 4 textures and"
+			" 2 color and THEN 1 map description ONLY\n";
 	else if (error_code == 5)
 		msg = "Texture file cannot be opened\n";
 	else if (error_code == 6)
 		msg = "Malloc issue\n";
 	else if (error_code == 7)
-		msg = "Colors needs to respect this format: identifier R, G, B with\
-                 R, G and B between 0 and 255\n";
+		msg = "Colors needs to respect this format: identifier R, G, B with"
+			" R, G and B between 0 and 255\n";
 	write(STDERR_FILENO, msg, ft_strlen(msg));
 	return (-1);
 }
@@ -54,7 +54,7 @@ int	arg_parsing(int argc, char **argv)
 		return (error_msg(1));
 	fd_config = open(argv[1], O_RDONLY);
 	if (fd_config == -1)
-		return (error_msg(3));
+		return (error_msg(2));
 	return (fd_config);
 }
 
@@ -65,15 +65,14 @@ int	parsing_text_col(int fd_config, int *done_text, int *done_col, t_game *game)
 	char	*line;
 	int		id;
 
-
 	line = get_next_line(fd_config);
 	if (!line)
 		return (-1);
-	if (*done_col != -1 &&  *done_text != -1 
-		&&is_texture(line, &id) && parse_texture(line, done_text, id, game))
+	if (*done_col != -1 && *done_text != -1 && is_texture(line, &id)
+		&& parse_texture(line, done_text, id, game))
 		*done_text = -1;
-	if (*done_text != -1 && *done_col != -1 
-		&& is_color(line, &id) && parse_color(line, done_col, id, game))
+	if (*done_text != -1 && *done_col != -1 && is_color(line, &id)
+		&& parse_color(line, done_col, id, game))
 		*done_col = -1;
 	free(line);
 	return (0);
@@ -82,9 +81,9 @@ int	parsing_text_col(int fd_config, int *done_text, int *done_col, t_game *game)
 /*Main parsing function -> A COUPER EN 2*/
 int	parsing(int argc, char **argv, t_game *game)
 {
-	int		fd_config;
-	int		done_text;
-	int		done_col;
+	int	fd_config;
+	int	done_text;
+	int	done_col;
 
 	fd_config = arg_parsing(argc, argv);
 	if (fd_config == -1)
@@ -94,10 +93,10 @@ int	parsing(int argc, char **argv, t_game *game)
 	while (1)
 	{
 		if (parsing_text_col(fd_config, &done_text, &done_col, game))
-			break;
+			break ;
 	}
-	if (done_text != 4 || done_col != 2 
-		|| parse_map(argv[1], fd_config, game) == -1)
+	if (done_text != 4 || done_col != 2 || parse_map(argv[1], fd_config,
+			game) == -1)
 		return (-1);
 	return (0);
 }

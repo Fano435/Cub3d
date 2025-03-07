@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/26 11:55:05 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 10:11:06 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	add_text_to_game(char *texture_file, int id, t_game *game)
 
 	if (id == NO)
 		curr_text = game->img_text_n;
-		else if (id == SO)
+	else if (id == SO)
 		curr_text = game->img_text_s;
 	else if (id == WE)
 		curr_text = game->img_text_w;
@@ -76,10 +76,9 @@ int	add_text_to_game(char *texture_file, int id, t_game *game)
 	if (curr_text->path)
 		return (error_msg(4));
 	curr_text->path = ft_strdup(texture_file);
-	free(texture_file);	
+	free(texture_file);
 	return (0);
 }
-
 
 /*Check the texture line for errors & try to opens it
 + put the file relative path in the struct*/

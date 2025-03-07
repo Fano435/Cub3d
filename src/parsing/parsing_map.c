@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/26 16:45:14 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 10:23:27 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	get_height(int fd_config, t_game *game)
 			break ;
 		if (game->map_height != -1)
 			ret_map = is_map(line, &player_pos, game);
-		if (ret_map == -1 || (game->map_height > 0 && !ret_map) 
-			|| (ret_map == 1 && save == 2  && game->map_height > 0))
+		if (ret_map == -1 || (game->map_height > 0 && !ret_map)
+			|| (ret_map == 1 && save == 2 && game->map_height > 0))
 			game->map_height = -1;
 		if (game->map_height != -1 && ret_map == 1)
 			game->map_height++;
@@ -148,7 +148,10 @@ int	parse_map(char *config_file, int fd_config, t_game *game)
 	if (get_starting_pos(map, game) == -1)
 		return (-1);
 	if (valid_map(game) == -1)
+	{
+		free_map(map);
 		return (-1);
+	}
 	close(fd_config);
 	return (0);
 }
