@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 10:11:43 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 10:12:09 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:29:47 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,16 @@ int				key_press(int keysym, t_player *player);
 int				key_release(int keysym, t_game *game);
 
 // init.c
-void			init(t_game *game);
-void			init_player(t_player *player);
-void			init_ray(t_ray *ray);
-void			init_mlx_textures(t_game *game);
+int				init(t_game *game);
+int				init_player(t_player *player);
+int				init_ray(t_ray *ray);
+int				init_img(t_game *game);
+int				init_mlx_textures(t_game *game);
+
+//init_utils.c
+int				error_msg_mlx(int error_code);
+int				init_mlx_img(t_game *game);
+int				malloc_img(t_game *game);
 
 // player.c
 void			move_player(t_game *game, t_player *player);

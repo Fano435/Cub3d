@@ -12,6 +12,7 @@ FILES = main\
 		get_next_line_utils\
 		player\
 		init\
+		init_utils\
 		raycasting\
 		raycasting_utils\
 		render\

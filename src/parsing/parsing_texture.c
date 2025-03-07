@@ -46,7 +46,7 @@ int	get_texture_file(char **texture_file, char *line, int pos)
 	while (line[pos + len])
 	{
 		if (!is_space(line[pos + len]))
-			return (error_msg(3));
+			return (free(*texture_file), error_msg(3));
 		len++;
 	}
 	len = 0;

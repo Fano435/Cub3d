@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:36:24 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/02/26 16:45:34 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:41:57 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,16 @@ int	main(int ac, char **av)
 	t_game	*game;
 
 	game = ft_calloc(sizeof(t_game), 1);
-	init(game);
-	if (parsing(ac, av, game) == -1)
-	{
-		free_game(game);
+	if (init(game))
 		return (-1);
-	}
+	if (parsing(ac, av, game) == -1)
+		return(free_game(game), -1);
 	game->win_ptr = mlx_new_window(game->mlx_ptr, WIN_WIDTH, WIN_HEIGHT,
 			"Cub3D");
-	init_mlx_textures(game);
+	if (!game->win_ptr)
+		return (error_msg_mlx(3));
+	if (init_mlx_textures(game) == -1)
+		return (-1);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_press, game->player);
 	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_release, game);
 	mlx_loop_hook(game->mlx_ptr, render_loop, game);
