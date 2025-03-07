@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:06:14 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 14:42:16 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:45:54 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	error_msg_mlx(int error_code)
         msg = "mlx_init of mlx_ptr failed. Look at init.c\n";
     else if (error_code == 3)
         msg = "mlx_new_window failed. Look at main.c\n";
+    else if (error_code == 4)
+        msg = "GG, you did env -i\n";
     write(STDERR_FILENO, msg, ft_strlen(msg));
 	return (-1);
 }

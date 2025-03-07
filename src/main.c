@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:36:24 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/03/07 14:41:57 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:47:46 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ void	free_game(t_game *game)
 	free(game);
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **env)
 {
 	t_game	*game;
 
+	if (!env || !env[0])
+		return(error_msg_mlx(4));
 	game = ft_calloc(sizeof(t_game), 1);
 	if (init(game))
 		return (-1);
