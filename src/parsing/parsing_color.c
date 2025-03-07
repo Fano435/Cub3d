@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/26 12:02:04 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:56:28 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,31 @@ int	is_color(char *line, int *id)
 /*get each R G B in int format*/
 int	get_color(char *line, int *pos, int first_nb)
 {
-	int	color;
+	long long	color;
+	int			count;
+	int			not_zero;
 
 	if (first_nb)
-	{
 		while (line[*pos] && (is_space(line[*pos])))
 			(*pos)++;
-	}
 	else
-	{
 		while (line[*pos] && (is_space(line[*pos]) || line[*pos] == ','))
 			(*pos)++;
-	}
 	color = 0;
+	count = 0;
+	not_zero = 0;
 	while (line[*pos] && is_digit(line[*pos]))
 	{
 		color = color * 10 + (line[*pos] - '0');
 		(*pos)++;
+		if (line[*pos] != '0')
+			not_zero = 1;
+		if (not_zero)
+			count++;
 	}
-	if (color < 0 || color > 255)
+	if (color < 0 || color > 255 || count > 10)
 		return (-1);
-	return (color);
+	return ((int)color);
 }
 
 /*Adding the converted color to the proper variable of the game struct
