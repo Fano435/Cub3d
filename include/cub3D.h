@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 10:11:43 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 14:29:47 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 09:55:43 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
+# include <dirent.h>
 
 typedef struct s_img
 {

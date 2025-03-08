@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/08 09:30:37 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:09:30 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	error_msg(int error_code)
 	if (error_code == 0)
 		msg = "Program needs one argument\n";
 	else if (error_code == 1)
-		msg = "Program needs a configuration file .cub as argument\n";
+		msg = "Program needs a configuration file .cub as argument (not a directory)\n";
 	else if (error_code == 2)
 		msg = "Configuration file cannot be opened, check permission\n";
 	else if (error_code == 3)
@@ -37,7 +37,7 @@ int	error_msg(int error_code)
 		msg = "Colors needs to respect this format: identifier R, G, B with"
 			" R, G and B between 0 and 255\n";
 	else if (error_code == 8)
-		msg = "Texture needs to be a .xpm file\n";
+		msg = "Texture needs to be a .xpm file (not a directory)\n";
 	write(STDERR_FILENO, msg, ft_strlen(msg));
 	return (-1);
 }
@@ -54,6 +54,9 @@ int	arg_parsing(int argc, char **argv)
 	if (!(argv[1][len - 1] == 'b' && argv[1][len - 2] == 'u' && argv[1][len
 			- 3] == 'c' && argv[1][len - 4] == '.'))
 		return (error_msg(1));
+	fd_config = open(argv[1], __O_DIRECTORY);
+	if (fd_config != -1)
+		return (close(fd_config), error_msg(1));
 	fd_config = open(argv[1], O_RDONLY);
 	if (fd_config == -1)
 		return (error_msg(2));

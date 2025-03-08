@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 16:00:21 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:42:57 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_map(char *line, int *player_pos, t_game *game)
 		if (line[pos] != '1' && line[pos] != '0' && !is_space(line[pos])
 			&& line[pos] != 'N' && line[pos] != 'S' && line[pos] != 'E'
 			&& line[pos] != 'W')
-			return (error_msg_map(1));
+			return (-1);
 		if (player_pos && (line[pos] == 'N' || line[pos] == 'S'
 				|| line[pos] == 'E' || line[pos] == 'W'))
 			(*player_pos)++;
@@ -140,7 +140,7 @@ int	parse_map(char *config_file, int fd_config, t_game *game)
 	fd_config = open(config_file, O_RDONLY);
 	get_height(fd_config, game);
 	if (game->map_height == -1)
-		return (-1);
+		return (error_msg_map(1)); //mettre error_msg ici ??
 	else if (game->map_height == -2)
 		return (error_msg_map(1));
 	map = file_to_array(fd_config, config_file, game);

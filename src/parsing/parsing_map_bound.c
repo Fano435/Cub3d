@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:49:07 by aubertra          #+#    #+#             */
-/*   Updated: 2025/02/26 16:31:18 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:22:08 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,27 @@ int	check_flooded_map(char **map, int height)
 /*Main function to verify the converted map is correct*/
 int	valid_map(t_game *game)
 {
+	char	**map_copy;
 	int		x;
 	int		y;
-	char	**map_copy;
 
-	x = game->player->pos_x;
-	y = game->player->pos_y;
 	map_copy = copy_map(game->map, game->map_height);
-	flood_fill(map_copy, x, y, game->map_height);
+	if (!map_copy)
+		return (error_msg(6));
+	y = 0;
+	while (y < game->map_height)
+	{
+		x = 0;		
+		while (map_copy[y][x])
+		{
+			if (map_copy[y][x] == '0' || map_copy[y][x] == 'N'
+				|| map_copy[y][x] == 'S' || map_copy[y][x] == 'W'
+				|| map_copy[y][x] == 'E')
+				flood_fill(map_copy, x, y, game->map_height);
+			x++;
+		}
+		y++;
+	}
 	if (check_flooded_map(map_copy, game->map_height) == -1)
 		return (free_map(map_copy), -1);
 	free_map(map_copy);

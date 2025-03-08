@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/08 09:33:32 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 09:59:27 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,27 @@ int	add_text_to_game(char *texture_file, int id, t_game *game)
 	return (0);
 }
 
+/*Check if the texture file permission and if it is a dir or a file*/
+int	opening_check(char *texture_file)
+{
+	int		fd_texture;
+
+	fd_texture = open(texture_file, __O_DIRECTORY);
+	if (fd_texture != -1)
+		return (error_msg(8));
+	fd_texture = open(texture_file, O_RDONLY);
+	if (fd_texture == -1)
+		return (free(texture_file), error_msg(5));
+	close(fd_texture);
+	return (0);
+}
+	
 /*Check the texture line for errors & try to opens it
 + put the file relative path in the struct*/
 int	parse_texture(char *line, int *done_text, int id, t_game *game)
 {
 	int		pos;
 	char	*texture_file;
-	int		fd_texture;
 
 	pos = 3;
 	if (id == -1)
@@ -107,10 +121,8 @@ int	parse_texture(char *line, int *done_text, int id, t_game *game)
 		return (error_msg(3));
 	if (get_texture_file(&texture_file, line, pos))
 		return (-1);
-	fd_texture = open(texture_file, O_RDONLY);
-	if (fd_texture == -1)
-		return (free(texture_file), error_msg(5));
-	close(fd_texture);
+	if (opening_check(texture_file) == -1)
+		return (free(texture_file), -1);
 	if (add_text_to_game(texture_file, id, game))
 		return (free(texture_file), -1);
 	(*done_text)++;
