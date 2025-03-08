@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 16:22:36 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 09:30:37 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	error_msg(int error_code)
 	else if (error_code == 7)
 		msg = "Colors needs to respect this format: identifier R, G, B with"
 			" R, G and B between 0 and 255\n";
+	else if (error_code == 8)
+		msg = "Texture needs to be a .xpm file\n";
 	write(STDERR_FILENO, msg, ft_strlen(msg));
 	return (-1);
 }

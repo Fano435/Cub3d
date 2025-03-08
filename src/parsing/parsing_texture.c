@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 16:27:27 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 09:33:32 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ int	get_texture_file(char **texture_file, char *line, int pos)
 		len++;
 	}
 	(*texture_file)[len] = '\0';
+	if (!((*texture_file)[len - 1] == 'm' && (*texture_file)[len - 2] == 'p'
+		&& (*texture_file)[len - 3] == 'x' && (*texture_file)[len - 4] == '.'))
+		return (free(*texture_file), error_msg(8));
 	return (0);
 }
 
