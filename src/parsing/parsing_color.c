@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:55:13 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 16:56:08 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:12:51 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@ int	is_color(char *line, int *id)
 	return (*id);
 }
 
+int	format_check_color(char *line, int *pos)
+{
+	while (line[*pos] && is_space(line[*pos]))
+		(*pos)++;
+	(*pos) += 1;
+	while (line[*pos] && is_space(line[*pos]))
+		(*pos)++;
+	return (*pos);
+}
+
 /*get each R G B in int format*/
 int	get_color(char *line, int *pos, int first_nb)
 {
@@ -38,8 +48,7 @@ int	get_color(char *line, int *pos, int first_nb)
 	int			not_zero;
 
 	if (first_nb)
-		while (line[*pos] && (is_space(line[*pos])))
-			(*pos)++;
+		*pos = format_check_color(line, pos);
 	else
 		while (line[*pos] && (is_space(line[*pos]) || line[*pos] == ','))
 			(*pos)++;
@@ -92,7 +101,7 @@ int	parse_color(char *line, int *done_col, int id, t_game *game)
 
 	if (*done_col >= 2 || id == -1)
 		return (*done_col = -1, -1);
-	pos = 2;
+	pos = 0;
 	red = get_color(line, &pos, 1);
 	green = get_color(line, &pos, 0);
 	blue = get_color(line, &pos, 0);

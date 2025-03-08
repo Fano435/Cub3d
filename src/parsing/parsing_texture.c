@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/08 09:59:27 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:05:44 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	opening_check(char *texture_file)
 	return (0);
 }
 	
+
 /*Check the texture line for errors & try to opens it
 + put the file relative path in the struct*/
 int	parse_texture(char *line, int *done_text, int id, t_game *game)
@@ -107,13 +108,15 @@ int	parse_texture(char *line, int *done_text, int id, t_game *game)
 	int		pos;
 	char	*texture_file;
 
-	pos = 3;
 	if (id == -1)
 	{
 		*done_text = -1;
 		return (error_msg(3));
 	}
 	if (*done_text >= 4)
+		return (-1);
+	pos = format_check(line);
+	if (pos == -1)
 		return (-1);
 	while (line[pos] && is_space(line[pos]))
 		pos++;

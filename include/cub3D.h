@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 10:11:43 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/08 09:55:43 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:11:38 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void			get_wall_distance(t_game *game, t_ray *ray);
 ////////////////////////*PARSING*////////////////////////////////////////////
 
 // parsing.c
+int				format_check(char *line);
 int				error_msg(int error_code);
 int				parsing(int argc, char **argv, t_game *game);
 int				arg_parsing(int argc, char **argv);
@@ -145,6 +146,7 @@ int				my_strcmp(const char *s1, const char *s2);
 int				is_color(char *line, int *id);
 int				get_color(char *line, int *pos, int first_nb);
 int				parse_color(char *line, int *done, int id, t_game *game);
+int				format_check_color(char *line, int *pos);
 
 // parsing_map.c
 int				parse_map(char *config_file, int fd_config, t_game *game);
@@ -158,6 +160,7 @@ int				is_texture(char *line, int *id);
 int				get_texture_file(char **texture_file, char *line, int pos);
 int				parse_texture(char *line, int *done, int id, t_game *game);
 int				add_text_to_game(char *texture_file, int id, t_game *game);
+int				opening_check(char *texture_file);
 
 // parsing_map_bound.c
 int				valid_map(t_game *game);

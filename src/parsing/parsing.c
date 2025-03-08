@@ -6,11 +6,27 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/08 10:09:30 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:07:00 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
+
+/*Utils for parsing_texture*/
+int	format_check(char *line)
+{
+	int	pos;
+
+	pos = 0;
+	while (line[pos] && is_space(line[pos]))
+		pos++;
+	pos += 2;
+	while (line[pos] && is_space(line[pos]))
+		pos++;
+	if (!(line[pos] == '.' && line[pos + 1] == '/'))
+		return (error_msg(3));
+	return (pos);
+}
 
 /*Displaying the correct error message*/
 int	error_msg(int error_code)
