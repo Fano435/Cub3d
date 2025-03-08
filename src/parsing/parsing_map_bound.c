@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:49:07 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/08 10:22:08 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:17:50 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	valid_map(t_game *game)
 	y = 0;
 	while (y < game->map_height)
 	{
-		x = 0;		
+		x = 0;
 		while (map_copy[y][x])
 		{
 			if (map_copy[y][x] == '0' || map_copy[y][x] == 'N'

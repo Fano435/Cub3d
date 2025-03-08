@@ -6,13 +6,13 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 21:37:18 by jrasamim          #+#    #+#             */
-/*   Updated: 2025/03/07 14:37:22 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:16:24 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
-int		init_img(t_game *game)
+int	init_img(t_game *game)
 {
 	if (malloc_img(game))
 		return (-1);
@@ -39,26 +39,26 @@ int	init_mlx_textures(t_game *game)
 			&game->img_text_e->bits_per_pixel, &game->img_text_e->line_len,
 			&game->img_text_e->endian);
 	if (!game->img_text_e->addr)
-			return(error_msg_mlx(1));
+		return (error_msg_mlx(1));
 	game->img_text_n->addr = mlx_get_data_addr(game->img_text_n->mlx_img,
 			&game->img_text_n->bits_per_pixel, &game->img_text_n->line_len,
 			&game->img_text_n->endian);
 	if (!game->img_text_e->addr)
-			return(error_msg_mlx(1));
+		return (error_msg_mlx(1));
 	game->img_text_s->addr = mlx_get_data_addr(game->img_text_s->mlx_img,
 			&game->img_text_s->bits_per_pixel, &game->img_text_s->line_len,
 			&game->img_text_e->endian);
 	if (!game->img_text_s->addr)
-			return(error_msg_mlx(1));
+		return (error_msg_mlx(1));
 	game->img_text_w->addr = mlx_get_data_addr(game->img_text_w->mlx_img,
 			&game->img_text_w->bits_per_pixel, &game->img_text_w->line_len,
 			&game->img_text_w->endian);
 	if (!game->img_text_s->addr)
-			return(error_msg_mlx(1));
+		return (error_msg_mlx(1));
 	return (0);
 }
 
-int		init(t_game *game)
+int	init(t_game *game)
 {
 	game->player = malloc(sizeof(t_player));
 	if (!game->player)
@@ -79,7 +79,7 @@ int		init(t_game *game)
 	return (0);
 }
 
-int		init_player(t_player *player)
+int	init_player(t_player *player)
 {
 	player->fov = (60.0 * M_PI) / 180.0;
 	player->pos_x = -1;

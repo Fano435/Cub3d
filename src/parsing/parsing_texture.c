@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:49:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/08 11:05:44 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:17:36 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	opening_check(char *texture_file)
 	close(fd_texture);
 	return (0);
 }
-	
 
 /*Check the texture line for errors & try to opens it
 + put the file relative path in the struct*/

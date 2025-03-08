@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/08 10:42:57 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:18:12 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	parse_map(char *config_file, int fd_config, t_game *game)
 	fd_config = open(config_file, O_RDONLY);
 	get_height(fd_config, game);
 	if (game->map_height == -1)
-		return (error_msg_map(1)); //mettre error_msg ici ??
+		return (error_msg_map(1));
 	else if (game->map_height == -2)
 		return (error_msg_map(1));
 	map = file_to_array(fd_config, config_file, game);

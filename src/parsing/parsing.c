@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:09:01 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/08 11:07:00 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:18:56 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	error_msg(int error_code)
 	if (error_code == 0)
 		msg = "Program needs one argument\n";
 	else if (error_code == 1)
-		msg = "Program needs a configuration file .cub as argument (not a directory)\n";
+		msg = "Program needs a configuration FILE .cub as argument\n";
 	else if (error_code == 2)
 		msg = "Configuration file cannot be opened, check permission\n";
 	else if (error_code == 3)
