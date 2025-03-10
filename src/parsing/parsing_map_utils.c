@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/07 16:00:06 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:33:45 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ void	print_map(char **map)
 	while (map[i])
 	{
 		j = 0;
+		dprintf(STDERR_FILENO, "[");
 		while (map[i][j])
 		{
 			dprintf(STDERR_FILENO, "%c", map[i][j]);
 			j++;
 		}
+		dprintf(STDERR_FILENO, "]");
 		dprintf(STDERR_FILENO, "\n");
 		i++;
 	}
