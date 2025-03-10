@@ -21,6 +21,7 @@ FILES = main\
 		parsing_texture\
 		parsing_map\
 		parsing_map_utils\
+		parsing_map_utils2\
 		parsing_map_bound\
 		parsing_libft\
 		debug\

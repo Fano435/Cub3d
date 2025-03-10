@@ -6,7 +6,7 @@
 /*   By: aubertra <aubertra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:25 by aubertra          #+#    #+#             */
-/*   Updated: 2025/03/08 11:18:12 by aubertra         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:45:24 by aubertra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,12 @@ int	get_height(int fd_config, t_game *game)
 }
 
 /*Convert the map into a char ** to finish the parsing*/
-char	**file_to_array(int fd_config, char *config_file, t_game *game)
+char	**file_to_array(int fd_config, t_game *game)
 {
 	char	**map;
 	char	*line;
 	int		i;
 
-	close(fd_config);
-	fd_config = open(config_file, O_RDONLY);
 	map = (char **)malloc(sizeof(char *) * (game->map_height + 1));
 	if (!map)
 		return (error_msg(6), NULL);
@@ -93,7 +91,9 @@ char	**file_to_array(int fd_config, char *config_file, t_game *game)
 			break ;
 		if (is_map(line, NULL, game) == 1)
 		{
-			map[i] = ft_strdup(line);
+			map[i] = create_map_line(line, game);
+			if (!map[i])
+				return (free_map(map), NULL);
 			i++;
 		}
 		free(line);
@@ -143,7 +143,9 @@ int	parse_map(char *config_file, int fd_config, t_game *game)
 		return (error_msg_map(1));
 	else if (game->map_height == -2)
 		return (error_msg_map(1));
-	map = file_to_array(fd_config, config_file, game);
+	close(fd_config);
+	fd_config = open(config_file, O_RDONLY);
+	map = file_to_array(fd_config,game);
 	if (!map)
 		return (error_msg_map(4));
 	game->map = map;
