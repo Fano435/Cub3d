@@ -17,9 +17,9 @@ t_img	*get_texture_img(t_game *game, t_ray *ray)
 	if (ray->side)
 	{
 		if (ray->angle > M_PI / 2 && ray->angle < 3 * M_PI / 2)
-			return ((game->img_text_w));
-		else
 			return ((game->img_text_e));
+		else
+			return ((game->img_text_w));
 	}
 	else
 	{

@@ -18,11 +18,11 @@
 # include "../src/gnl/get_next_line.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include <dirent.h>
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
-# include <dirent.h>
 
 typedef struct s_img
 {
@@ -111,14 +111,14 @@ int				init_ray(t_ray *ray);
 int				init_img(t_game *game);
 int				init_mlx_textures(t_game *game);
 
-//init_utils.c
+// init_utils.c
 int				error_msg_mlx(int error_code);
 int				init_mlx_img(t_game *game);
 int				malloc_img(t_game *game);
 
 // player.c
 void			move_player(t_game *game, t_player *player);
-bool			touch(int x, int y, t_game *game);
+bool			touch(double x, double y, t_game *game);
 
 // raycasting.c
 void			cast_rays(t_game *game);
@@ -133,8 +133,8 @@ int				format_check(char *line);
 int				error_msg(int error_code);
 int				parsing(int argc, char **argv, t_game *game);
 int				arg_parsing(int argc, char **argv);
-int				parsing_text_col(int fd_config, int *done_text,
-					int *done_col, t_game *game);
+int				parsing_text_col(int fd_config, int *done_text, int *done_col,
+					t_game *game);
 
 // parsing_libft.c
 int				is_space(char c);

@@ -12,7 +12,7 @@
 
 #include "cub3D.h"
 
-bool	touch(int x, int y, t_game *game)
+bool	touch(double x, double y, t_game *game)
 {
 	int	grid_x;
 	int	grid_y;
